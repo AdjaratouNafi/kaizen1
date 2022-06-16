@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | MATERIELS
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h3></h3>
+                    </div>
+
+                    <h:form id="form1">
+                        <!-- Basic Examples -->
+                        <div class="row clearfix">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                                <div class="body">
+                                    <p:panel header="LISTE DES MATERIELS" style="width: 100%;text-align: center;">
+
+                                        <c:if test="#{marchandiseBean.consulterMarchandise.equalsIgnoreCase('yes')}"> 
+
+                                            <p:dataTable emptyMessage="Aucune donnée trouvée" filteredValue="#{marchandiseBean.filteredListMarchandise}" value="#{marchandiseBean.item}" var="r" widgetVar="listMarchandise" style="width: 100%;">
+                                                <f:facet name="header">
+                                                    <p:outputPanel>
+                                                        <h:outputText value="Recherche:" style="margin: 15px;" />
+                                                        <p:inputText id="globalFilter" converter="#{beanStringConverter}" onkeyup="PF('listMarchandise').filter()" style="150px;" />
+                                                    </p:outputPanel>
+                                                </f:facet>
+
+                                                <p:column filterStyle="display:none" headerText="Nom du materiel" sortBy="#{r.libelle}" filterBy="#{r.libelle}">
+                                                    #{r.libelle} 
+                                                </p:column>
+
+                                                <p:column filterStyle="display:none" headerText="Corps d'teat" sortBy="#{r.idCorpsetat.libellecoprsetat}" filterBy="#{r.idCorpsetat.libellecoprsetat}">
+                                                    #{r.idCorpsetat.libellecoprsetat} 
+                                                </p:column>
+
+                                                <p:column filterStyle="display:none" headerText="Lot technique" sortBy="#{r.idLottechnique.libellelottechnique}" filterBy="#{r.idLottechnique.libellelottechnique}">
+                                                    #{r.idLottechnique.libellelottechnique} 
+                                                </p:column>
+
+                                                <p:column>
+                                                    <f:facet name="header">Action</f:facet> 
+
+                                                    <c:if test="#{marchandiseBean.modifierMarchandise.equalsIgnoreCase('yes')}"> 
+                                                        <h:commandLink  action="#{marchandiseBean.editer}">
+                                                            <h:graphicImage value="resources/images/modifier.svg" width="35px" height="35px"  title="Modifier" />
+                                                        </h:commandLink>
+                                                    </c:if>  
+
+                                                    <c:if test="#{marchandiseBean.modifierMarchandise.equalsIgnoreCase('no')}">
+                                                        <p:commandButton value="Modifier" ajax="false"  />
+                                                    </c:if> 
+
+                                                    &nbsp;&nbsp;&nbsp;
+
+                                                    <c:if test="#{marchandiseBean.supprimerMarchandise.equalsIgnoreCase('yes')}"> 
+                                                        <h:commandLink  action="#{marchandiseBean.supprimer}">
+                                                            <h:graphicImage value="resources/images/supprimer.svg" width="35px" height="35px"  title="Supprimer" />
+                                                        </h:commandLink>
+                                                    </c:if> 
+
+                                                    <c:if test="#{marchandiseBean.supprimerMarchandise.equalsIgnoreCase('no')}">
+                                                        <h:commandLink  class="btn waves-effect" style="background-color: red;color: #fff;margin-top: -5px;border-radius: 8px;">Supprimer</h:commandLink>  
+                                                    </c:if> 
+
+
+                                                </p:column>
+
+                                            </p:dataTable>
+
+                                            <c:if test="#{marchandiseBean.creerMarchandise.equalsIgnoreCase('yes')}"> 
+                                                <a href="new_marchandise.xhtml" class="btn btn-primary m-t-15 waves-effect" style="border-radius: 10px;color: white;">Nouveau materiel</a>
+                                            </c:if> 
+
+                                            <c:if test="#{marchandiseBean.creerMarchandise.equalsIgnoreCase('no')}">
+                                                <a href="#" class="btn btn-primary m-t-15 waves-effect" style="border-radius: 10px;color: white;">Nouveau materiel</a>
+                                            </c:if> 
+
+
+                                        </c:if> 
+
+
+                                    </p:panel>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- #END# Basic Examples -->
+                    </h:form>
+
+
+                </div>
+
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

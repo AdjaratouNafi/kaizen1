@@ -1,0 +1,176 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | PRESTATAIRES
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h2></h2>
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                            <div class="body">
+
+                                <h:form>
+                                    <p:growl id="msgs" showDetail="true" />
+
+
+                                    <p:panel id="basic" header="ENREGISTRER UN PRESTATAIRE" styleClass="myPanelClientForm">
+
+                                        <p:spacer height="50px;"/>
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-4">
+                                                <label style="float: left;">Nouveau ou ancien prestataire ?</label>
+                                                <h:selectOneMenu id="choix" class="form-control"  converter="omnifaces.SelectItemsConverter"  
+                                                                 value="#{prestataireBean.choixCreation}"> 
+                                                    <f:ajax event="change" listener="#{prestataireBean.renderInfo}" execute="@form" render="perfbyselection1 perfbyselection2 perfbyselection3 perfbyselection4" />
+                                                    <f:selectItem itemLabel="------- Effectuer un choix -------"  noSelectionOption="true"/>
+                                                    <f:selectItem itemLabel="Nouveau prestataire"  itemValue="Nouveau prestataire"/>
+                                                    <f:selectItem itemLabel="Ancien prestataire"  itemValue="Ancien prestataire"/>
+                                                </h:selectOneMenu>
+                                            </div>
+                                            <h:panelGroup id="perfbyselection1">
+                                                <div class="col-sm-4">
+                                                    <label style="float: left;">Prestataire</label>
+
+                                                    <h:selectOneMenu id="idP" class="form-control"  converter="omnifaces.SelectItemsConverter"  
+                                                                     rendered="#{prestataireBean.choixCreation eq 'Ancien prestataire'}" value="#{prestataireBean.prestatairePrim}"> 
+                                                        <f:ajax event="change" listener="#{prestataireBean.renderInfoo}" execute="@form" render="perfbyselection2 perfbyselection3 perfbyselection4" />
+                                                        <f:selectItem itemLabel="------- Selectionnez un pestataire -------" noSelectionOption="true"/>
+                                                        <f:selectItems value="#{prestatairePrimBean.listprestataires}"  var="pst"  itemLabel="#{pst.nomcomplet}" itemValue="#{pst}" />       
+                                                    </h:selectOneMenu>
+
+                                                    <h:inputText id="nom" rendered="#{prestataireBean.choixCreation eq 'Nouveau prestataire'}" class="form-control" a:placeholder="Nom complet"  converter="#{beanStringConverter}" value="#{prestataireBean.prestataire.nomcomplet}"/>
+
+                                                </div>
+                                            </h:panelGroup>
+
+                                            <h:panelGroup id="perfbyselection2">
+                                                <div class="col-sm-4">
+                                                    <label style="float: left;">NINEA</label>
+                                                    <h:inputText id="ninea1" rendered="#{prestataireBean.choixCreation eq 'Nouveau prestataire'}" class="form-control" a:placeholder="NINEA" converter="#{beanStringConverter}" value="#{prestataireBean.prestataire.ninea}" />
+                                                    <h:inputText id="ninea2" readonly="true" rendered="#{prestataireBean.choixCreation eq 'Ancien prestataire'}" class="form-control" a:placeholder="NINEA" converter="#{beanStringConverter}" value="#{prestataireBean.prestataire.ninea}" />
+                                                </div>
+                                            </h:panelGroup>
+
+                                        </div>
+
+                                        <div class="row clearfix">
+                                            <br/><br/>
+                                            <h:panelGroup id="perfbyselection3">
+                                                <div class="col-sm-4">
+                                                    <br/>
+                                                    <label style="float: left;">Coprs d'etat</label>
+                                                    <h:selectOneMenu id="corps1" class="form-control" converter="omnifaces.SelectItemsConverter"  
+                                                                     rendered="#{prestataireBean.choixCreation eq 'Nouveau prestataire'}" value="#{prestataireBean.prestataire.corps}"> 
+                                                        <f:selectItem itemLabel="-------- Selectionnez un corps d'etat --------"  noSelectionOption="true"/>
+                                                        <f:selectItems value="#{prestataireBean.listCorpsEtats}"  var="corps"  itemLabel="#{corps.libellecoprsetat}" itemValue="#{corps.libellecoprsetat}" />       
+                                                    </h:selectOneMenu>
+
+                                                    <h:inputText id="corps2" readonly="true" rendered="#{prestataireBean.choixCreation eq 'Ancien prestataire'}" class="form-control" a:placeholder="Corps d'etat"  converter="#{beanStringConverter}" value="#{prestataireBean.prestataire.corps}"/>
+                                                </div>
+
+
+                                                <div class="col-sm-4">
+                                                    <br/>
+                                                    <label style="float: left;">Contact</label>
+                                                    <h:inputText id="contact1" rendered="#{prestataireBean.choixCreation eq 'Nouveau prestataire'}" styleClass="form-control" a:placeholder="Contact" converter="#{beanStringConverter}" value="#{prestataireBean.prestataire.telephone}" />
+                                                    <h:inputText id="contact2" rendered="#{prestataireBean.choixCreation eq 'Ancien prestataire'}" readonly="true" styleClass="form-control" a:placeholder="Contact" converter="#{beanStringConverter}" value="#{prestataireBean.prestataire.telephone}" />
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <br/>
+                                                    <label style="float: left;">Projet</label>
+                                                    <h:selectOneMenu id="idProjet1" class="form-control" converter="omnifaces.SelectItemsConverter"  
+                                                                     rendered="#{prestataireBean.choixCreation eq 'Nouveau prestataire'}" value="#{prestataireBean.marche}"> 
+                                                        <f:ajax event="change" listener="#{prestataireBean.renderInfooo}" execute="@form" render="perfbyselection4" />
+                                                        <f:selectItem itemLabel="-------- Selectionnez un projet --------"  noSelectionOption="true"/>
+                                                        <f:selectItems value="#{marcheBean.listMarches}"  var="marche"  itemLabel="#{marche.nomMarche}" itemValue="#{marche}" />       
+                                                    </h:selectOneMenu>
+
+                                                    <h:selectOneMenu id="idProjet2" class="form-control" converter="omnifaces.SelectItemsConverter"  
+                                                                     rendered="#{prestataireBean.choixCreation eq 'Ancien prestataire'}" value="#{prestataireBean.marche}"> 
+                                                        <f:ajax event="change" listener="#{prestataireBean.renderInfooo}" execute="@form" render="perfbyselection4" />
+                                                        <f:selectItem itemLabel="-------- Selectionnez un projet --------"  noSelectionOption="true"/>
+                                                        <f:selectItems value="#{marcheBean.listMarches}"  var="marche"  itemLabel="#{marche.nomMarche}" itemValue="#{marche}" />       
+                                                    </h:selectOneMenu>
+
+                                                </div>
+                                            </h:panelGroup>
+                                        </div> 
+
+                                        <div class="row clearfix">
+                                            <br/><br/>
+                                            <h:panelGroup id="perfbyselection4">
+                                                <div class="col-sm-4">
+                                                    <br/>
+                                                    <label style="float: left;">Chantier</label>
+                                                    <h:selectOneMenu id="idChantier1" class="form-control" converter="omnifaces.SelectItemsConverter"  
+                                                                     rendered="#{prestataireBean.choixCreation eq 'Nouveau prestataire'}" value="#{prestataireBean.prestataire.idChantier}"> 
+                                                        <f:selectItem itemLabel="-------- Selectionnez un chantier --------"  noSelectionOption="true"/>
+                                                        <f:selectItems value="#{prestataireBean.listChantier}"  var="chantier"  itemLabel="#{chantier.siteChantier}" itemValue="#{chantier}" />       
+                                                    </h:selectOneMenu>
+
+                                                    <h:selectOneMenu id="idChantier2" class="form-control" converter="omnifaces.SelectItemsConverter"  
+                                                                     rendered="#{prestataireBean.choixCreation eq 'Ancien prestataire'}" value="#{prestataireBean.prestataire.idChantier}"> 
+                                                        <f:selectItem itemLabel="-------- Selectionnez un chantier --------"  noSelectionOption="true"/>
+                                                        <f:selectItems value="#{prestataireBean.listChantier}"  var="chantier"  itemLabel="#{chantier.siteChantier}" itemValue="#{chantier}" />       
+                                                    </h:selectOneMenu>
+
+                                                </div>
+
+                                                <div class="col-sm-4">
+
+                                                </div>
+
+                                                <div class="col-sm-4"></div>
+                                            </h:panelGroup>
+                                        </div>
+
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <br/><br/>
+                                                    <h:commandLink  action="#{prestataireBean.save}">
+                                                        <h:graphicImage value="resources/images/enregistrer.svg"  title="Enregistrer" />
+                                                    </h:commandLink>
+                                                    &nbsp;&nbsp;&nbsp;
+                                                    <h:commandLink  action="#{prestataireBean.reset}">
+                                                        <h:graphicImage value="resources/images/annuler.svg"  title="Annuler" />
+                                                    </h:commandLink>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </p:panel>
+                                </h:form>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

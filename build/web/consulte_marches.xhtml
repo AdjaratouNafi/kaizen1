@@ -1,0 +1,249 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | MARCHES
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="body">
+
+                                <h:form id="form">
+
+                                    <p:growl id="msgs" showDetail="true" />
+
+                                    <center style="margin-left: auto;margin-right: auto;margin-bottom: 30px;width: 100%;font-size: 25px;font-weight: bold;text-transform: uppercase;"> 
+                                        #{marcheOtherBean.marcheFromEdit.nomMarche}
+                                    </center>
+                                    <p:tabView>
+                                        <p:tab title="INFORMATIONS DU PROJET">
+
+                                            <table width="100%" border="0">
+
+                                                <tr align="left">
+                                                    <td>
+                                                        <p style="margin-left: 15px; margin-top: 15px;"><b>Client:</b> #{marcheOtherBean.marcheFromEdit.idDevis.idClient.nomClient} </p> <br/>
+
+                                                        <p style="margin-left: 15px; margin-top: 15px;"><b>Montant HT:</b> #{marcheOtherBean.marcheFromEdit.montantExecution} FCFA</p> <br/>
+
+                                                        <p style="margin-left: 15px; margin-top: 15px;"><b>Date de notification:</b> #{marcheOtherBean.marcheFromEdit.notification} </p> <br/>
+
+                                                        <p style="margin-left: 15px; margin-top: 15px;"><b>Ordre de service:</b> #{marcheOtherBean.marcheFromEdit.ordreservice} </p> <br/>
+
+                                                    </td>
+
+                                                    <td>
+
+                                                        <p style="margin-left: 15px; margin-top: 15px;"><b>Objet du marché:</b> #{marcheOtherBean.marcheFromEdit.objetMarche} </p> <br/>
+
+                                                        <p style="margin-left: 15px; margin-top: 15px;"><b>Devise utilisé:</b> #{marcheOtherBean.marcheFromEdit.idDevise.symbole}</p> <br/>
+
+                                                        <p style="margin-left: 15px; margin-top: 15px;"><b>Montant TTC:</b> #{marcheOtherBean.marcheFromEdit.montantMarche}</p> <br/>
+
+                                                        <p style="margin-left: 15px; margin-top: 15px;"><b>Caution</b> #{marcheOtherBean.marcheFromEdit.cotion}</p> <br/>
+
+
+                                                    </td>
+
+                                                    <td>
+                                                        <p style="margin-left: 15px; margin-top: 15px;"><b>Date de début:</b> #{marcheOtherBean.marcheFromEdit.dateDebut}</p> <br/>
+
+                                                        <p style="margin-left: 15px; margin-top: 15px;"><b>Durée:</b> #{marcheOtherBean.marcheFromEdit.dureeContrat}</p> <br/>
+
+                                                        <p style="margin-left: 15px; margin-top: 15px;"><b>Montant de démarrage:</b> #{marcheOtherBean.marcheFromEdit.montantDemarrage}</p> <br/>
+
+                                                        <p style="margin-left: 15px; margin-top: 15px;"><b>Montant du caution:</b> #{marcheOtherBean.marcheFromEdit.montantcotion}</p> <br/>
+
+                                                    </td> 
+
+                                                </tr>
+
+                                                <tr align="left">
+                                                    <td>
+                                                        <p style="margin-left: 15px; margin-top: 15px;"><b>Date de fin:</b> #{marcheOtherBean.marcheFromEdit.dateFin}</p> <br/>
+                                                    </td>
+                                                </tr>
+
+
+
+                                            </table> 
+
+                                        </p:tab>
+                                        <p:tab title="CHANTIERS DU PROJET">
+
+                                            <h:dataTable  class="table table-bordered table-striped table-hover js-basic-example dataTable" value="#{marcheOtherBean.listChantier}" var="r">
+
+                                                <h:column>
+                                                    <f:facet name="header">Site</f:facet> 
+                                                        #{r.siteChantier}  
+                                                </h:column> 
+                                                <h:column>
+                                                    <f:facet name="header">Date de création</f:facet> 
+                                                        #{r.dateCreation}  
+                                                </h:column> 
+                                                <h:column>
+                                                    <f:facet name="header">Etat</f:facet> 
+                                                        #{r.etatchantier}
+                                                </h:column>                       
+
+                                            </h:dataTable>
+
+                                        </p:tab>
+                                        <p:tab title="DEPENSES ET AVANCEMENT DU PROJET">
+
+                                            <table width="100%" border="0">
+
+                                                <tr align="left">
+
+                                                    <td></td>
+
+                                                    <td align="left">
+                                                        <p style="margin-top: 15px;"><b>Montant du marché : </b> #{marcheOtherBean.marcheFromEdit.montantMarche} #{marcheBean.marcheFromEdit.idDevise.symbole} </p> <br/>
+                                                    </td>
+
+                                                    <td></td>
+
+
+                                                </tr> 
+
+
+                                                <tr align="left">
+
+                                                    <td>
+                                                        <p style="margin-left: 15px; margin-top: 15px;"><b>Total Appro Direct : </b> #{marcheOtherBean.totalApproDirect} </p> <br/>
+                                                    </td>
+
+                                                    <td>
+
+                                                    </td>
+
+                                                    <td>
+                                                        <p style="margin-left: 15px; margin-top: 15px;"><b>Montant de démarrage : </b> #{marcheOtherBean.marcheFromEdit.montantDemarrage} </p> <br/>
+                                                    </td>
+
+
+                                                </tr> 
+
+
+                                                <tr align="left">
+
+                                                    <td>
+                                                        <p style="margin-left: 15px; margin-top: 15px;"><b>Total Appro Stock : </b> #{marcheOtherBean.totalApproStock} </p> <br/>
+                                                    </td>
+
+                                                    <td>
+
+                                                    </td>
+
+                                                    <td>
+                                                        <p style="margin-left: 15px; margin-top: 15px;"><b>Total des décomptes : </b> #{marcheOtherBean.totalDecompte} </p> <br/>
+                                                    </td>
+
+
+                                                </tr> 
+
+
+
+                                                <tr align="left">
+
+                                                    <td>
+                                                        <p style="margin-left: 15px; margin-top: 15px;"><b>Total main d'oeuvre HT : </b> #{marcheOtherBean.totalMoHt} </p> <br/>
+                                                    </td>
+
+                                                    <td>
+
+                                                    </td>
+
+                                                    <td>
+                                                        <p style="margin-left: 15px; margin-top: 15px;"><b>Reliquat = </b> #{marcheOtherBean.reliquat} </p> <br/>
+                                                    </td>
+
+
+                                                </tr> 
+
+
+                                                <tr align="left">
+
+                                                    <td>
+                                                        <p style="margin-left: 15px; margin-top: 15px;"><b>Total main d'oeuvre TTC : </b> #{marcheOtherBean.totalMoTtc} </p> <br/>
+                                                    </td>
+
+                                                    <td>
+
+                                                    </td>
+
+                                                    <td>
+
+                                                    </td>
+
+
+                                                </tr> 
+
+
+                                                <tr align="left">
+
+                                                    <td>
+                                                        <p style="margin-left: 15px; margin-top: 15px;"><b>Total des depenses = </b> #{marcheOtherBean.totalDepenses}  </p> <br/>
+                                                    </td>
+
+                                                    <td>
+
+                                                    </td>
+
+                                                    <td>
+
+                                                    </td>
+
+
+                                                </tr> 
+                                                
+                                                
+                                                <tr align="left">
+
+                                                    <td></td>
+
+                                                    <td align="left">
+                                                        <p style="margin-top: 15px;"><b>Pourcentage d'execution : </b> #{marcheOtherBean.pourcentageExecution}%</p> <br/>
+                                                    </td>
+
+                                                    <td></td>
+
+
+                                                </tr> 
+
+                                            </table> 
+
+                                        </p:tab>
+                                    </p:tabView>
+
+                                </h:form>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

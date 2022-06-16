@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | STOCK
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+
+                    </div>
+
+                    <h:form id="form1">
+                        <!-- Basic Examples -->
+                        <div class="row clearfix">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                                <div class="body">
+                                    <p:panel header="LISTE DES SORTIES DE STOCK" styleClass="myPanelWidth">
+
+                                        <c:if test="#{sortieStockBean.consulterSortieStock.equalsIgnoreCase('yes')}"> 
+
+                                            <p:dataTable emptyMessage="Aucune donnée trouvée" filteredValue="#{sortieStockBean.filteredListSortiestock}" value="#{sortieStockBean.item}" var="r" widgetVar="listSortiestock"  style="width: 100%;">
+                                                <f:facet name="header">
+                                                    <p:outputPanel>
+                                                        <h:outputText value="Recherche:" style="margin: 15px;" />
+                                                        <p:inputText id="globalFilter" converter="#{beanStringConverter}" onkeyup="PF('listSortiestock').filter()" style="150px;" />
+                                                    </p:outputPanel>
+                                                </f:facet>
+
+                                                <p:column filterStyle="display:none" headerText="Materiel" sortBy="#{r.idStock.designation}" filterBy="#{r.idStock.designation}">
+                                                    #{r.idStock.designation}
+                                                </p:column>
+                                                <p:column filterStyle="display:none" headerText="Qte" sortBy="#{r.quantite}" filterBy="#{r.quantite}">
+                                                    #{r.quantite}  
+                                                </p:column> 
+                                                <p:column filterStyle="display:none" headerText="Entrepot" sortBy="#{r.idEntrepot.nom}" filterBy="#{r.idEntrepot.nom}">
+                                                     #{r.idEntrepot.nom}  
+                                                </p:column> 
+                                                <p:column filterStyle="display:none" headerText="Date sortie stock" sortBy="#{r.dateSortiestock}" filterBy="#{r.dateSortiestock}">
+                                                    #{r.dateSortiestock}  
+                                                </p:column> 
+                                                <p:column filterStyle="display:none" headerText="Demandeur" sortBy="#{r.idUtilisateur.nomUtilisateur}  #{r.idUtilisateur.prenomUtilisateur}" filterBy="#{r.idUtilisateur.nomUtilisateur}  #{r.idUtilisateur.prenomUtilisateur}">
+                                                     #{r.idUtilisateur.nomUtilisateur}  #{r.idUtilisateur.prenomUtilisateur} 
+                                                </p:column> 
+
+                                                <p:column filterStyle="display:none" headerText="Chantier" sortBy="#{r.idChantier.siteChantier}" filterBy="#{r.idChantier.siteChantier}">
+                                                     #{r.idChantier.siteChantier}
+                                                </p:column> 
+
+                                                <p:column>
+                                                    <f:facet name="header">Action</f:facet> 
+
+                                                    <c:if test="#{sortieStockBean.modifierSortieStock.equalsIgnoreCase('yes')}"> 
+                                                        <h:commandLink  action="#{sortieStockBean.editer}">
+                                                            <h:graphicImage value="resources/images/modifier.svg" width="35px" height="35px"  title="Modifier" />
+                                                        </h:commandLink>
+                                                    </c:if> 
+                                                    <c:if test="#{sortieStockBean.modifierSortieStock.equalsIgnoreCase('no')}">
+                                                        <p:commandButton value="Modifier" ajax="false" />
+                                                    </c:if> 
+
+                                                    &nbsp;&nbsp;&nbsp;
+
+                                                    <c:if test="#{sortieStockBean.supprimerSortieStock.equalsIgnoreCase('yes')}"> 
+                                                        <h:commandLink  action="#{sortieStockBean.supprimer}">
+                                                            <h:graphicImage value="resources/images/supprimer.svg" width="35px" height="35px"  title="Supprimer" />
+                                                        </h:commandLink>
+                                                    </c:if> 
+
+                                                    <c:if test="#{sortieStockBean.supprimerSortieStock.equalsIgnoreCase('no')}">
+                                                        <h:commandLink  class="btn waves-effect" style="background-color: red;color: #fff;margin-top: -5px;border-radius: 8px;">Supprimer</h:commandLink>  
+                                                    </c:if> 
+
+                                                </p:column>
+
+                                            </p:dataTable>
+
+                                            <c:if test="#{sortieStockBean.creerSortieStock.equalsIgnoreCase('yes')}"> 
+                                                <a href="new_sortieStock.xhtml" class="btn btn-primary m-t-15 waves-effect" style="border-radius: 10px;color: white;">Nouvelle sortie</a>
+                                            </c:if> 
+
+                                            <c:if test="#{sortieStockBean.creerSortieStock.equalsIgnoreCase('no')}">
+                                                <a href="#" class="btn btn-primary m-t-15 waves-effect" style="border-radius: 10px;color: white;">Nouvelle sortie</a>
+                                            </c:if> 
+
+
+                                        </c:if> 
+
+                                    </p:panel>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- #END# Basic Examples -->
+                    </h:form>
+
+                </div>
+
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

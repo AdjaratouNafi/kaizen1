@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | Chantier
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h2></h2>
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="body">
+
+                                <h:form>
+                                    <p:growl id="msgs" showDetail="true" />
+
+
+                                    <p:panel id="basic" header="MODIFIER UN CHANTIER" styleClass="myPanelClientForm">
+
+                                        <p:spacer height="50px;"/>
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-4">
+                                                <p:selectOneMenu id="idMarche" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter"  
+                                                                 value="#{chantierBean.chantierFromEdit.idMarche}"> 
+                                                    <f:selectItem itemLabel="----- #{chantierBean.chantierFromEdit.idMarche.nomMarche} (#{chantierBean.chantierFromEdit.idMarche.idDevis.idClient.nomClient}) -----"  itemValue="#{chantierBean.chantierFromEdit.idMarche}"/>
+                                                    <f:selectItems value="#{chantierBean.listMarches}"  var="m"  itemLabel="#{m.nomMarche} (#{m.idDevis.idClient.nomClient})" itemValue="#{m}" />       
+                                                </p:selectOneMenu>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <p:inputText id="site" styleClass="form-control"   converter="#{beanStringConverter}"  a:placeholder="Nom du chantier" value="#{chantierBean.chantierFromEdit.siteChantier}"/>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label style="float:left;margin-right: 5px;">Date de création</label>
+                                                <p:calendar  id="datecreation" converter="#{beanStringConverter}" value="#{chantierBean.chantierFromEdit.dateCreation}" />
+                                            </div>
+                                        </div>
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-4">
+                                                <br/>
+                                                <p:selectOneMenu id="idChef" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter"  
+                                                                 value="#{chantierBean.chantierFromEdit.idUtilisateur}"> 
+                                                    <f:selectItem itemLabel="------------------- #{chantierBean.chantierFromEdit.idUtilisateur.nomUtilisateur} --------------------"  itemValue="#{chantierBean.chantierFromEdit.idUtilisateur}"/>
+                                                    <f:selectItems value="#{salaireBean.listUsersWithoutAdmin}"  var="u"  itemLabel="#{u.nomUtilisateur} #{u.prenomUtilisateur}" itemValue="#{u}" />       
+                                                </p:selectOneMenu> 
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <br/>
+                                                <p:selectOneMenu id="etatChantier" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter"  
+                                                                 value="#{chantierBean.chantierFromEdit.etatchantier}"> 
+                                                    <f:selectItem itemLabel="----------------- #{chantierBean.chantierFromEdit.etatchantier} ------------------"  itemValue="#{chantierBean.chantierFromEdit.etatchantier}"/>
+                                                    <f:selectItem   itemLabel="En cours" itemValue="En cours" />
+                                                    <f:selectItem   itemLabel="Suspendu" itemValue="Suspendu" />
+                                                    <f:selectItem   itemLabel="Abandonné" itemValue="Abandonné" />
+                                                    <f:selectItem   itemLabel="Réception" itemValue="Réception" />
+                                                </p:selectOneMenu>
+                                            </div>
+                                            <div class="col-sm-3">
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-12">
+
+                                                <div class="form-group">
+                                                    <br/>
+                                                    <h:inputHidden id="idOperation" converter="#{beanStringConverter}" value="#{chantierBean.chantierFromEdit.idChantier}"/>
+                                                    <p:commandButton id="save" value="Modifier" ajax="false" action="#{chantierBean.update}" />
+                                                    
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </p:panel>
+                                </h:form>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

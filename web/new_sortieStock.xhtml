@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | STOCK
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h2></h2>
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                            <div class="body">
+
+                                <h:form id="formSortie">
+
+                                    <p:growl id="msgs" showDetail="true" sticky="true" /> 
+
+
+                                    <p:panel id="basic" header="ENREGISTRER UNE SORTIE DE STOCK" styleClass="myPanelClientForm">
+
+                                        <p:spacer height="50px;"/>
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-4">
+                                                <h:selectOneMenu id="idUser" class="form-control"  converter="omnifaces.SelectItemsConverter" value="#{sortieStockBean.sortieStock.idUtilisateur}"> 
+                                                    <f:selectItem itemLabel="------------------ Demandeur --------------"  noSelectionOption="true"/>
+                                                    <f:selectItems value="#{sortieStockBean.listUtilisateurs}"  var="u"  itemLabel="#{u.nomUtilisateur} #{u.prenomUtilisateur}" itemValue="#{u}" />       
+                                                </h:selectOneMenu>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h:selectOneMenu id="idChantier" class="form-control"  converter="omnifaces.SelectItemsConverter" value="#{sortieStockBean.sortieStock.idChantier}"> 
+
+                                                    <f:selectItem itemLabel="------------------ Chantier --------------"  noSelectionOption="true"/>
+                                                    <f:selectItems value="#{sortieStockBean.listChantiers}"  var="c"  itemLabel="#{c.siteChantier}" itemValue="#{c}" />       
+                                                </h:selectOneMenu>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h:selectOneMenu id="idStock" class="form-control"  converter="omnifaces.SelectItemsConverter" value="#{sortieStockBean.marchandise}"> 
+                                                    <f:ajax event="change" listener="#{sortieStockBean.renderInfo}" execute="@form" render="perfbyselection1" />
+                                                    <f:selectItem itemLabel="------------------ Materiel --------------"  noSelectionOption="true"/>
+                                                    <f:selectItems value="#{marchandiseBean.listMarchandise}"  var="m"  itemLabel="#{m.libelle}" itemValue="#{m}" />       
+                                                </h:selectOneMenu>
+                                            </div>
+
+                                        </div>
+
+
+                                        <div class="row clearfix">
+                                            <br/><br/>
+                                            <div class="col-sm-4">
+                                                <br/>
+                                                <h:panelGroup id="perfbyselection1">
+                                                    <h:selectOneMenu id="idEntrepot" class="form-control"  converter="omnifaces.SelectItemsConverter" value="#{sortieStockBean.sortieStock.idStock}"> 
+                                                        <f:selectItem itemLabel="------------------ Entrepot --------------"  noSelectionOption="true"/>
+                                                        <f:selectItems value="#{sortieStockBean.listEntrepots}"  var="s"  itemLabel="#{s.idEntrepot.nom}" itemValue="#{s}" />       
+                                                    </h:selectOneMenu>
+                                                </h:panelGroup>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <br/>
+                                                <h:panelGroup id="perfbyselection2">
+                                                    <h:inputText id="qt" styleClass="form-control" a:placeholder="Quantité"  converter="#{beanStringConverter}" value="#{sortieStockBean.sortieStock.quantite}">
+                                                        <f:ajax event="blur" listener="#{sortieStockBean.renderInfo2}" execute="@form" render="perfbyselection2" />                                       
+                                                    </h:inputText>
+                                                    <label style="color: red;">#{sortieStockBean.textMessage}</label>
+                                                </h:panelGroup>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <br/>
+                                                <label style="float:left;">Date de sortie</label>
+                                                <p:calendar  id="datemarche" converter="#{beanStringConverter}" value="#{sortieStockBean.sortieStock.dateSortiestock}" />
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <br/><br/>
+                                                    <h:commandLink  action="#{sortieStockBean.save}">
+                                                        <h:graphicImage value="resources/images/enregistrer.svg"  title="Enregistrer" />
+                                                    </h:commandLink>
+                                                    &nbsp;&nbsp;&nbsp;
+                                                    <h:commandLink  action="#{sortieStockBean.reset}">
+                                                        <h:graphicImage value="resources/images/annuler.svg"  title="Annuler" />
+                                                    </h:commandLink>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </p:panel>
+                                </h:form>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

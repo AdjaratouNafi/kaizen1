@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | STOCK
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h2></h2>
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="card">
+                                <div class="body">
+
+                                    <h:form>
+
+                                        <p:growl id="msgs" showDetail="true" sticky="true" /> 
+
+
+                                        <p:panel id="basic" header="MODIFIER UNE SORTIE DE STOCK" styleClass="myPanelClientForm">
+
+                                            <p:spacer height="50px;"/>
+
+                                            <div class="row clearfix">
+                                                <div class="col-sm-4">
+                                                    <p:selectOneMenu id="idUser" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter" value="#{sortieStockBean.sortieStockFromEdit.idUtilisateur}"> 
+                                                        <f:selectItem itemLabel="------------------ #{sortieStockBean.sortieStockFromEdit.idUtilisateur.nomUtilisateur} #{sortieStockBean.sortieStockFromEdit.idUtilisateur.prenomUtilisateur} --------------"  itemValue="#{sortieStockBean.sortieStock.idUtilisateur}"/>
+                                                        <f:selectItems value="#{sortieStockBean.listUtilisateurs}"  var="u"  itemLabel="#{u.nomUtilisateur} #{u.prenomUtilisateur}" itemValue="#{u}" />       
+                                                    </p:selectOneMenu>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <p:selectOneMenu id="idChantier" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter" value="#{sortieStockBean.sortieStockFromEdit.idChantier}"> 
+
+                                                        <f:selectItem itemLabel="------------------ #{sortieStockBean.sortieStockFromEdit.idChantier.siteChantier} --------------"  itemValue="#{sortieStockBean.sortieStockFromEdit.idChantier}"/>
+                                                        <f:selectItems value="#{sortieStockBean.listChantiers}"  var="s"  itemLabel="#{s.siteChantier}" itemValue="#{s}" />       
+                                                    </p:selectOneMenu>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <p:selectOneMenu id="idStock" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter" value="#{sortieStockBean.sortieStockFromEdit.idStock}"> 
+                                                        <f:ajax event="change" listener="#{sortieStockBean.renderInfoo}" execute="@form" render="pu" />
+                                                        <f:selectItem itemLabel="------------------ #{sortieStockBean.sortieStockFromEdit.idStock.designation} --------------"  itemValue="#{sortieStockBean.sortieStockFromEdit.idStock}"/>
+                                                        <f:selectItems value="#{sortieStockBean.listStocks}"  var="s"  itemLabel="#{s.designation}" itemValue="#{s}" />       
+                                                    </p:selectOneMenu>
+                                                </div>
+
+                                            </div>
+
+
+                                            <div class="row clearfix">
+                                                <div class="col-sm-4">
+                                                    <p:inputText id="qt" styleClass="form-control" a:placeholder="Quantité"  converter="#{beanStringConverter}" value="#{sortieStockBean.sortieStockFromEdit.quantite}"/>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <p:inputText id="pu" readonly="true" styleClass="form-control" a:placeholder="P.U" converter="#{beanStringConverter}" value="#{sortieStockBean.sortieStockFromEdit.pu}"/>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label style="float:left;">Date de sortie</label>
+                                                    <p:calendar  id="datemarche" converter="#{beanStringConverter}" value="#{sortieStockBean.sortieStockFromEdit.dateSortiestock}" />
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row clearfix">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <h:inputHidden id="idSS" converter="#{beanStringConverter}" value="#{sortieStockBean.sortieStockFromEdit.idSortiestock}"/>
+                                                        <h:inputHidden id="acq" converter="#{beanStringConverter}" value="#{sortieStockBean.ancienQuantite}"/>
+                                                        <h:inputHidden id="acqq" converter="#{beanStringConverter}" value="#{sortieStockBean.sortieStockFromEdit.idStock.pu}"/>
+                                                        <p:commandButton  id="save" value="Enregistrer" ajax="false" update="msgs" action="#{sortieStockBean.update()}" />
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </p:panel>
+                                    </h:form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

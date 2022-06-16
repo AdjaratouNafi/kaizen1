@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | Ressources
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h2>CLOTURER UN Appel d'offre</h2>
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="card">
+                                <div class="body">
+                                    <h:form> 
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-4">
+                                                <div class="col-sm-4">
+                                                    <p:selectOneMenu id="resultat" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter" value="#{appelOffreBean.appelOffreFromEdit.resultat}"> 
+                                                        <f:selectItem itemLabel="--- Choisissez une valeur  ---"  itemValue="null"/> 
+                                                        <f:selectItem itemLabel="Validé"  itemValue="Validé"/>
+                                                        <f:selectItem itemLabel="Non validé"  itemValue="Non validé"/>
+                                                    </p:selectOneMenu>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <p:inputText id="motif" styleClass="form-control" a:placeholder="Motifi de non validation"  converter="#{beanStringConverter}" value="#{appelOffreBean.appelOffreFromEdit.motif}"/>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <h:inputHidden id="idApp" converter="#{beanStringConverter}" value="#{appelOffreBean.appelOffreFromEdit.idAppel}"/>
+                                                    <p:commandButton styleClass="btn btn-primary m-t-15 waves-effect" id="save" value="Cloturer" ajax="false" action="#{appelOffreBean.validerCloture}" />
+                                                    &nbsp;&nbsp;&nbsp;
+                                                    <p:commandButton styleClass="btn btn-primary m-t-15 waves-effect" id="reset" value="Annuler" action="#{appelOffreBean.reset}" />
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </h:form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

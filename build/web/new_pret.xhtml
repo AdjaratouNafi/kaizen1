@@ -1,0 +1,142 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | Prets
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="body">
+
+
+                                <h:form>
+                                    <fieldset>
+
+                                        <legend>Informations Personnel :</legend>
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-3">
+                                                <p:selectOneMenu id="idUser" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter" value="#{pretBean.pret.idUtilisateur}"> 
+                                                    <f:ajax event="change" listener="#{pretBean.renderInfoUser}"  render="cni nom prenom mail adresse telephone lieu"/>
+                                                    <f:selectItem itemLabel="--- Sélectionnez un personnel ---"  itemValue="null"/>
+                                                    <f:selectItems value="#{contratRecrutBean.listUsers}"  var="u"  itemLabel="#{u.nomUtilisateur} #{u.prenomUtilisateur}" itemValue="#{u}" />       
+                                                </p:selectOneMenu>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <p:inputText id="cni" styleClass="form-control" style="background-color: #CECECE;" a:placeholder="CNI"  converter="#{beanStringConverter}" readonly="true" value="#{pretBean.user.cni}"/>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <p:inputText id="nom" styleClass="form-control" style="background-color: #CECECE;" a:placeholder="Nom" converter="#{beanStringConverter}" readonly="true" value="#{pretBean.user.nomUtilisateur}"/>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <p:inputText id="prenom" styleClass="form-control" style="background-color: #CECECE;" a:placeholder="Prenom" converter="#{beanStringConverter}" readonly="true" value="#{pretBean.user.prenomUtilisateur}"/>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row clearfix">
+                                            <br/><br/>
+                                            <div class="col-sm-3">
+                                                <p:inputText id="mail" styleClass="form-control" style="background-color: #CECECE;" a:placeholder="Email"  converter="#{beanStringConverter}" readonly="true" value="#{pretBean.user.mailUtilisateur}"/>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <p:inputText id="adresse" styleClass="form-control" style="background-color: #CECECE;" a:placeholder="Adresse"  converter="#{beanStringConverter}" readonly="true" value="#{pretBean.user.adresseUtilisateur}"/>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <p:inputText id="telephone" styleClass="form-control" style="background-color: #CECECE;" a:placeholder="Téléphone" converter="#{beanStringConverter}" readonly="true" value="#{pretBean.user.telUtilisateur}"/>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <p:inputText id="lieu" styleClass="form-control" style="background-color: #CECECE;" a:placeholder="Lieu de naissance" converter="#{beanStringConverter}" readonly="true" value="#{pretBean.user.lieuNaissanceUtilisateur}"/>
+                                            </div>
+                                        </div>
+
+
+                                    </fieldset>
+
+                                    <br/>
+
+                                    <fieldset>
+
+                                        <legend>Informations Prêt :</legend>
+
+                                        <div class="row clearfix">
+                                            <br/><br/>
+                                            <div class="col-sm-3">
+                                                <p:inputTextarea id="motif" styleClass="form-control"   converter="#{beanStringConverter}"  a:placeholder="Motif du prêt" value="#{pretBean.pret.motifPret}"/>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <p:inputText id="periode" styleClass="form-control"   converter="#{beanStringConverter}"  a:placeholder="Montant" value="#{pretBean.pret.montantPret}"/>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <p:inputText id="periodedeb" styleClass="form-control"  converter="#{beanStringConverter}"  a:placeholder="Date au format JJ-MM-AAAA" value="#{pretBean.pret.datePret}"/>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <p:selectOneMenu id="mois" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter" value="#{pretBean.pret.suivi}"> 
+                                                    <f:selectItem itemLabel="--- A remboursser en  ---"  itemValue="null"/> 
+                                                    <f:selectItem itemLabel="1 Mois"  itemValue="1"/>
+                                                    <f:selectItem itemLabel="2 Mois"  itemValue="2"/>
+                                                    <f:selectItem itemLabel="3 Mois"  itemValue="3"/>
+                                                    <f:selectItem itemLabel="4 Mois"  itemValue="4"/>
+                                                    <f:selectItem itemLabel="5 Mois"  itemValue="5"/>
+                                                    <f:selectItem itemLabel="6 Mois"  itemValue="6"/>
+                                                    <f:selectItem itemLabel="7 Mois"  itemValue="7"/>
+                                                    <f:selectItem itemLabel="8 Mois"  itemValue="8"/>
+                                                    <f:selectItem itemLabel="9 Mois"  itemValue="9"/>
+                                                    <f:selectItem itemLabel="10 Mois"  itemValue="10"/>
+                                                    <f:selectItem itemLabel="11 Mois"  itemValue="11"/>
+                                                    <f:selectItem itemLabel="12 Mois"  itemValue="12"/>
+                                                </p:selectOneMenu>
+                                            </div>
+                                        </div>   
+
+
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <br/><br/>
+                                                    <h:commandLink  action="#{pretBean.savePret}">
+                                                        <h:graphicImage value="resources/images/enregistrer.svg"  title="Enregistrer" />
+                                                    </h:commandLink>
+                                                    &nbsp;&nbsp;&nbsp;
+                                                    <h:commandLink  action="#{contratRecrutBean.reset}">
+                                                        <h:graphicImage value="resources/images/annuler.svg"  title="Annuler" />
+                                                    </h:commandLink>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </fieldset>
+
+
+                                </h:form>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

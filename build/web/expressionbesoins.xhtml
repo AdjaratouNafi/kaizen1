@@ -1,0 +1,141 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | EXPRESSION DE BESOIN
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h3></h3>
+                    </div>
+
+                    <h:form id="form1">
+
+                        <p:panel header="LISTE DES EXPRESSIONS DE BESOINS" styleClass="myPanelWidth">
+
+                            <c:if test="#{expressionbesoinBean.consulterExpression.equalsIgnoreCase('yes')}"> 
+
+                                <p:dataTable emptyMessage="Aucune donnée trouvée" filteredValue="#{expressionbesoinBean.filteredListExpressionbesoin}" value="#{expressionbesoinBean.allExpressionbesoins}" var="r" widgetVar="listExp" style="width: 100%;">
+                                    <f:facet name="header">
+                                        <p:outputPanel>
+                                            <h:outputText value="Recherche:" style="margin: 15px;" />
+                                            <p:inputText id="globalFilter" converter="#{beanStringConverter}" onkeyup="PF('listExp').filter()" style="150px;" />
+                                        </p:outputPanel>
+                                    </f:facet>
+
+                                    <p:column filterStyle="display:none" headerText="Date" sortBy="#{r.dateExpression}" filterBy="#{r.dateExpression}">
+                                        #{r.dateExpression}  
+                                    </p:column> 
+                                    <p:column filterStyle="display:none" headerText="Demandeur" sortBy="#{r.idUtilisateur.nomUtilisateur} #{r.idUtilisateur.prenomUtilisateur}" filterBy="#{r.idUtilisateur.nomUtilisateur} #{r.idUtilisateur.prenomUtilisateur}">
+                                        #{r.idUtilisateur.nomUtilisateur} #{r.idUtilisateur.prenomUtilisateur}
+                                    </p:column>
+                                    <p:column filterStyle="display:none" headerText="Chantier" sortBy="#{r.idChantier.siteChantier}" filterBy="#{r.idChantier.siteChantier}">
+                                        #{r.idChantier.siteChantier}
+                                    </p:column>
+
+                                    <p:column filterStyle="display:none" headerText="Etat" sortBy="#{r.etat}" filterBy="#{r.etat}">
+                                        #{r.etat}
+                                    </p:column> 
+
+                                    <p:column filterStyle="display:none" headerText="Motif rejet" sortBy="#{r.motif}" filterBy="#{r.motif}">
+                                        #{r.motif}
+                                    </p:column>
+
+                                    <p:column>
+                                        <f:facet name="header">Action</f:facet> 
+
+                                        <c:if test="#{expressionbesoinBean.validerExpression.equalsIgnoreCase('yes')}"> 
+                                            <h:commandLink  rendered="#{r.etat == 'En cours de validation'}" action="#{expressionbesoinBean.traiterExpression(r)}">
+                                                <h:graphicImage value="resources/images/traiter.svg" width="25px" height="25px"  title="Traiter" />
+                                            </h:commandLink>
+
+                                            <h:commandLink  rendered="#{r.etat == 'Validé'}">
+                                                <h:graphicImage value="resources/images/traiter.svg" width="25px" height="25px"  title="Traiter" />
+                                            </h:commandLink>
+
+                                            <h:commandLink rendered="#{r.etat == 'Rejeté'}">
+                                                <h:graphicImage value="resources/images/traiter.svg" width="25px" height="25px"  title="Traiter" />
+                                            </h:commandLink>
+                                        </c:if> 
+
+                                        <c:if test="#{expressionbesoinBean.validerExpression.equalsIgnoreCase('no')}">
+                                            <p:commandButton rendered="#{r.etat == 'En cours de validation'}" value="Traiter" ajax="false"  />
+                                            <p:commandButton rendered="#{r.etat == 'Validé'}" value="Traiter" />
+                                            <p:commandButton rendered="#{r.etat == 'Rejeté'}" value="Traiter" />
+                                        </c:if> 
+
+                                        &nbsp;&nbsp;
+
+                                        <h:commandLink   action="#{expressionbesoinOtherBean.detail(r)}">
+                                            <h:graphicImage value="resources/images/visualisation.svg" width="25px" height="25px"  title="Detail" />
+                                        </h:commandLink>
+                                        &nbsp;&nbsp;
+
+                                        <c:if test="#{expressionbesoinBean.imprimerExpression.equalsIgnoreCase('yes')}"> 
+                                            <h:commandLink   action="#{expressionbesoinOtherBean.imprimer(r)}">
+                                                <h:graphicImage value="resources/images/imprimer.svg" width="25px" height="25px"  title="Imprimer" />
+                                            </h:commandLink>
+                                        </c:if> 
+
+                                        <c:if test="#{expressionbesoinBean.imprimerExpression.equalsIgnoreCase('no')}">
+                                            <p:commandButton value="Imprimer" ajax="false" />
+                                        </c:if> 
+
+
+                                        &nbsp;&nbsp;
+
+                                        <c:if test="#{expressionbesoinBean.supprimerExpression.equalsIgnoreCase('yes')}"> 
+                                            <h:commandLink   action="#{expressionbesoinBean.supprimer(r)}">
+                                                <h:graphicImage value="resources/images/supprimer.svg" width="25px" height="25px"  title="Supprimer" />
+                                            </h:commandLink>
+                                        </c:if> 
+
+                                        <c:if test="#{expressionbesoinBean.supprimerExpression.equalsIgnoreCase('no')}">
+                                            <h:commandLink  class="btn waves-effect" style="background-color: red;color: #fff;margin-top: -5px;border-radius: 8px;">Supprimer</h:commandLink>  
+                                        </c:if> 
+
+                                    </p:column>
+
+                                </p:dataTable>
+
+                                <c:if test="#{expressionbesoinBean.creerExpression.equalsIgnoreCase('yes')}"> 
+                                    <a href="new_expression.xhtml" class="btn btn-primary m-t-15 waves-effect" style="border-radius: 10px;color: white;">Créer une expression de besoin</a>
+                                </c:if> 
+
+                                <c:if test="#{expressionbesoinBean.creerExpression.equalsIgnoreCase('no')}">
+                                    <a href="#" class="btn btn-primary m-t-15 waves-effect" style="border-radius: 10px;color: white;">Créer une expression de besoin</a>
+                                </c:if> 
+                                
+                                <a href="new_expression_import.xhtml" class="btn btn-primary m-t-15 waves-effect" style="border-radius: 10px;color: white;">Importer un fichier Excel</a>
+
+
+                            </c:if> 
+
+
+
+                            <!--<a href="first_traitement_expression.xhtml" class="btn btn-primary m-t-15 waves-effect" style="border-radius: 10px;color: white;">Traiter une expression de besoin</a>-->
+
+
+                        </p:panel>
+
+                        <!-- #END# Basic Examples -->
+                    </h:form>
+
+                </div>
+
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

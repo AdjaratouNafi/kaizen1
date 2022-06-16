@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | DECOMPTES
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h3></h3>
+                    </div>
+
+                    <h:form id="form1">
+
+                        <p:panel header="LISTE DES DECOMPTES" style="width: 100%;text-align: center;">
+
+
+                            <p:dataTable value="#{decompte2Bean.itemDecomptes2}" var="r" widgetVar="100" paginator="true" rows="20" paginatorPosition="bottom" style="width: 100%;">
+                                <f:facet name="header">  
+
+                                </f:facet>
+
+                                <p:column>
+                                    <f:facet name="header">Numéro</f:facet> 
+                                        #{r.numeroDecompte2}
+                                </p:column>
+
+
+                                <p:column>
+                                    <f:facet name="header">Date</f:facet> 
+                                        #{r.dateDecompte2}  
+                                </p:column> 
+                                <p:column>
+                                    <f:facet name="header">Marché</f:facet> 
+                                        #{r.idMarche.nomMarche}
+                                </p:column> 
+
+                                <p:column style="width: 500px;">
+                                    <f:facet name="header">Action</f:facet> 
+                                    <p:commandButton value="Detail" ajax="false" action="#{decompte2Bean.detail}" />
+                                    &nbsp;&nbsp;
+                                    <p:commandButton value="Imprimer" ajax="false" action="#{decompte2Bean.imprimer}" />
+                                    &nbsp;&nbsp;
+                                    <h:commandLink  class="btn waves-effect" style="background-color: red;color: #fff;margin-top: -5px;border-radius: 8px;" action="#{decompte2Bean.supprimer}">Supprimer</h:commandLink>  
+                                </p:column>
+
+                            </p:dataTable>
+
+                            <a href="new_decompte2.xhtml" class="btn btn-primary m-t-15 waves-effect" style="border-radius: 10px;color: white;">Lancer un projet de decompte</a>
+                            &nbsp;&nbsp;&nbsp;
+                            <a href="maj_decompte2.xhtml" class="btn btn-primary m-t-15 waves-effect" style="border-radius: 10px;color: white;">Ajouter un materiel à un projet de decompte</a>
+
+                        </p:panel>
+
+                        <!-- #END# Basic Examples -->
+                    </h:form>
+
+                </div>
+
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

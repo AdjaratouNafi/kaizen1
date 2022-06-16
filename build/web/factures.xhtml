@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | Factures
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h3>Liste des factures</h3>
+                    </div>
+
+                    <h:form id="form1">
+                        <!-- Basic Examples -->
+                        <div class="row clearfix">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="card">
+                                    <div class="header">
+                                        <h2>
+
+                                        </h2>
+                                        <ul class="header-dropdown m-r--5">
+                                            <li class="dropdown">
+
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="body">
+
+                                        <h:dataTable  class="table table-bordered table-striped table-hover js-basic-example dataTable" value="#{commandeBean.itemFactures}" var="r">
+                                            <h:column>
+                                                <f:facet name="header">#</f:facet>
+
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">N</f:facet> 
+                                                    #{r.code}
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">Date</f:facet> 
+                                                    #{r.dateechance}
+                                            </h:column>
+
+                                            <h:column>
+                                                <f:facet name="header">Action</f:facet> 
+                                                
+                                                <h:commandLink  class="btn btn-primary m-t-15 waves-effect" action="#{commandeBean.detail2}">Consulter</h:commandLink>
+                                                &nbsp;&nbsp;&nbsp;
+                                                <h:commandLink  class="btn btn-primary m-t-15 waves-effect" action="#{commandeBean.imprimerr}">Imprimer</h:commandLink>
+                                                &nbsp;&nbsp;&nbsp;
+                                                <h:commandLink  class="btn waves-effect" style="background-color: red;color: #fff;margin-top:15px;" action="#{commandeBean.supprimerr}">Supprimer</h:commandLink>  
+                                            </h:column>
+                                        </h:dataTable>
+
+                                        <a href="new_facture.xhtml" class="btn btn-primary m-t-15 waves-effect">Nouvelle facture</a>
+                                       &nbsp;&nbsp;&nbsp;
+                                        <a href="maj_facture.xhtml" class="btn btn-primary m-t-15 waves-effect">Ajouter une ressource à une facture</a>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- #END# Basic Examples -->
+                    </h:form>
+
+                </div>
+
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

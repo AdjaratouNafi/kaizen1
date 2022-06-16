@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | CONVERTER
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h2></h2>
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="card">
+                                <div class="body">
+
+                                    <h:form>
+                                        <p:growl id="msgs" showDetail="true" />
+
+
+                                        <p:panel id="basic" header="CONVERTER" style="margin-bottom:20px;text-align: center;">
+
+                                            <p:spacer height="50px;"/>
+
+                                            <!--<div class="row clearfix">
+                                                <div class="col-sm-4">
+                                                    <p:inputText id="nom" styleClass="form-control" a:placeholder="Entre un numbre"  converter="#{beanStringConverter}" value="#{montantBean.stringNumber}"/>
+                                                </div>
+                                            </div>-->
+
+
+                                            <!--<div class="row clearfix">
+                                                <div class="col-sm-4">
+                                                    <p:inputMask id="mt" styleClass="form-control" a:placeholder="Entre un numbre"  converter="#{beanStringConverter}" value="#{montantBean.stringNumber}" mask="999.999.999"/>
+                                                </div>
+                                            </div>-->
+
+                                           <!-- <div class="row clearfix">
+                                                <div class="col-sm-4">
+                                                    <p:inputNumber  id="mt" styleClass="form-control" a:placeholder="Entre un numbre" converter="#{beanStringConverter}" value="#{montantBean.stringNumber}"  thousandSeparator="." decimalSeparator="."  />  
+                                                </div>
+                                            </div>-->
+
+
+
+                                            <div class="row clearfix">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <p:commandButton id="save" value="String to Double" ajax="false" action="#{montantBean.save}" />
+                                                        &nbsp;&nbsp;&nbsp;
+                                                        <p:commandButton  id="reset" value="Double to String" action="#{montantBean.reset}" />
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </p:panel>
+                                    </h:form>
+
+                                    <h:form> 
+
+
+
+                                    </h:form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | Salaires
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+
+                    </div>
+
+                    <h:form id="form1">
+                        <!-- Basic Examples -->
+                        <div class="row clearfix">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                                <div class="body">
+                                    <p:panel header="Liste des planifications des salaires" style="width: 100%;text-align: center;">
+
+                                        <c:if test="#{salaireBean.consulterSalaire.equalsIgnoreCase('yes')}"> 
+
+                                            <p:dataTable value="#{salaireBean.itemSalaires}" var="s" widgetVar="100" style="width: 100%;">
+                                                <f:facet name="header">  
+
+                                                </f:facet>
+
+                                                <p:column>
+                                                    <f:facet name="header">Période</f:facet> 
+                                                        #{s.periode}  
+                                                </p:column> 
+                                                <p:column>
+                                                    <f:facet name="header">Etat</f:facet> 
+                                                    <h:outputText value="Payé" rendered="#{s.etat == 'Payer'}" />
+                                                    <h:outputText value="En attente de validation" rendered="#{s.etat == 'Impayer'}" /> 
+                                                    <h:outputText value="Rejeté" rendered="#{s.etat == 'Rejeté'}" />
+                                                </p:column> 
+
+                                                <p:column>
+                                                    <f:facet name="header">Motif</f:facet> 
+                                                        #{s.motif}  
+                                                </p:column>
+
+                                                <p:column>
+                                                    <f:facet name="header">Action</f:facet> 
+
+                                                    <c:if test="#{salaireBean.validerSalaire.equalsIgnoreCase('yes')}"> 
+                                                        <h:commandLink rendered="#{s.etat == 'Impayer'}"   action="#{salaireBean.traiterSalaire}">
+                                                            <h:graphicImage value="resources/images/traiter.svg" width="35px" height="35px"  title="Traiter" />
+                                                        </h:commandLink>
+                                                    </c:if>  
+
+                                                    <c:if test="#{salaireBean.validerSalaire.equalsIgnoreCase('yes')}">
+                                                        <h:commandLink rendered="#{s.etat == 'Payer'}">
+                                                            <h:graphicImage value="resources/images/traiter.svg" width="35px" height="35px"  title="Traiter" />
+                                                        </h:commandLink>
+                                                    </c:if>
+
+                                                    <c:if test="#{salaireBean.validerSalaire.equalsIgnoreCase('yes')}">
+                                                        <h:commandLink rendered="#{s.etat == 'Rejeté'}">
+                                                            <h:graphicImage value="resources/images/traiter.svg" width="35px" height="35px"  title="Traiter" />
+                                                        </h:commandLink>
+                                                    </c:if>
+
+                                                    <c:if test="#{salaireBean.validerSalaire.equalsIgnoreCase('no')}">
+                                                        <h:commandLink style="border-radius: 10px;color: white;"  class="btn btn-primary m-t-15 waves-effect">Traiter</h:commandLink>
+                                                    </c:if>
+
+                                                    &nbsp;&nbsp;&nbsp;
+
+                                                    <c:if test="#{salaireBean.supprimerSalaire.equalsIgnoreCase('yes')}"> 
+                                                        <h:commandLink  action="#{salaireBean.supprimer}">
+                                                            <h:graphicImage value="resources/images/supprimer.svg" width="35px" height="35px"  title="Supprimer" />
+                                                        </h:commandLink>
+                                                    </c:if> 
+
+                                                    <c:if test="#{salaireBean.supprimerSalaire.equalsIgnoreCase('no')}">
+                                                        <h:commandLink  class="btn waves-effect" style="border-radius: 10px;background-color: red;color: #fff;margin-top:15px;">Supprimer</h:commandLink> 
+                                                    </c:if> 
+                                                </p:column>
+
+                                            </p:dataTable>
+
+                                            <c:if test="#{salaireBean.creerSalaire.equalsIgnoreCase('yes')}"> 
+                                                <a href="new_salaire.xhtml" class="btn btn-primary m-t-15 waves-effect" style="border-radius: 10px;color: white;">Planifier les salaires</a>
+                                            </c:if> 
+
+                                            <c:if test="#{salaireBean.creerSalaire.equalsIgnoreCase('no')}">
+                                                <a href="#" class="btn btn-primary m-t-15 waves-effect" style="border-radius: 10px;color: white;">Planifier les salaires</a>
+                                            </c:if> 
+
+                                            &nbsp;&nbsp;&nbsp;
+
+                                            <c:if test="#{salaireBean.imprimerSalaire.equalsIgnoreCase('yes')}"> 
+                                                <a href="new_bulletin.xhtml" class="btn btn-primary m-t-15 waves-effect" style="border-radius: 10px;color: white;">Generer un bulletin de paie</a>
+                                            </c:if> 
+                                            <c:if test="#{salaireBean.imprimerSalaire.equalsIgnoreCase('no')}"> 
+                                                <a href="#" class="btn btn-primary m-t-15 waves-effect" style="border-radius: 10px;color: white;">Generer un bulletin de paie</a>
+                                            </c:if> 
+
+                                        </c:if> 
+
+
+                                    </p:panel>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- #END# Basic Examples -->
+                    </h:form>
+
+                </div>
+
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

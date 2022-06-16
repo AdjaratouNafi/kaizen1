@@ -1,0 +1,136 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | DECOMPTES
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                            <div class="body">
+
+                                <h:form id="form1">
+
+                                    <p:panel header="DETAIL DU DECOMPTE #{decomptepOtherBean.decomptepFromEdit.numeroDecomptep}" styleClass="myPanelWidth">
+
+                                        <b style="float: left;">Facture numéro : <h:outputText value = "#{decomptepOtherBean.decomptepFromEdit.idNewfacture.numeroNewfacture}"/> </b><br/><br/>
+                                        <b style="float: left;">Date : <h:outputText value = "#{decomptepOtherBean.decomptepFromEdit.dateDecomptep}"/> </b><br/>
+                                        <b style="float: left;">Client : <h:outputText value = "#{decomptepOtherBean.decomptepFromEdit.idNewfacture.idDevis.idClient.nomClient}"/> </b><br/>
+                                        <b style="float: left;">Marché : <h:outputText value = "#{decomptepOtherBean.decomptepFromEdit.idNewfacture.idDevis.nommarche}"/> </b><br/><br/>
+
+                                        <b style="float: right;">#{decomptepOtherBean.decomptepFromEdit.idNewfacture.idMarche.idDevise.symbole}</b>
+                                        <p:dataTable value="#{decomptepOtherBean.allFactureUtils}" var="r" widgetVar="100" paginator="true" rows="20" paginatorPosition="bottom" style="width: 100%;">
+                                            <f:facet name="header">  
+
+                                            </f:facet>
+
+                                            <p:column style="text-align: center;">
+                                                <f:facet name="header">Désignation</f:facet> 
+                                                   <p style="text-align: left;"> #{r.designation} </p>
+                                            </p:column>
+                                            <p:column style="text-align: center;">
+                                                <f:facet name="header">Ref</f:facet> 
+                                                    #{r.ref}
+                                            </p:column>
+                                            <p:column style="text-align: center;">
+                                                <f:facet name="header">U.mesure</f:facet> 
+                                                    #{r.unite}
+                                            </p:column>
+                                            <p:column style="text-align: center;">
+                                                <f:facet name="header">Qte</f:facet> 
+                                                    #{r.quantite}
+                                            </p:column>
+                                            <p:column style="text-align: center;">
+                                                <f:facet name="header">P.U</f:facet> 
+                                                    #{r.pu}
+                                            </p:column>
+                                            <p:column style="text-align: center;">
+                                                <f:facet name="header">P.Total</f:facet> 
+                                                    #{r.prixtotal}
+                                            </p:column>
+                                            
+                                             <p:column rendered="#{r.quantite == 0}" style="text-align: center;">
+                                                <f:facet name="header">Qte</f:facet> 
+                                                    #{decomptepOtherBean.emtyvalues}
+                                            </p:column>
+                                            <p:column rendered="#{r.quantite != 0}" style="text-align: center;">
+                                                <f:facet name="header">Qte</f:facet> 
+                                                    #{r.quantite}
+                                            </p:column>
+                                            <p:column rendered="#{r.pu == 0}" style="text-align: center;">
+                                                <f:facet name="header">P.U</f:facet> 
+                                                    #{decomptepOtherBean.emtyvalues}
+                                            </p:column>
+                                            <p:column rendered="#{r.pu != 0}" style="text-align: center;">
+                                                <f:facet name="header">P.U</f:facet> 
+                                                    #{r.pu}
+                                            </p:column>
+                                            <p:column rendered="#{r.prixtotal == 0}" style="text-align: center;">
+                                                <f:facet name="header">P.Total</f:facet> 
+                                                    #{decomptepOtherBean.emtyvalues}
+                                            </p:column>
+                                            <p:column rendered="#{r.prixtotal != 0}" style="text-align: center;">
+                                                <f:facet name="header">P.Total</f:facet> 
+                                                    #{r.prixtotal}
+                                            </p:column>
+
+                                            <p:column style="text-align: center;">
+                                                <f:facet name="header">% Execution</f:facet> 
+                                                    #{r.execution}
+                                            </p:column>
+
+                                        </p:dataTable>
+
+
+                                        <br/>
+                                        <font style="font-size: 15px;font-weight: bold;float: right">TOTAL HT: #{decomptepOtherBean.totalHT}</font>
+                                        <br/>
+                                        <font style="font-size: 15px;font-weight: bold;float: right">TVA 18%: #{decomptepOtherBean.montantTVA}</font>
+                                        <br/>
+                                        <font style="font-size: 15px;font-weight: bold;float: right">TOTAL TTC: #{decomptepOtherBean.totalTTC}</font>
+                                        <br/>
+                                        <font style="font-size: 15px;font-weight: bold;float: right">AVANCEMENT #{decomptepOtherBean.valeurXPourcent}% HT: #{decomptepOtherBean.avancementHt}</font>
+                                        <br/>
+                                        <font style="font-size: 15px;font-weight: bold;float: right">TVA AVANCEMENT #{decomptepOtherBean.valeurXPourcent}%: #{decomptepOtherBean.avancementTVA}</font>
+                                        <br/>
+                                        <font style="font-size: 15px;font-weight: bold;float: right">AVANCEMENT #{decomptepOtherBean.valeurXPourcent}% TTC: #{decomptepOtherBean.avancementTTC}</font>
+                                        <br/>
+                                        <font style="font-size: 15px;font-weight: bold;float: right">AVANCE RECUE : #{decomptepOtherBean.avanceRecu}</font>
+                                        <br/>
+                                        <font style="font-size: 15px;font-weight: bold;float: right">RELIQUAT DEMANDE : #{decomptepOtherBean.reliquantDemande}</font>
+                                        <br/><br/>
+
+                                    </p:panel>
+
+                                    <!-- #END# Basic Examples -->
+                                </h:form>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

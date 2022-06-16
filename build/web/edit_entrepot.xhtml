@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | ENTREPOTS
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h2></h2>
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="card">
+                                <div class="body">
+
+                                    <h:form>
+
+                                        <p:growl id="msgs" showDetail="true" sticky="true" /> 
+
+
+                                        <p:panel id="basic" header="ENREGISTRER UN ENTREPOT" styleClass="myPanelClientForm">
+
+                                            <p:spacer height="50px;"/>
+
+                                            <div class="row clearfix">
+                                                <div class="col-sm-4">
+                                                    <p:inputText id="nom" styleClass="form-control" a:placeholder="Nom"  converter="#{beanStringConverter}" value="#{entrepotBean.entrepotFromEdit.nom}"/>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <p:inputText id="adresse" styleClass="form-control" a:placeholder="Adresse "  converter="#{beanStringConverter}" value="#{entrepotBean.entrepotFromEdit.adresse}"/>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <p:inputText id="telephone" styleClass="form-control" a:placeholder="Téléphone " converter="#{beanStringConverter}" value="#{entrepotBean.entrepotFromEdit.telephone}"/>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row clearfix">
+                                                <div class="col-sm-4">
+                                                    <p:selectOneMenu id="idChef" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter"  
+                                                                     value="#{entrepotBean.entrepotFromEdit.idUtilisateur}"> 
+                                                        <f:selectItem itemLabel="----- #{entrepotBean.entrepotFromEdit.idUtilisateur.nomUtilisateur} #{entrepotBean.entrepotFromEdit.idUtilisateur.prenomUtilisateur} ----"  itemValue="#{entrepotBean.entrepotFromEdit.idUtilisateur}"/>
+                                                        <f:selectItems value="#{utilisateurBean.listUtilisateurs}"  var="u"  itemLabel="#{u.nomUtilisateur} #{u.prenomUtilisateur}" itemValue="#{u}" />       
+                                                    </p:selectOneMenu> 
+                                                </div>
+                                                <div class="col-sm-4">
+
+                                                </div>
+                                                <div class="col-sm-4">
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row clearfix">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <h:inputHidden id="idE" converter="#{beanStringConverter}" value="#{entrepotBean.entrepotFromEdit.idEntrepot}"/>
+                                                        <p:commandButton  id="save" value="Enregistrer" ajax="false" update="msgs" action="#{entrepotBean.update}" />
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </p:panel>
+                                    </h:form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | SALAIRE
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="body">
+
+                                <h:form>
+
+                                    <p:growl id="msgs" showDetail="true" sticky="true" /> 
+
+
+                                    <p:panel id="basic" header="GENERER UN BULLETIN DE SALAIRE" style="margin-bottom:20px;text-align: center;">
+
+                                        <p:spacer height="50px;"/>
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-4">
+                                                <p:selectOneMenu id="idSalaire" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter"  
+                                                                 value="#{salaireBean.salaireFromReport}"> 
+                                                    <f:selectItem itemLabel="-- Sélectionnez une période --"  itemValue="null"/>
+                                                    <f:selectItems value="#{salaireBean.listSalaireWithoutImprimer}"  var="s"  itemLabel="#{s.periode}" itemValue="#{s}" />       
+                                                </p:selectOneMenu>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <p:selectOneMenu id="idUser" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter"  
+                                                                 value="#{salaireBean.userFromSalaire}"> 
+                                                    <f:selectItem itemLabel="-- Sélectionnez un personnel --"  itemValue="null"/>
+                                                    <f:selectItems value="#{salaireBean.listUsersWithoutAdmin}"  var="u"  itemLabel="#{u.nomUtilisateur} #{u.prenomUtilisateur}" itemValue="#{u}" />       
+                                                </p:selectOneMenu>
+                                            </div>
+                                            <div class="col-sm-4">
+
+                                            </div>
+                                        </div>    
+
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <br/><br/>
+                                                    <h:commandLink  action="#{salaireBean.generateBulletin}">
+                                                        <h:graphicImage value="resources/images/enregistrer.svg"  title="Enregistrer" />
+                                                    </h:commandLink>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </p:panel>
+                                </h:form>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

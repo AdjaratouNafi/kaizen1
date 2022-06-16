@@ -1,0 +1,174 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | PROJECT MANAGEMENT
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h2></h2>
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                            <div class="body">
+
+                                <h:form>
+                                    <p:growl id="msgs" showDetail="true" /> 
+
+
+                                    <p:panel id="basic" header="ENREGISTRER UNE NOUVELLE TACHE" style="margin-bottom:20px;text-align: center;">
+
+                                        <p:spacer height="50px;"/>
+
+                                        <div class="row clearfix">
+                                            <h:panelGroup id="perfbyselection1">
+                                                <div class="col-sm-4">
+
+                                                    <label style="float: left;">Projet</label>
+                                                    <h:selectOneMenu id="idProjet" class="form-control" converter="omnifaces.SelectItemsConverter" value="#{gestionprojetBean.management.idMarche}"> 
+                                                        <f:ajax event="change" listener="#{gestionprojetBean.renderInfo}" execute="@form" render="perfbyselection1" />
+                                                        <f:selectItem itemLabel="-------- Selectionnez un projet --------"  noSelectionOption="true"/>
+                                                        <f:selectItems value="#{gestionprojetBean.allMarches}"  var="marche"  itemLabel="#{marche.nomMarche}" itemValue="#{marche}" />       
+                                                    </h:selectOneMenu>
+
+                                                </div>
+                                                <div class="col-sm-4">
+
+                                                    <label style="float: left;">Chantier</label>
+                                                    <h:selectOneMenu id="idChantier" class="form-control" converter="omnifaces.SelectItemsConverter" value="#{gestionprojetBean.management.idChantier}"> 
+                                                        <f:selectItem itemLabel="-------- Selectionnez un chantier --------"  noSelectionOption="true"/>
+                                                        <f:selectItems value="#{gestionprojetBean.allChantiers}"  var="chantier"  itemLabel="#{chantier.siteChantier}" itemValue="#{chantier}" />       
+                                                    </h:selectOneMenu>
+
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label style="float: left;">Affecter à</label>
+                                                    <h:selectOneMenu id="choix" class="form-control"  converter="omnifaces.SelectItemsConverter"  
+                                                                     value="#{gestionprojetBean.choixAffectation}"> 
+                                                        <f:ajax event="change" listener="#{gestionprojetBean.renderInfoo}" execute="@form" render="perfbyselection2" />
+                                                        <f:selectItem itemLabel="------- Effectuer un choix -------"  noSelectionOption="true"/>
+                                                        <f:selectItem itemLabel="Un prestataire"  itemValue="Prestataire"/>
+                                                        <f:selectItem itemLabel="Un personnel"  itemValue="Personnel"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                            </h:panelGroup>
+
+                                        </div> 
+
+
+                                        <div class="row clearfix">
+                                            <br/><br/>
+                                            <h:panelGroup id="perfbyselection2">
+                                                <div class="col-sm-4">
+
+                                                    <h:selectOneMenu id="idP" class="form-control"  converter="omnifaces.SelectItemsConverter"  
+                                                                     rendered="#{gestionprojetBean.choixAffectation eq 'Prestataire'}" value="#{gestionprojetBean.management.idprestatairePrim}"> 
+                                                        <f:selectItem itemLabel="------- Selectionnez un pestataire -------" noSelectionOption="true"/>
+                                                        <f:selectItems value="#{gestionprojetBean.allPrestataires}"  var="pst"  itemLabel="#{pst.nomcomplet}" itemValue="#{pst}" />       
+                                                    </h:selectOneMenu>
+
+                                                    <h:selectOneMenu id="idU" class="form-control"  converter="omnifaces.SelectItemsConverter"  
+                                                                     rendered="#{gestionprojetBean.choixAffectation eq 'Personnel'}" value="#{gestionprojetBean.management.idUtilisateur}"> 
+                                                        <f:selectItem itemLabel="------- Selectionnez un personnel -------" noSelectionOption="true"/>
+                                                        <f:selectItems value="#{gestionprojetBean.allUsers}"  var="usr"  itemLabel="#{usr.nomUtilisateur} #{usr.prenomUtilisateur}" itemValue="#{usr}" />       
+                                                    </h:selectOneMenu>
+
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <p:inputText id="tache" styleClass="form-control" a:placeholder="Libelle de la tâche" converter="#{beanStringConverter}" value="#{gestionprojetBean.management.tache}" />
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <p:inputText id="duree" styleClass="form-control" a:placeholder="Durée" converter="#{beanStringConverter}" value="#{gestionprojetBean.management.duree}" />
+                                                </div>
+                                            </h:panelGroup>
+
+                                        </div> 
+
+                                        <div class="row clearfix">
+                                            <br/><br/>
+                                            <div class="col-sm-4">
+                                                <label style="float:left;margin-right: 5px;">Date de début</label>
+                                                <p:calendar  id="debut" converter="#{beanStringConverter}" value="#{gestionprojetBean.management.datedebut}" />
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label style="float:left;margin-right: 5px;">Date de fin</label>
+                                                <p:calendar  id="fin" converter="#{beanStringConverter}" value="#{gestionprojetBean.management.datefin}" />
+                                            </div>  
+                                            <div class="col-sm-4">
+                                                <p:inputText id="prede" styleClass="form-control" a:placeholder="Prédécesseur" converter="#{beanStringConverter}" value="#{gestionprojetBean.management.predecesseur}" />
+                                            </div> 
+
+                                        </div> 
+
+
+                                        <div class="row clearfix">
+                                            <br/><br/>
+                                            <div class="col-sm-4">
+                                                <p:inputText id="cmmt" styleClass="form-control" a:placeholder="Commantaire" converter="#{beanStringConverter}" value="#{gestionprojetBean.management.commentaire}" />
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <h:panelGroup id="detailWrapper1">
+                                                    <p:selectOneMenu id="idEx2" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter"  
+                                                                     value="#{gestionprojetBean.management.terminer}"> 
+                                                        <f:selectItem itemLabel="--------------- % terminé -------------------"  noSelectionOption="true"/>
+                                                        <f:selectItem itemLabel="0%"  itemValue="0"/>
+                                                        <f:selectItem itemLabel="10%"  itemValue="10"/>
+                                                        <f:selectItem itemLabel="20%"  itemValue="20"/>
+                                                        <f:selectItem itemLabel="30%"  itemValue="30"/>
+                                                        <f:selectItem itemLabel="40%"  itemValue="40"/>
+                                                        <f:selectItem itemLabel="50%"  itemValue="50"/>
+                                                        <f:selectItem itemLabel="60%"  itemValue="60"/>
+                                                        <f:selectItem itemLabel="70%"  itemValue="70"/>
+                                                        <f:selectItem itemLabel="80%"  itemValue="80"/>
+                                                        <f:selectItem itemLabel="90%"  itemValue="90"/>
+                                                        <f:selectItem itemLabel="100%"  itemValue="100"/>
+                                                    </p:selectOneMenu>
+                                                </h:panelGroup>
+                                            </div> 
+
+                                            <div class="col-sm-4">
+
+                                            </div> 
+
+                                        </div> 
+
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <br/><br/>
+                                                    <p:commandButton id="save" value="Enregistrer" ajax="false" action="#{gestionprojetBean.save}" />
+                                                    &nbsp;&nbsp;&nbsp;
+                                                    <p:commandButton  id="reset" value="Annuler" action="#{gestionprojetBean.rest}" />
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </p:panel>
+                                </h:form>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

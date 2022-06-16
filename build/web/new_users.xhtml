@@ -1,0 +1,130 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | Utilisateurs
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h2>ENREGISTRER UN UTILISATEUR</h2>
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="card">
+                                <div class="body">
+                                    <h:form>
+                                        <div class="row clearfix">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                        <p:inputText id="cni" styleClass="form-control" a:placeholder="Numero d'identification nationale"  converter="omnifaces.SelectItemsConverter" value="#{utilisateurBean.utilisateur.cni}"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                        <p:inputText id="nom" styleClass="form-control" a:placeholder="Nom" converter="omnifaces.SelectItemsConverter" value="#{utilisateurBean.utilisateur.nomUtilisateur}"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                        <p:inputText id="prenom" styleClass="form-control" a:placeholder="Prenom" converter="omnifaces.SelectItemsConverter" value="#{utilisateurBean.utilisateur.prenomUtilisateur}"/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <p:calendar id="datenaiss" styleClass="border: 0px;" effect="fold" styleClass="form-control" a:placeholder="Date de naissance" converter="omnifaces.SelectItemsConverter" value="#{utilisateurBean.utilisateur.dateNaissanceUtilisateur}"/>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                        <p:inputText id="lieu" styleClass="form-control" a:placeholder="Lieu de naissance" converter="omnifaces.SelectItemsConverter" value="#{utilisateurBean.utilisateur.lieuNaissanceUtilisateur}"/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                        <p:inputText id="situation" styleClass="form-control" a:placeholder="Situation matrimoniale" converter="omnifaces.SelectItemsConverter" value="#{utilisateurBean.utilisateur.situationfamille}"/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                        <p:inputText id="adresse" styleClass="form-control" a:placeholder="Adresse" converter="omnifaces.SelectItemsConverter" value="#{utilisateurBean.utilisateur.adresseUtilisateur}"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                        <p:inputText id="telephone" styleClass="form-control" a:placeholder="Téléphone" converter="omnifaces.SelectItemsConverter" value="#{utilisateurBean.utilisateur.telUtilisateur}"/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                        <p:inputText id="mail" styleClass="form-control" a:placeholder="Email" converter="omnifaces.SelectItemsConverter" value="#{utilisateurBean.utilisateur.mailUtilisateur}"/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                        <p:inputText id="fonction" styleClass="form-control" a:placeholder="Fonction" converter="omnifaces.SelectItemsConverter" value="#{utilisateurBean.utilisateur.fonction}"/>
+                                                    </div>
+                                                </div> 
+
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                        <p:password id="password" styleClass="form-control" a:placeholder="Mot de passe" converter="omnifaces.SelectItemsConverter" value="#{utilisateurBean.utilisateur.passwordUtisateur}"/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                        <p:inputText id="numerosociale" styleClass="form-control" a:placeholder="Numéro de sécurité sociale" converter="omnifaces.SelectItemsConverter" value="#{utilisateurBean.utilisateur.numeroSecuriteSociale}"/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+
+                                                    <p:selectOneMenu styleClass='form-control round-form' id="idRole" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter"  
+                                                                     value="#{utilisateurBean.utilisateur.idRole}"> 
+                                                        <f:selectItem itemLabel="-- Sélectionnez un rôle --"  itemValue="null"/>
+                                                        <f:selectItems value="#{utilisateurBean.itemR}"  var="r"  itemLabel="#{r.libelleRole}" itemValue="#{r}" />       
+                                                    </p:selectOneMenu>
+
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <p:commandButton styleClass="btn btn-primary m-t-15 waves-effect"   id="save" value="Enregistrer" action="#{utilisateurBean.save}" />
+                                                    &nbsp;&nbsp;&nbsp;
+                                                    <p:commandButton styleClass="btn btn-primary m-t-15 waves-effect"   id="reset" value="Annuler" action="#{utilisateurBean.reset}" />
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </h:form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

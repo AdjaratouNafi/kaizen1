@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | EXPRESSION DE BESOINS
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h2></h2>
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                            <div class="body">
+                                <br/><br/>
+                                <center style="font-size: 25px;font-weight: bold;">TRAITER UNE EXPRESSION DE BESOINS</center>
+                                <br/><br/>
+                                <h:form id="formDevis"> 
+
+
+                                    <div class="row clearfix">
+                                        <div class="col-sm-4">
+                                            <label style="float:left;margin-right: 15px;">Expression de besoin</label>
+                                            <p:inputText id="expBesoin"  readonly="true" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traiterNotificationExpressionBean.expressionbesoinFromTraitement.numeroExpression}"/>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label style="float:left;margin-right: 15px;">Date</label>
+                                            <p:inputText id="dateexp"  readonly="true" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traiterNotificationExpressionBean.expressionbesoinFromTraitement.dateExpression}"/>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label style="float:left;">Etat de traitement</label>
+                                            <p:inputText id="etattraitement" readonly="true" styleClass="form-control"   converter="#{beanStringConverter}" value="#{traiterNotificationExpressionBean.expressionbesoinFromTraitement.etat}"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="row clearfix">
+                                        <br/><br/>
+                                        <div class="col-sm-4">
+                                            <br/><br/>
+                                            <label style="float:left;margin-right: 15px;">Traitement</label>
+                                            <h:selectOneMenu id="etat" styleClass="ui-selectonemenu" converter="omnifaces.SelectItemsConverter"  
+                                                             value="#{traiterNotificationExpressionBean.etatExpression}"> 
+                                                <f:ajax event="change" listener="#{traiterNotificationExpressionBean.renderInfoExpTraitement2}" execute="@form" render="perfbyselection1" />
+                                                <f:selectItem itemLabel="-------------- Selectionnez un etat --------------"  itemValue="null"/>
+                                                <f:selectItem itemLabel="Valider"  itemValue="Validé"/>
+                                                <f:selectItem itemLabel="Rejeter"  itemValue="Rejeté"/>
+                                            </h:selectOneMenu>
+                                        </div>
+
+                                        <h:panelGroup id="perfbyselection1">
+                                            <div class="col-sm-4">
+                                                <br/> <br/>
+                                                <label style="float:left;margin-right: 15px;">Motif de rejet</label> <br/>
+                                                <h:inputText rendered="#{traiterNotificationExpressionBean.etatExpression eq 'Rejeté'}" id="motif" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traiterNotificationExpressionBean.expressionbesoinFromTraitement.motif}" />
+                                            </div>
+                                        </h:panelGroup>
+
+
+                                        <div class="col-sm-4">
+                                        </div>
+
+
+                                    </div>
+
+
+                                    <div class="row clearfix">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <center>
+                                                    <br/> <br/>
+                                                    <h:commandLink  action="#{traiterNotificationExpressionBean.save2}">
+                                                        <h:graphicImage value="resources/images/enregistrer.svg"  title="Enregistrer" />
+                                                    </h:commandLink>
+                                                </center>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </h:form>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

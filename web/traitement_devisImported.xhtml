@@ -1,0 +1,255 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | DEVIS
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h2></h2>
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                            <div class="body">
+                                <br/><br/>
+                                <center style="font-size: 25px;font-weight: bold;">ENREGISTRER UN DEVIS</center>
+
+                                <br/><br/>
+
+                                <center>Les champs marqués d'un astérisque <b style="color: red;">(*)</b> sont obligatoires</center>
+
+                                <br/><br/>
+
+                                <h:form id="formDevis"> 
+
+
+                                    <div class="row clearfix">
+                                        <div class="col-sm-3">
+                                            <br/>
+                                            <label style="float:left;margin-right: 15px;">Date <b style="color: red;">(*)</b></label>
+                                            <p:calendar  id="datdev" converter="#{beanStringConverter}" value="#{traitementdevisimportedBean.devis.dateDevis}" />
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <label style="float:left;margin-right: 15px;">Nom du projet <b style="color: red;">(*)</b></label> <br/>
+                                            <h:inputText id="np" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traitementdevisimportedBean.devis.nommarche}" />
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <label style="float:left;margin-right: 15px;">Client <b style="color: red;">(*)</b></label> <br/>
+                                            <h:selectOneMenu id="idMarche" styleClass="form-control"  converter="omnifaces.SelectItemsConverter"  
+                                                             value="#{traitementdevisimportedBean.devis.idClient}"> 
+                                                <f:ajax event="change" listener="#{devisBean.renderInfo}" execute="@form" render="adr tel mail" />
+                                                <f:selectItem itemLabel="  "  noSelectionOption="true"/>
+                                                <f:selectItems value="#{clientBean.listClients}"  var="c"  itemLabel="#{c.nomClient}" itemValue="#{c}" />       
+                                            </h:selectOneMenu>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <h:inputHidden id="input10PPP" converter="#{beanStringConverter}" value="#{traitementdevisimportedBean.devis.numeroDevis}" />
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row clearfix">
+                                        <br/><br/>
+                                        <div class="col-sm-3">
+                                            <label style="float:left;">Adresse</label>
+                                            <p:inputText id="adr" readonly="true" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traitementdevisimportedBean.devis.idClient.adresse}"/>
+                                        </div>
+                                        <div class="col-sm-3">
+
+                                            <label style="float:left;">Téléphone</label>
+                                            <p:inputText id="tel" readonly="true" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traitementdevisimportedBean.devis.idClient.telephoneClient}"/>
+                                        </div>
+                                        <div class="col-sm-3">
+
+                                            <label style="float:left;">Email</label>
+                                            <p:inputText id="mail" readonly="true" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traitementdevisimportedBean.devis.idClient.mailClient}"/>
+                                        </div> 
+                                        <div class="col-sm-3">
+                                            <h:inputHidden id="input10" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row clearfix">
+                                        <br/><br/>
+                                        <div class="col-sm-3">
+                                            <label style="float:left;margin-right: 15px;">Désignation</label> <br/>
+                                            <h:inputHidden id="input1" />
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <label style="float:left;margin-right: 15px;">Ref</label> <br/>
+                                            <h:inputHidden id="input2" />
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <label style="float:left;margin-right: 15px;">U.mesure</label> <br/>
+                                            <h:inputHidden id="input3" />
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <label style="float:left;margin-right: 15px;">Qte</label> <br/>
+                                            <h:inputHidden id="input4" />
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <label style="float:left;margin-right: 15px;">P.U</label> <br/>
+                                            <h:inputHidden id="input5" />
+                                        </div>
+
+                                    </div>
+
+                                    <h:panelGroup id="devis">
+                                        <br/><br/>
+                                        <ui:repeat id="repeater1" value="#{traitementdevisimportedBean.listDevis}" var="d" varStatus="status">
+                                            <div class="row clearfix">
+                                                <div class="col-sm-3">
+                                                    <br/>
+                                                    <h:inputText id="designation" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traitementdevisimportedBean.listDevis[status.index].designation}" />
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <br/>
+                                                    <h:inputText id="ref" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traitementdevisimportedBean.listDevis[status.index].ref}" />
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <br/>
+                                                                                                           <!-- <h:inputText id="unite" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traitementdevisimportedBean.listDevis[status.index].unite}" />-->
+                                                    <h:selectOneMenu id="unite" styleClass="form-control"  converter="omnifaces.SelectItemsConverter"  
+                                                                     value="#{traitementdevisimportedBean.listDevis[status.index].unite}"> 
+                                                        <f:selectItem itemLabel="#{traitementdevisimportedBean.listDevis[status.index].unite}"  itemValue="#{traitementdevisimportedBean.listDevis[status.index].unite}"/>
+                                                        <f:selectItems value="#{uniteBean.listUnites}"  var="unite"  itemLabel="#{unite.abreviation}" itemValue="#{unite.abreviation}" />       
+                                                    </h:selectOneMenu>
+
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <br/>
+                                                    <h:inputText id="quantite" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traitementdevisimportedBean.listDevis[status.index].quantite}" >
+                                                        <f:ajax event="blur" listener="#{traitementdevisimportedBean.calculateTTC(traitementdevisimportedBean.listDevis[status.index])}" execute="@form" render=":formDevis:mtotal :formDevis:devis" />                                       
+                                                    </h:inputText>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <br/>
+                                                    <h:inputText id="pu" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traitementdevisimportedBean.listDevis[status.index].pu}">
+                                                        <f:ajax event="blur" listener="#{traitementdevisimportedBean.calculateTTC(traitementdevisimportedBean.listDevis[status.index])}" execute="@form" render=":formDevis:mtotal :formDevis:devis" />                                       
+                                                    </h:inputText>
+                                                </div>
+                                            </div>
+                                        </ui:repeat>  
+
+                                    </h:panelGroup> 
+
+                                    <div class="row clearfix">
+                                        <div class="col-sm-12"> 
+                                            <div class="form-group">
+                                                <h:commandLink style="font-size: 35px;font-weight: bold;text-decoration: none;" value="" /> 
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row clearfix">
+                                        <br/><br/>
+                                        <div class="col-sm-3">
+                                            <label style="float:left;margin-right: 15px;">Coef.</label> <br/>
+                                            <h:inputText  id="coef" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traitementdevisimportedBean.devis.coef}">
+                                                <f:ajax event="change" listener="#{traitementdevisimportedBean.calculateCoef}" execute="@form" render=":formDevis:coef :formDevis:mtotal :formDevis:devis" />
+                                            </h:inputText>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <label style="float:left;margin-right: 15px;">Montant TTC</label> <br/>
+                                            <p:inputText id="mtotal" readonly="true" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traitementdevisimportedBean.mttc}" />
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <h:inputHidden id="input30" />
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <h:inputHidden id="input31" />
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row clearfix">
+                                        <br/><br/>
+                                        <div class="col-sm-3">
+                                            <label style="float:left;margin-right: 15px;">Montant en lettre</label> <br/>
+                                            <h:inputText id="montantlettre" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traitementdevisimportedBean.devis.montantlettre}" />
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <label style="float: left;">Devise <b style="color: red;">(*)</b></label>
+                                            <h:selectOneMenu id="idDevise" styleClass="form-control"  converter="omnifaces.SelectItemsConverter" value="#{traitementdevisimportedBean.devis.idDevise}"> 
+                                                <f:selectItem itemLabel="  "  noSelectionOption="true"/>
+                                                <f:selectItems value="#{deviseBean.listDevises}"  var="d"  itemLabel="#{d.symbole}" itemValue="#{d}" />       
+                                            </h:selectOneMenu>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <label style="float:left;margin-right: 15px;">Termes du contrat</label> <br/>
+                                            <h:inputText id="montantlettre1" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traitementdevisimportedBean.devis.terme}" />
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <label style="float:left;margin-right: 15px;">Disponibilité</label> <br/>
+                                            <h:inputText id="montantlettre2" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traitementdevisimportedBean.devis.nbjours}" />
+                                        </div>
+                                    </div>
+
+
+                                    <!--<div class="row clearfix">
+                                        <br/><br/>
+                                        <div class="col-sm-12"> 
+                                            <div class="form-group">
+                                                <h:commandLink style="font-size: 35px;font-weight: bold;text-decoration: none;" value="+"> 
+                                                    <f:ajax event="click" listener="#{traitementdevisimportedBean.addNewInputLigne()}" execute="@form" render=":formDevis:devis" />
+                                                </h:commandLink>
+                                            </div>
+
+                                        </div>
+                                    </div>-->
+
+                                    <div class="row clearfix">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <center>
+
+                                                    <br/><br/>
+                                                    <h:commandLink  action="#{traitementdevisimportedBean.save}">
+                                                        <h:graphicImage value="resources/images/enregistrer.svg"  title="Enregistrer" />
+                                                    </h:commandLink>
+                                                    &nbsp;&nbsp;&nbsp;
+                                                    <h:commandLink  action="#{traitementdevisimportedBean.reset}">
+                                                        <h:graphicImage value="resources/images/annuler.svg"  title="Annuler" />
+                                                    </h:commandLink>
+                                                </center>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </h:form>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

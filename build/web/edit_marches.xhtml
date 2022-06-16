@@ -1,0 +1,246 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | MARCHES
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h2></h2>
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="card" style="background: #FFF;">
+                                <div class="body">
+
+                                    <h:form>
+                                        <p:growl id="msgs" showDetail="true" />
+
+
+                                        <p:panel id="basic" header="MODIFIER UN MARCHE" styleClass="myPanelClientForm">
+
+                                            <p:spacer height="50px;"/>
+
+                                            <div class="row clearfix">
+                                                <div class="col-sm-4">
+                                                    <label style="float: left;">Client</label>
+                                                    <p:selectOneMenu id="idClient" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter" value="#{marcheOtherBean.marcheFromEdit.idDevis}"> 
+                                                        <f:ajax event="change" listener="#{marcheOtherBean.renderInfo2()}" execute="@form" render="nom montantexe montantmarche numerofact dttfacture" />
+                                                        <f:selectItem itemLabel="------------- #{marcheOtherBean.marcheFromEdit.idDevis.idClient.nomClient} ---------"  itemValue="#{marcheOtherBean.marcheFromEdit.idDevis}"/>
+                                                        <f:selectItems value="#{marcheBean.listDevis}"  var="d"  itemLabel="#{d.idClient.nomClient}" itemValue="#{d}" />       
+                                                    </p:selectOneMenu>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label style="float: left;">Nom du marché</label>
+                                                    <p:inputText id="nom" readonly="true" styleClass="form-control"   converter="#{beanStringConverter}" value="#{marcheOtherBean.marcheFromEdit.nomMarche}"/>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label style="float: left;">Montant HT</label>
+                                                    <p:inputText id="montantexe" readonly="true" styleClass="form-control"  converter="#{beanStringConverter}" value="#{marcheOtherBean.marcheFromEdit.montantExecution}" />
+                                                </div>
+                                            </div>                              
+
+
+                                            <div class="row clearfix">
+                                                <div class="col-sm-4">
+                                                    <label style="float: left;">Montant TTC</label>
+                                                    <p:inputText id="montantmarche" readonly="true" styleClass="form-control"   converter="#{beanStringConverter}" value="#{marcheOtherBean.marcheFromEdit.montantMarche}"/>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label style="float: left;">Numéro devis</label>
+                                                    <p:inputText id="numerofact" readonly="true" styleClass="form-control"   converter="#{beanStringConverter}" value="#{marcheOtherBean.marcheFromEdit.idDevis.numeroDevis}"/>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label style="float: left;">Date devis</label>
+                                                    <p:inputText id="dttfacture" readonly="true" styleClass="form-control"   converter="#{beanStringConverter}" value="#{marcheOtherBean.marcheFromEdit.idDevis.dateDevis}"/>
+                                                </div>
+                                            </div> 
+
+                                            <div class="row clearfix">
+                                                <div class="col-sm-4">
+                                                    <label style="float: left;">Objet</label>
+                                                    <p:inputText id="objet" styleClass="form-control"   converter="#{beanStringConverter}" value="#{marcheOtherBean.marcheFromEdit.objetMarche}"/>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label style="float: left;">Numéro du projet</label>
+                                                    <p:inputText id="numfinance" styleClass="form-control"   converter="#{beanStringConverter}" value="#{marcheOtherBean.marcheFromEdit.numeroFinancement}"/>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <br/>
+                                                    <label style="float:left;">Date de création</label>
+                                                    <p:calendar  id="datemarche" converter="#{beanStringConverter}" value="#{marcheOtherBean.marcheFromEdit.dateMarche}" />
+                                                </div>
+                                            </div>
+
+                                            <div class="row clearfix">
+                                                <div class="col-sm-4">
+
+                                                    <label style="float:left;">Montant de demarrage</label>
+                                                    <!-- <p:inputText id="montantdemarrage" styleClass="form-control"   converter="#{beanStringConverter}" value="#{marcheOtherBean.marche.montantDemarrage}"/> -->
+                                                    <pe:inputNumber  id="montantdemarrage"  converter="#{beanStringConverter}" value="#{marcheOtherBean.mtDemarageFromEdit}"  thousandSeparator="." decimalSeparator="," maxValue="999999999999"  />  
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <br/>
+                                                    <label style="float:left;">Date notification</label>
+                                                    <p:calendar  id="daten" converter="#{beanStringConverter}" value="#{marcheOtherBean.marcheFromEdit.notification}" />
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label style="float:left;">Caution</label>
+                                                    <p:inputText id="quotient" styleClass="form-control"   converter="#{beanStringConverter}" value="#{marcheOtherBean.marcheFromEdit.cotion}"/>
+
+                                                </div>
+                                            </div> 
+
+
+                                            <div class="row clearfix">
+                                                <div class="col-sm-4">
+                                                    <label style="float:left;">Montant du caution</label>
+                                                    <!--<p:inputText id="mtquotient" styleClass="form-control"   converter="#{beanStringConverter}" value="#{marcheOtherBean.marche.montantcotion}"/> -->
+                                                    <pe:inputNumber  id="mtquotient"  converter="#{beanStringConverter}" value="#{marcheOtherBean.mtCautionFromEdit}"  thousandSeparator="." decimalSeparator="," maxValue="999999999999"  />  
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label style="float:left;">Prime de caution</label>
+                                                    <pe:inputNumber  id="prim"  converter="#{beanStringConverter}" value="#{marcheOtherBean.mtPrimCautionFromEdit}"  thousandSeparator="." decimalSeparator="," maxValue="999999999999"  />  
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <br/>
+                                                    <label style="float:left;">Main levée</label>
+                                                    <p:calendar  id="main" converter="#{beanStringConverter}" value="#{marcheOtherBean.marcheFromEdit.mainlevee}" />
+                                                </div>
+                                            </div> 
+
+                                            <div class="row clearfix">
+                                                <div class="col-sm-4">
+                                                    <br/>
+                                                    <label style="float:left;">Ordre de service</label>
+                                                    <p:calendar  id="ordre" converter="#{beanStringConverter}" value="#{marcheOtherBean.marcheFromEdit.ordreservice}" />
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label style="float:left;">Avenant</label>
+                                                    <p:inputText id="avenant" styleClass="form-control"   converter="#{beanStringConverter}" value="#{marcheOtherBean.marcheFromEdit.avenant}"/>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <br/>
+                                                    <label style="float:left;margin-right: 25px;">Date avenant</label>
+                                                    <p:calendar  id="dateavenent" converter="#{beanStringConverter}" value="#{marcheOtherBean.marcheFromEdit.dateAvenant}" />
+                                                </div>
+                                            </div> 
+
+
+                                            <div class="row clearfix">
+                                                <div class="col-sm-4">
+                                                    <label style="float:left;">Durée du contrat</label>
+                                                    <p:selectOneMenu id="dureecontrat" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter" value="#{marcheOtherBean.marcheFromEdit.dureeContrat}"> 
+                                                        <f:selectItem itemLabel="--------------- #{marcheOtherBean.marcheFromEdit.dureeContrat} -----------"  itemValue="#{marcheOtherBean.marcheFromEdit.dureeContrat}"/>
+
+                                                        <f:selectItem itemLabel="6 Mois"  itemValue="6 Mois"/>
+                                                        <f:selectItem itemLabel="7 Mois"  itemValue="7 Mois"/>
+                                                        <f:selectItem itemLabel="8 Mois"  itemValue="8 Mois"/>
+                                                        <f:selectItem itemLabel="9 Mois"  itemValue="9 Mois"/>
+                                                        <f:selectItem itemLabel="10 Mois"  itemValue="10 Mois"/>
+                                                        <f:selectItem itemLabel="11 Mois"  itemValue="11 Mois"/>
+                                                        <f:selectItem itemLabel="12 Mois"  itemValue="12 Mois"/>
+                                                        <f:selectItem itemLabel="13 Mois"  itemValue="13 Mois"/>
+                                                        <f:selectItem itemLabel="14 Mois"  itemValue="14 Mois"/>
+                                                        <f:selectItem itemLabel="15 Mois"  itemValue="15 Mois"/>
+                                                        <f:selectItem itemLabel="16 Mois"  itemValue="16 Mois"/>
+                                                        <f:selectItem itemLabel="17 Mois"  itemValue="17 Mois"/>
+                                                        <f:selectItem itemLabel="18 Mois"  itemValue="18 Mois"/>
+                                                        <f:selectItem itemLabel="19 Mois"  itemValue="19 Mois"/>
+                                                        <f:selectItem itemLabel="20 Mois"  itemValue="20 Mois"/>
+
+                                                        <f:selectItem itemLabel="21 Mois"  itemValue="21 Mois"/>
+                                                        <f:selectItem itemLabel="22 Mois"  itemValue="22 Mois"/>
+                                                        <f:selectItem itemLabel="23 Mois"  itemValue="23 Mois"/>
+                                                        <f:selectItem itemLabel="24 Mois"  itemValue="24 Mois"/>
+                                                        <f:selectItem itemLabel="25 Mois"  itemValue="25 Mois"/>
+                                                        <f:selectItem itemLabel="26 Mois"  itemValue="26 Mois"/>
+                                                        <f:selectItem itemLabel="27 Mois"  itemValue="27 Mois"/>
+                                                        <f:selectItem itemLabel="28 Mois"  itemValue="28 Mois"/>
+                                                        <f:selectItem itemLabel="29 Mois"  itemValue="29 Mois"/>
+                                                        <f:selectItem itemLabel="30 Mois"  itemValue="30 Mois"/>
+                                                        <f:selectItem itemLabel="31 Mois"  itemValue="31 Mois"/>
+                                                        <f:selectItem itemLabel="32 Mois"  itemValue="32 Mois"/>
+                                                        <f:selectItem itemLabel="33 Mois"  itemValue="33 Mois"/>
+                                                        <f:selectItem itemLabel="34 Mois"  itemValue="34 Mois"/>
+                                                        <f:selectItem itemLabel="35 Mois"  itemValue="35 Mois"/>
+                                                        <f:selectItem itemLabel="36 Mois"  itemValue="36 Mois"/>
+                                                        <f:selectItem itemLabel="37 Mois"  itemValue="37 Mois"/>
+                                                        <f:selectItem itemLabel="38 Mois"  itemValue="38 Mois"/>
+                                                        <f:selectItem itemLabel="39 Mois"  itemValue="39 Mois"/>
+                                                        <f:selectItem itemLabel="40 Mois"  itemValue="40 Mois"/>
+
+                                                        <f:selectItem itemLabel="41 Mois"  itemValue="41 Mois"/>
+                                                        <f:selectItem itemLabel="42 Mois"  itemValue="42 Mois"/>
+                                                        <f:selectItem itemLabel="43 Mois"  itemValue="43 Mois"/>
+                                                        <f:selectItem itemLabel="44 Mois"  itemValue="44 Mois"/>
+                                                        <f:selectItem itemLabel="45 Mois"  itemValue="45 Mois"/>
+                                                        <f:selectItem itemLabel="46 Mois"  itemValue="46 Mois"/>
+                                                        <f:selectItem itemLabel="47 Mois"  itemValue="47 Mois"/>
+                                                        <f:selectItem itemLabel="48 Mois"  itemValue="48 Mois"/>
+
+                                                    </p:selectOneMenu>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <br/>
+                                                    <label style="float:left;margin-right: 25px;">Date de début</label>
+                                                    <p:calendar  id="datedebut" converter="#{beanStringConverter}" value="#{marcheOtherBean.marcheFromEdit.dateDebut}" />
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <br/>
+                                                    <label style="float:left;margin-right: 50px;">Date de fin</label>
+                                                    <p:calendar  id="datefin" converter="#{beanStringConverter}" value="#{marcheOtherBean.marcheFromEdit.dateFin}" />
+                                                </div>
+                                            </div> 
+
+
+                                            <div class="row clearfix">
+
+                                                <div class="col-sm-4">
+                                                    <label style="float:left;">Observation</label>
+                                                    <p:inputText id="observation" styleClass="form-control" converter="#{beanStringConverter}" value="#{marcheOtherBean.marcheFromEdit.observation}"/>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                </div>
+                                            </div> 
+
+                                            <div class="row clearfix">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <h:inputHidden id="idMarche" converter="#{beanStringConverter}" value="#{marcheOtherBean.marcheFromEdit.idMarche}"/>
+                                                        <p:commandButton  id="save" value="Modifier" ajax="false" action="#{marcheOtherBean.update}" />
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </p:panel>
+                                    </h:form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

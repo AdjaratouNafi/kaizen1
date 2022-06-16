@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | Factures
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h2>ENREGISTRER UNE FACTURE</h2>
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="card">
+                                <div class="body">
+                                    <h:form> 
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-4">
+                                                <p:inputText id="numcmd" styleClass="form-control" a:placeholder="Numéro de la facture"  converter="#{beanStringConverter}" value="#{commandeBean.commande.code}"/>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <p:inputText id="unite" styleClass="form-control" a:placeholder="Unité"  converter="#{beanStringConverter}" value="#{commandeBean.detailleCommande.unite}"/>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <p:inputText id="echeance" styleClass="form-control"  a:placeholder="Date au format JJ-MM-AAAA"  converter="#{beanStringConverter}"  value="#{commandeBean.dateEcheance}" converterMessage="Veuillez entreer une date au format JJ-MM-AAAA">
+                                                    <f:convertDateTime pattern = "dd-mm-yyyy" />
+                                                </p:inputText>
+
+                                                <p></p>
+                                                <h:message id="m4" for="echeance" style="color:red"/>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row clearfix">
+
+                                            <div class="col-sm-4">
+                                                <p:inputText id="desi" styleClass="form-control" a:placeholder="Désignation"  converter="#{beanStringConverter}" value="#{commandeBean.detailleCommande.designation}"/>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <p:inputText id="qt" styleClass="form-control" a:placeholder="Quantité" converter="#{beanStringConverter}" value="#{commandeBean.detailleCommande.quantite}" />
+                                                    
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <p:inputText id="pri" styleClass="form-control" a:placeholder="Prix unitaire" converter="#{beanStringConverter}" value="#{commandeBean.detailleCommande.pu}"/>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row clearfix">
+                                            
+                                            <div class="col-sm-4">
+                                                <p:inputText id="obser" styleClass="form-control" a:placeholder="Projet" converter="#{beanStringConverter}" value="#{commandeBean.commande.observation}"/>
+                                            </div>
+                                            
+                                            <div class="col-sm-4">
+                                                
+                                            </div>
+                                            <div class="col-sm-4">
+                                               
+                                            </div>
+                                            
+                                        </div>
+
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <p:commandButton styleClass="btn btn-primary m-t-15 waves-effect" id="save" value="Enregistrer" ajax="false" action="#{commandeBean.savee}" />
+                                                    &nbsp;&nbsp;&nbsp;
+                                                    <p:commandButton styleClass="btn btn-primary m-t-15 waves-effect" id="reset" value="Annuler" action="#{ressourceBean.reset}" />
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </h:form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

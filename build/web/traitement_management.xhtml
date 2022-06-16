@@ -1,0 +1,157 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | PROJECT MANAGEMENT
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h2></h2>
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="card">
+                                <div class="body">
+
+                                    <h:form>
+                                        <p:growl id="msgs" showDetail="true" /> 
+
+
+                                        <p:panel id="basic" header="ENREGISTRER UN NOUVELLE TACHE" style="margin-bottom:20px;text-align: center;">
+
+                                            <p:spacer height="50px;"/>
+
+                                            <div class="row clearfix">
+
+                                                <div class="col-sm-4">
+
+                                                    <label style="float: left;">Projet</label>
+                                                    <p:inputText id="projet" readonly="true" styleClass="form-control" converter="#{beanStringConverter}" value="#{traitementManagementBean.management.idMarche.nomMarche}" />
+
+                                                </div>
+                                                <div class="col-sm-4">
+
+                                                    <label style="float: left;">Chantier</label>
+                                                    <p:inputText id="chantier" readonly="true" styleClass="form-control" converter="#{beanStringConverter}" value="#{traitementManagementBean.management.idChantier.siteChantier}" />
+
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label style="float: left;">Affecter à</label>
+                                                    <p:inputText rendered="#{traitementManagementBean.management.typeTache eq 'Prestataire'}" id="respo1" readonly="true" styleClass="form-control" converter="#{beanStringConverter}" value="#{traitementManagementBean.management.idprestatairePrim.nomcomplet}" />
+                                                    <p:inputText rendered="#{traitementManagementBean.management.typeTache eq 'Personnel'}" id="respo2" readonly="true" styleClass="form-control" converter="#{beanStringConverter}" value="#{traitementManagementBean.management.idUtilisateur.nomUtilisateur} #{traitementManagementBean.management.idUtilisateur.prenomUtilisateur}" />
+                                                </div>
+
+                                            </div> 
+
+
+                                            <div class="row clearfix">
+                                                <div class="col-sm-4">
+                                                    <label style="float: left;">Tâche</label>
+                                                    <p:inputText  readonly="true" id="tache" styleClass="form-control" converter="#{beanStringConverter}" value="#{traitementManagementBean.management.tache}" />
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label style="float: left;">Durée</label>
+                                                    <p:inputText readonly="true" id="duree" styleClass="form-control" converter="#{beanStringConverter}" value="#{traitementManagementBean.management.duree}" />
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label style="float:left;margin-right: 5px;">Date de début</label>
+                                                    <p:inputText readonly="true"  id="debut" converter="#{beanStringConverter}" value="#{traitementManagementBean.management.datedebut}" />
+                                                </div>
+                                            </div> 
+
+                                            <div class="row clearfix">
+
+                                                <div class="col-sm-4">
+                                                    <br/>
+                                                    <label style="float:left;margin-right: 5px;">Date de fin</label>
+                                                    <p:inputText readonly="true"  id="fin" converter="#{beanStringConverter}" value="#{traitementManagementBean.management.datefin}" />
+                                                </div>  
+                                                <div class="col-sm-4">
+                                                    <label style="float: left;">Prédécesseur</label>
+                                                    <p:inputText readonly="true" id="prede" styleClass="form-control" a:placeholder="Prédécesseur" converter="#{beanStringConverter}" value="#{traitementManagementBean.management.predecesseur}" />
+                                                </div> 
+
+                                                <div class="col-sm-4">
+                                                    <label style="float: left;">Commantaire</label>
+                                                    <p:inputText readonly="true" id="cmmt" styleClass="form-control" a:placeholder="Commantaire" converter="#{beanStringConverter}" value="#{traitementManagementBean.management.commentaire}" />
+                                                </div>
+
+                                            </div> 
+
+
+                                            <div class="row clearfix">
+
+                                                <div class="col-sm-4">
+                                                    <label style="float: left;">Ancien % treminé</label>
+                                                    <p:inputText readonly="true" id="pct" styleClass="form-control" converter="#{beanStringConverter}" value="#{traitementManagementBean.management.terminer}" />
+                                                </div>
+                                                
+                                                <div class="col-sm-4">
+                                                    <label style="float: left;">Nouveau % treminé</label>
+                                                    <p:selectOneMenu id="idEx2" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter"  
+                                                                     value="#{traitementManagementBean.management.terminer}"> 
+                                                       <f:selectItem itemLabel="--------------- % terminé -------------------"  noSelectionOption="true"/>
+                                                        <f:selectItem itemLabel="0%"  itemValue="0"/>
+                                                        <f:selectItem itemLabel="10%"  itemValue="10"/>
+                                                        <f:selectItem itemLabel="20%"  itemValue="20"/>
+                                                        <f:selectItem itemLabel="30%"  itemValue="30"/>
+                                                        <f:selectItem itemLabel="40%"  itemValue="40"/>
+                                                        <f:selectItem itemLabel="50%"  itemValue="50"/>
+                                                        <f:selectItem itemLabel="60%"  itemValue="60"/>
+                                                        <f:selectItem itemLabel="70%"  itemValue="70"/>
+                                                        <f:selectItem itemLabel="80%"  itemValue="80"/>
+                                                        <f:selectItem itemLabel="90%"  itemValue="90"/>
+                                                        <f:selectItem itemLabel="100%"  itemValue="100"/>
+                                                    </p:selectOneMenu>
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                    <label style="float: left;">Etat</label>
+                                                    <p:selectOneMenu  id="situation" styleClass="ui-selectonemenu"  
+                                                                      converter="omnifaces.SelectItemsConverter"  
+                                                                      value="#{traitementManagementBean.management.etat}"> 
+                                                        <f:selectItem itemLabel="#{traitementManagementBean.management.etat}"  itemValue="#{traitementManagementBean.management.etat}"/>
+                                                        <f:selectItem itemLabel="En attente"  itemValue="En attente"/>
+                                                        <f:selectItem itemLabel="En cours"  itemValue="En cours"/>
+                                                        <f:selectItem itemLabel="Terminé"  itemValue="Terminé"/>
+                                                    </p:selectOneMenu>
+                                                </div>
+
+                                            </div> 
+
+
+                                            <div class="row clearfix">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group"> 
+                                                        <p:commandButton id="save" value="Enregistrer" ajax="false" action="#{traitementManagementBean.save}" />
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </p:panel>
+                                    </h:form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

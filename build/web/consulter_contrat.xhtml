@@ -1,0 +1,388 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | CONTRATS
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                            <div class="body">
+
+                                <h:form>
+
+                                    <p:panel header="APERCU DU #{contratRecrutBean.contratFromRead.diffTypeContrat}  DE #{contratRecrutBean.contratFromRead.idUtilisateur.nomUtilisateur} #{contratRecrutBean.contratFromRead.idUtilisateur.prenomUtilisateur}" style="width: 100%;text-align: center;">
+
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-12">
+                                                <table width="100%" border="0">
+
+                                                    <tr bgcolor="#CECECE" align="center">
+                                                        <td colspan="4">
+                                                            <c:if test="#{contratRecrutBean.contratFromRead.diffTypeContrat == 'CDD'}">
+
+                                                                <b>CONTRAT DE TRAVAIL A DUREE DETERMINEE</b>
+
+                                                            </c:if>
+                                                            <c:if test="#{contratRecrutBean.contratFromRead.diffTypeContrat == 'CDI'}">
+
+                                                                <b>CONTRAT DE TRAVAIL A DUREE INDETERMINEE</b>
+
+                                                            </c:if>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr align="left">
+                                                        <td colspan="4">
+                                                            <br/>
+                                                            <u><b>ENTRE</b></u>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr align="left">
+                                                        <td colspan="4">
+                                                            <br/>
+                                                            <p>
+                                                                SARRE TECHNOBAT,  Société A Responsabilité Limitée  au Capital Social de 1.000.000 (Un million) FCFA ayant son siège social au 4, route de  l’Aéroport Dakar –Sénégal Tel : 33 820 83 83, immatriculée au registre du commerce sous le n° SN DKR 2014 B 21849, Ninea : 05310652 2Y2, représentée par Monsieur Mor SARRE, agissant en qualité de Président Directeur Général.
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr align="left">
+                                                        <td colspan="4">
+                                                            <br/>
+                                                            <b>Ci-après dénommée « L’Employeur »</b>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr align="right">
+                                                        <td colspan="4">
+                                                            <br/>
+                                                            <b>D’une part,</b>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr align="left">
+                                                        <td colspan="4">
+                                                            <br/>
+                                                            <b>Et:</b>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr align="left">
+                                                        <td colspan="4">
+                                                            <br/>
+                                                            <p>Prénom et nom : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #{contratRecrutBean.contratFromRead.idUtilisateur.nomUtilisateur} #{contratRecrutBean.contratFromRead.idUtilisateur.prenomUtilisateur}</p>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr align="left">
+                                                        <td colspan="4">
+                                                            <br/>
+                                                            <p>Date et lieu de naissance : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #{contratRecrutBean.contratFromRead.idUtilisateur.dateNaissanceUtilisateur}</p>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr align="left">
+                                                        <td colspan="4">
+                                                            <br/>
+                                                            <p>Situation de famille  : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #{contratRecrutBean.contratFromRead.idUtilisateur.situationfamille}</p>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr align="left">
+                                                        <td colspan="4">
+                                                            <br/>
+                                                            <p>Adresse : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #{contratRecrutBean.contratFromRead.idUtilisateur.adresseUtilisateur}</p>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr align="left">
+                                                        <td colspan="4">
+                                                            <br/>
+                                                            <p>Nationalité  : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sénégalaise</p>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr align="left">
+                                                        <td colspan="4">
+                                                            <br/>
+                                                            <p>Lieu d’exécution du contrat  : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sénégal</p>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr align="left">
+                                                        <td colspan="4">
+                                                            <br/>
+                                                            <p>Date de l’engagement  : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #{contratRecrutBean.contratFromRead.dateEngagement}</p>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr align="left">
+                                                        <td colspan="4">
+                                                            <br/>
+                                                            <p>Ci-après, dénommé (e) <b>« Le travailleur »</b></p>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr align="right">
+                                                        <td colspan="4">
+                                                            <br/>
+                                                            <b>D’autre part,</b>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr align="left">
+                                                        <td colspan="4">
+                                                            <br/>
+                                                            <p><b>IL  EST CONVENU CE QUI SUIT:</b></p>
+
+                                                            <br/>
+                                                            <p>
+                                                                L’employé titulaire du présent contrat est engagé aux conditions ci-après. Cet engagement est régi par les textes suivants :
+                                                                <br/> -	Loi n° 97-17 du 1er décembre 1997 portant Code du Travail au Sénégal, ensemble des règlements d’application de cette loi ;
+                                                                <br/> -	Convention Collective Nationale Interprofessionnelle du Sénégal du 27 mai 1982 ; 
+                                                                <br/> -	Convention collective du commerce ;
+                                                                <br/> -	ensemble des avenants et décisions qui viendraient à la compléter ou à la modifier ;
+                                                                <br/> -	Règlement intérieur de l’entreprise.
+
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+
+
+                                                    <tr align="left">
+                                                        <td colspan="4">
+                                                            <br/>
+                                                            <p><b><u>ARTICLE 1 : OBJET</u></b></p>
+                                                            <p>
+                                                                #{contratRecrutBean.contratFromRead.article1}
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr align="left">
+                                                        <td colspan="4">
+                                                            <br/>
+                                                            <p><b><u>ARTICLE 2 : DUREE</u></b></p>
+                                                            <p>
+                                                                #{contratRecrutBean.contratFromRead.article2}
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+
+
+                                                    <tr align="left">
+                                                        <td colspan="4">
+                                                            <br/>
+                                                            <p><b><u>ARTICLE 3 : FONCTIONS ET CLASSIFICATIONS</u></b></p>
+                                                            <p>
+                                                                #{contratRecrutBean.contratFromRead.article3}
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr align="left">
+                                                        <td colspan="4">
+                                                            <br/>
+                                                            <p><b><u>ARTICLE  4 : OBLIGATIONS</u></b></p>
+                                                            <p>
+                                                                #{contratRecrutBean.contratFromRead.article4}
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+
+
+                                                    <tr align="left">
+                                                        <td colspan="4">
+                                                            <br/>
+                                                            <p><b><u>ARTICLE  5: MALADIE</u></b></p>
+                                                            <p>
+                                                                #{contratRecrutBean.contratFromRead.article5}
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+
+
+                                                    <tr align="left">
+                                                        <td colspan="4">
+                                                            <br/>
+                                                            <p><b><u>ARTICLE  6: LIEU DE TRAVAIL</u></b></p>
+                                                            <p>
+                                                                #{contratRecrutBean.contratFromRead.article6}
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr align="left">
+                                                        <td colspan="4">
+                                                            <br/>
+                                                            <p><b><u>ARTICLE 7: TEMPS DE TRAVAIL</u></b></p>
+                                                            <p>
+                                                                #{contratRecrutBean.contratFromRead.article8}
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+
+
+                                                    <tr align="left">
+                                                        <td colspan="4">
+                                                            <br/>
+                                                            <p><b><u>ARTICLE 8 : RENUMERATION</u></b></p>
+                                                            <p>
+                                                                #{contratRecrutBean.contratFromRead.article9}
+                                                            </p>
+                                                            <p>
+                                                                Salaire de base : #{contratRecrutBean.contratFromRead.salairebase} F CFA
+                                                            </p>
+                                                            <p>
+                                                                Sursalaire : #{contratRecrutBean.contratFromRead.surSalaire} F CFA
+                                                            </p>
+                                                            <p>
+                                                                Prime de transport : #{contratRecrutBean.contratFromRead.dureeTravail} F CFA
+                                                            </p>
+                                                            <p>
+                                                                Total :	#{contratRecrutBean.contratFromRead.salaireBrutFiscal} FCFA
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr align="left">
+                                                        <td colspan="4">
+                                                            <br/>
+                                                            <p><b><u>ARTICLE 9 : CONGES PAYES – INDEMNITE DE CONGES</u></b></p>
+                                                            <p>
+                                                                #{contratRecrutBean.contratFromRead.article10}
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr align="left">
+                                                        <td colspan="4">
+                                                            <br/>
+                                                            <p><b><u>ARTCLE 10: FRAIS PROFESSIONNELS</u></b></p>
+                                                            <p>
+                                                                #{contratRecrutBean.contratFromRead.article11}
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr align="left">
+                                                        <td colspan="4">
+                                                            <br/>
+                                                            <p><b><u>ARTICLE 11: PREVOYANCE RETRAITE /SECURITE SOCIALE</u></b></p>
+                                                            <p>
+                                                                #{contratRecrutBean.contratFromRead.article12}
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+
+
+                                                    <tr align="left">
+                                                        <td colspan="4">
+                                                            <br/>
+                                                            <p><b><u>ARTICLE 12 : SECRET PROFESSIONNEL</u></b></p>
+                                                            <p>
+                                                                #{contratRecrutBean.contratFromRead.article13}
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+
+
+                                                    <tr align="left">
+                                                        <td colspan="4">
+                                                            <br/>
+                                                            <p><b><u>ARTICLE 13 : CLAUSE DE NON CONCURRENCE</u></b></p>
+                                                            <p>
+                                                                #{contratRecrutBean.contratFromRead.article14}
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+
+
+                                                    <tr align="left">
+                                                        <td colspan="4">
+                                                            <br/>
+                                                            <p><b><u>ARTICLE 14 : MODIFICATION</u></b></p>
+                                                            <p>
+                                                                #{contratRecrutBean.contratFromRead.article15}
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+
+
+                                                    <tr align="left">
+                                                        <td colspan="4">
+                                                            <br/>
+                                                            <p><b><u>ARTICLE 15 : ARRIVEE DU TERME, RUPTURE</u></b></p>
+                                                            <p>
+                                                                #{contratRecrutBean.contratFromRead.article16}
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <br/><br/>
+
+                                                    <p:commandButton  styleClass="btn btn-primary m-t-15 waves-effect" id="reset" value="Précédent" action="#{contratRecrutBean.precedent}" />
+
+                                                    &nbsp;&nbsp;&nbsp;
+
+                                                    <!--<c:if test="#{contratRecrutBean.imprimerRecrutement.equalsIgnoreCase('yes')}">-->
+                                                    <h:inputHidden id="idContrat" converter="#{beanStringConverter}" value="#{contratRecrutBean.contratFromRead.idContrat}"/>
+                                                    <p:commandButton styleClass="btn btn-primary m-t-15 waves-effect" id="save" value="Generer le contrat" ajax="false" action="#{contratRecrutBean.generateContrat}" />
+                                                    <!-- </c:if> -->
+
+                                                   <!-- <c:if test="#{contratRecrutBean.imprimerRecrutement.equalsIgnoreCase('no')}">
+                                                        <h:inputHidden id="idContrat" converter="#{beanStringConverter}" value="#{contratRecrutBean.contratFromRead.idContrat}"/>
+                                                        <p:commandButton styleClass="btn btn-primary m-t-15 waves-effect" id="save" value="Generer le contrat" ajax="false" />
+                                                    </c:if> -->
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </p:panel>
+
+
+
+                                </h:form>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

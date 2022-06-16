@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | CORPS D'ETAT
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+
+                    </div>
+
+                    <h:form id="form1">
+                        <p:growl id="messages" showDetail="true"/>
+                        <p:panel header="LISTE DES CORPS D'ETAT" style="width: 100%;text-align: center;"> 
+
+                            <p:spacer height="30px;"/>
+                            <p:dataTable value="#{corspetatBean.allCorpsetats}" var="o" rowKey="#{o.idCorpsetat}" selectionMode="single"  
+                                         selection="#{corspetatBean.corpsetatFromEdit}" widgetVar="100" paginator="true" rows="20" paginatorPosition="bottom" style="width: 100%;" editable="true">
+                                <f:facet name="header">  
+                                   
+                                </f:facet>
+                                <p:ajax event="rowEdit" listener="#{corspetatBean.rowEdit}" update=":form1:messages" />  
+                                <p:ajax event="rowEditCancel" listener="#{corspetatBean.rowEditCancel}" update=":form1:messages" /> 
+
+                                <p:column>
+                                    <f:facet name="header">  
+                                        <h:outputText value="NOM DU CORPS D'ETAT" />  
+                                    </f:facet>
+                                    <p:cellEditor>  
+                                        <f:facet name="output">  
+                                            <h:outputText value="#{o.libellecoprsetat}" />  
+                                        </f:facet>  
+                                        <f:facet name="input">  
+                                            <p:inputText id="nom" styleClass="form-control"  converter="#{beanStringConverter}" value="#{o.libellecoprsetat}"/>
+                                        </f:facet>  
+                                    </p:cellEditor> 
+                                </p:column>
+                                
+                                <p:column headerText="Options" style="width:50p%">  
+                                    <p:rowEditor />  
+                                </p:column> 
+
+                            </p:dataTable>
+
+                            <p:spacer height="30px;"/>
+
+                            <a href="new_corpsetat.xhtml" class="btn btn-primary m-t-15 waves-effect" style="border-radius: 10px;color: white;">Nouveau corps d'etat</a>
+
+                        </p:panel>
+
+
+
+                    </h:form>
+
+                </div>
+
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

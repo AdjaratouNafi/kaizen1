@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | Prospections
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h2>MODIFIER UNE PROSPECTION</h2>
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="card">
+                                <div class="body">
+                                    <h:form> 
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-4">
+                                                <p:inputText id="datepros" styleClass="form-control" a:placeholder="Date au format JJ-MM-AAAA"  converter="#{beanStringConverter}" value="#{prospectionBean.prospectionFromEdit.dateProspection}"/>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <p:inputText id="description" styleClass="form-control" a:placeholder="Adresse bailleur"  converter="#{beanStringConverter}" value="#{prospectionBean.prospectionFromEdit.descriptionProspection}"/>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <p:selectOneMenu id="idClient" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter" value="#{prospectionBean.prospectionFromEdit.idProspectClient}"> 
+                                                    <f:selectItem itemLabel="------------- Sélectionnez un prospect -------------"  itemValue="null"/>
+                                                    <f:selectItems value="#{prospectBean.listProspects}"  var="c"  itemLabel="#{c.nomProspect}" itemValue="#{c}" />       
+                                                </p:selectOneMenu>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <h:inputHidden id="idProspection" converter="#{beanStringConverter}" value="#{prospectionBean.prospectionFromEdit.idProspect}"/>
+                                                    <p:commandButton styleClass="btn btn-primary m-t-15 waves-effect" id="save" value="Enregistrer" ajax="false" action="#{prospectionBean.update}" />
+                                                    &nbsp;&nbsp;&nbsp;
+                                                    <p:commandButton styleClass="btn btn-primary m-t-15 waves-effect" id="reset" value="Annuler" action="#{prospectionBean.reset}" />
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </h:form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

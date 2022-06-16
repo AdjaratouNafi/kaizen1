@@ -1,0 +1,140 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | Salaire
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+
+                        <h:form>
+                            <b>APERCU DU <h:outputText value = "#{salaireBean.salaireFromRead.typeSalarie}"/>  DE #{salaireBean.salaireFromRead.idUtilisateur.nomUtilisateur} #{salaireBean.salaireFromRead.idUtilisateur.prenomUtilisateur}</b>
+                        </h:form>
+
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="card">
+                                <div class="body">
+
+
+                                    <h:form>
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-12">
+                                                <table width="100%" border="0">
+
+                                                    <tr bgcolor="#CECECE" align="center">
+                                                        <td colspan="4">
+                                                            <b>#{salaireBean.salaireFromRead.typeSalarie}</b>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr align="left">
+                                                        <td colspan="4">
+                                                            <br/>
+                                                            <b>SARRE TECHNOBAT SARL</b>
+                                                        </td>
+                                                    </tr>
+                                                    
+                                                    <tr align="left">
+                                                        <td colspan="4">
+                                                            <br/>
+                                                            <b>PERIODE DU: #{salaireBean.salaireFromRead.periodeDebut} AU #{salaireBean.salaireFromRead.periodeFin}</b>
+                                                        </td>
+                                                    </tr>
+                                                    
+                                                    <tr align="left">
+                                                        <td colspan="4">
+                                                            <br/>
+                                                            <b>Nom et Pténom: #{salaireBean.salaireFromRead.idUtilisateur.nomUtilisateur} #{salaireBean.salaireFromRead.idUtilisateur.prenomUtilisateur}</b>
+                                                        </td>
+                                                    </tr>
+                                                    
+                                                    
+                                                    <tr style="border: solid 1px black;">
+                                                        <td style="border: solid 1px black;">
+                                                            <br/>
+                                                            <b>SALAIRE DE BASE</b>
+                                                        </td>
+                                                        <td style="border: solid 1px black;">
+                                                            <br/>
+                                                            <b>SURSALAIRE</b>
+                                                        </td>
+                                                         <td style="border: solid 1px black;">
+                                                            <br/>
+                                                            <b>SALAIRE BRUT FISCAL</b>
+                                                        </td>
+                                                    </tr>
+                                                    
+                                                    <tr style="border: solid 1px black;">
+                                                         <td style="border: solid 1px black;">
+                                                            <br/>
+                                                            <p>#{salaireBean.contrat.salairebase}</p>
+                                                        </td>
+                                                         <td style="border: solid 1px black;">
+                                                            <br/>
+                                                            <p>#{salaireBean.contrat.surSalaire}</p>
+                                                        </td>
+                                                         <td style="border: solid 1px black;">
+                                                            <br/>
+                                                            <p>#{salaireBean.contrat.salaireBrutFiscal}</p>
+                                                        </td>
+                                                    </tr>
+                                                    
+                                                    <tr bgcolor="#CECECE" align="right">
+                                                        <td colspan="4" style="border: solid 1px black;">
+                                                            <b>NET A PAYER: #{salaireBean.contrat.salaireBrutFiscal} FCFA</b>
+                                                        </td>
+                                                    </tr>
+                                                    
+                                                    
+                                                </table>
+
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <br/><br/>
+                                                    <h:inputHidden id="idContrat" converter="#{beanStringConverter}" value="#{salaireBean.salaireFromRead.idSalaire}"/>
+                                                    <p:commandButton  styleClass="btn btn-primary m-t-15 waves-effect" id="reset" value="Précédent" action="#{salaireBean.precedent}" />
+                                                    &nbsp;&nbsp;&nbsp;
+                                                    <p:commandButton styleClass="btn btn-primary m-t-15 waves-effect" id="save" value="Generer le contrat" ajax="false" action="#{salaireBean.generateBulletin}" />
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                    </h:form>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

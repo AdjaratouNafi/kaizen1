@@ -1,0 +1,122 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | UTILISATEURS
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+
+                    </div>
+
+                    <h:form id="form1">
+                        <!-- Basic Examples -->
+                        <div class="row clearfix">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                                <div class="body">
+                                    <p:panel header="LISTE DES UTILISATEURS" style="width: 100%;text-align: center;">
+
+                                        <c:if test="#{utilisateurBean.consulterUser.equalsIgnoreCase('yes')}">
+                                            <p:dataTable value="#{utilisateurBean.item}" var="r" widgetVar="100" style="width: 100%;">
+                                                <f:facet name="header">  
+
+                                                </f:facet>
+
+                                                <p:column>
+                                                    <f:facet name="header">Nom</f:facet> 
+                                                        #{r.nomUtilisateur}  #{r.prenomUtilisateur}
+                                                </p:column>
+                                                <p:column>
+                                                    <f:facet name="header">Adresse</f:facet> 
+                                                        #{r.adresseUtilisateur}  
+                                                </p:column> 
+                                                <p:column>
+                                                    <f:facet name="header">Téléphone</f:facet> 
+                                                        #{r.telUtilisateur}  
+                                                </p:column> 
+                                                <p:column>
+                                                    <f:facet name="header">Email</f:facet> 
+                                                        #{r.mailUtilisateur}  
+                                                </p:column> 
+                                                <p:column>
+                                                    <f:facet name="header">Numéro de securité sociale</f:facet> 
+                                                        #{r.numeroSecuriteSociale}  
+                                                </p:column> 
+                                                <p:column>
+                                                    <f:facet name="header">Rôle</f:facet> 
+                                                        #{r.idRole.libelleRole}
+                                                </p:column>  
+
+                                                <p:column>
+                                                    <f:facet name="header">Action</f:facet> 
+
+                                                    <c:if test="#{utilisateurBean.modifierUser.equalsIgnoreCase('yes')}">
+                                                        <h:commandLink action="#{deleteUserBean.resetPassword(r)}">
+                                                            <h:graphicImage value="resources/images/traiter.svg" width="35px" height="35px"  title="Regenerer le mot de passe" />
+                                                        </h:commandLink>
+                                                        &nbsp;&nbsp;&nbsp;
+                                                        <h:commandLink action="#{deleteUserBean.modifierUser(r)}">
+                                                            <h:graphicImage value="resources/images/modifier.svg" width="35px" height="35px"  title="Modifier" />
+                                                        </h:commandLink>
+                                                    </c:if>
+
+                                                    <c:if test="#{utilisateurBean.modifierUser.equalsIgnoreCase('no')}">
+                                                        <h:commandLink>
+                                                            <h:graphicImage value="resources/images/modifier.svg" width="35px" height="35px"  title="Modifier" />
+                                                        </h:commandLink>  
+                                                    </c:if>
+
+                                                    &nbsp;&nbsp;&nbsp;
+                                                   <!-- <c:if test="#{utilisateurBean.supprimerUser.equalsIgnoreCase('yes')}"> -->
+                                                    <h:commandLink  action="#{deleteUserBean.deleteUser(r)}"> 
+                                                        <h:graphicImage value="resources/images/supprimer.svg" width="35px" height="35px"  title="Supprimer" />
+                                                    </h:commandLink>
+                                                    <!-- </c:if> -->
+
+                                                   <!-- <c:if test="#{utilisateurBean.supprimerUser.equalsIgnoreCase('no')}"> 
+                                                        <h:commandLink  class="btn waves-effect" style="background-color: red;color: #fff;margin-top: -5px;border-radius: 8px;" >Supprimer</h:commandLink>  
+                                                    </c:if> -->
+
+                                                </p:column>
+
+                                            </p:dataTable> 
+
+                                        </c:if>
+
+                                        <c:if test="#{utilisateurBean.creerUser.equalsIgnoreCase('yes')}"> 
+                                            <a href="new_user.xhtml" class="btn btn-primary m-t-15 waves-effect" style="border-radius: 10px;color: white;">Nouveau utilisateur</a>
+                                        </c:if> 
+
+                                        <c:if test="#{utilisateurBean.creerUser.equalsIgnoreCase('no')}">
+                                            <a href="#" class="btn btn-primary m-t-15 waves-effect" style="border-radius: 10px;color: white;">Nouveau utilisateur</a>
+                                        </c:if> 
+
+
+                                    </p:panel>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- #END# Basic Examples -->
+                    </h:form>
+
+
+                </div>
+
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

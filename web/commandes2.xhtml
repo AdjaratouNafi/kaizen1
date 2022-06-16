@@ -1,0 +1,156 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | COMMANDES
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h3></h3>
+                    </div>
+
+                    <h:form id="form1">
+
+                        <p:panel header="LISTE DES COMMANDES" style="width: 100%;text-align: center;">
+
+
+                            <c:if test="#{commande2Bean.consulterCommande.equalsIgnoreCase('yes')}"> 
+
+
+                                <p:dataTable emptyMessage="Aucune donnée trouvée" filteredValue="#{commande2Bean.filteredListCommande}" value="#{commande2Bean.allCommande}" var="r" widgetVar="listCmd"  style="width: 100%;"
+                                             resizableColumns="true"  liveResize="true">
+                                    <f:facet name="header">
+                                        <p:outputPanel>
+                                            <h:outputText value="Recherche:" style="margin: 15px;" />
+                                            <p:inputText id="globalFilter" converter="#{beanStringConverter}" onkeyup="PF('listCmd').filter()" style="150px;" />
+                                        </p:outputPanel>
+                                    </f:facet>
+
+                                    <!-- <p:column>
+                                         <f:facet name="header">Numéro</f:facet> 
+                                    #{r.code}
+                            </p:column> -->
+
+
+                                    <p:column filterStyle="display:none" headerText="Date" sortBy="#{r.dateechance}" filterBy="#{r.dateechance}">
+                                        #{r.dateechance}  
+                                    </p:column> 
+                                    <p:column filterStyle="display:none" headerText="Fournisseur" sortBy="#{r.idFournisseur.nomFournisseur}" filterBy="#{r.idFournisseur.nomFournisseur}">
+                                        #{r.idFournisseur.nomFournisseur}
+                                    </p:column>
+                                    <p:column filterStyle="display:none" headerText="Chantier" sortBy="#{r.idMarche.nomMarche}" filterBy="#{r.idMarche.nomMarche}">
+                                        #{r.idMarche.nomMarche}
+                                    </p:column>
+
+                                    <p:column filterStyle="display:none" headerText="Type de commande" sortBy="#{r.typecommande}" filterBy="#{r.typecommande}">
+                                        #{r.typecommande}
+                                    </p:column>
+
+                                    <p:column filterStyle="display:none" headerText="Etat de traitement" sortBy="#{r.etat}" filterBy="#{r.etat}">
+                                        #{r.etat}
+                                    </p:column>
+
+                                    <p:column>
+                                        <f:facet name="header">Action</f:facet> 
+
+                                        <h:commandLink rendered="#{r.etat == 'En attente'}" action="#{commande2Bean.traiterExpression(r)}">
+                                            <h:graphicImage value="resources/images/traiter.svg" width="25px" height="25px"  title="Traiter" />
+                                        </h:commandLink>
+
+                                        <h:commandLink  rendered="#{r.etat == 'Traitée'}">
+                                            <h:graphicImage value="resources/images/traiter.svg" width="25px" height="25px"  title="Traiter" />
+                                        </h:commandLink>
+
+                                        <h:commandLink rendered="#{r.etat == 'Rejetée'}" >
+                                            <h:graphicImage value="resources/images/traiter.svg" width="25px" height="25px"  title="Traiter" />
+                                        </h:commandLink>
+
+                                        <!-- <c:if test="#{commande2Bean.validerCommande.equalsIgnoreCase('yes')}"> 
+                                             <p:commandButton rendered="#{r.etat == 'En attente'}" value="Traiter" ajax="false" action="#{commande2Bean.traiterExpression(r)}" />
+                                              <p:commandButton rendered="#{r.etat == 'Traitée'}" value="Traiter" />
+                                         </c:if> 
+
+                                        <c:if test="#{commande2Bean.validerCommande.equalsIgnoreCase('no')}">
+                                               <p:commandButton rendered="#{r.etat == 'En attente'}" value="Traiter" ajax="false" />
+                                                <p:commandButton rendered="#{r.etat == 'Traitée'}" value="Traiter" />
+                                        </c:if>  -->
+
+
+                                        &nbsp;&nbsp;
+                                        <h:commandLink  action="#{commandeOtherBean.detail(r)}">
+                                            <h:graphicImage value="resources/images/visualisation.svg" width="25px" height="25px"  title="Detail" />
+                                        </h:commandLink>
+                                        &nbsp;&nbsp;
+
+                                       <!-- <c:if test="#{commande2Bean.imprimerCommande.equalsIgnoreCase('yes')}"> -->
+                                        <h:commandLink  action="#{commandeOtherBean.imprimer(r)}">
+                                            <h:graphicImage value="resources/images/imprimer.svg" width="25px" height="25px"  title="Imprimer" />
+                                        </h:commandLink>
+                                        <!-- </c:if>  -->
+
+                                       <!-- <c:if test="#{commande2Bean.imprimerCommande.equalsIgnoreCase('no')}">
+                                             <h:commandLink >
+                                                <h:graphicImage value="resources/images/imprimer.svg" width="25px" height="25px"  title="Imprimer" />
+                                            </h:commandLink>
+                                        </c:if> -->
+
+
+                                        &nbsp;&nbsp;
+
+                                        <c:if test="#{commande2Bean.supprimerCommande.equalsIgnoreCase('yes')}"> 
+                                            <h:commandLink  action="#{commande2Bean.supprimer(r)}">
+                                                <h:graphicImage value="resources/images/supprimer.svg" width="25px" height="25px"  title="Supprimer" />
+                                            </h:commandLink>
+                                        </c:if> 
+
+                                        <c:if test="#{commande2Bean.supprimerCommande.equalsIgnoreCase('no')}">
+                                            <h:commandLink  class="btn waves-effect" style="background-color: red;color: #fff;margin-top: -5px;border-radius: 8px;">Supprimer</h:commandLink>  
+                                        </c:if> 
+
+
+                                    </p:column>
+
+                                </p:dataTable>
+
+                                <c:if test="#{commande2Bean.creerCommande.equalsIgnoreCase('yes')}"> 
+                                    <a href="new_commande2.xhtml" class="btn btn-primary m-t-15 waves-effect" style="border-radius: 10px;color: white;">Creer un bon de commande</a>
+                                </c:if> 
+
+                                <c:if test="#{commande2Bean.creerCommande.equalsIgnoreCase('no')}">
+                                    <a href="#" class="btn btn-primary m-t-15 waves-effect" style="border-radius: 10px;color: white;">Creer un bon de commande</a>
+                                </c:if> 
+
+
+                            </c:if> 
+
+
+
+                            <!--<a href="traitement_commande.xhtml" class="btn btn-primary m-t-15 waves-effect" style="border-radius: 10px;color: white;">Traiter une commande</a>-->
+
+                            <!--<a href="traitement_expression.xhtml" class="btn btn-primary m-t-15 waves-effect" style="border-radius: 10px;color: white;">Traiter une expression de besoin</a>-->
+
+
+
+                        </p:panel>
+
+                        <!-- #END# Basic Examples -->
+                    </h:form>
+
+                </div>
+
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

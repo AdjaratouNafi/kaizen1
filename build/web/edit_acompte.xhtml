@@ -1,0 +1,183 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | ACOMPTES
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h2></h2>
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                            <div class="body">
+
+                                <h:form>
+                                    <p:growl id="msgs" showDetail="true" />
+
+
+                                    <p:panel id="basic" header="MODIFIER UN ACOMPTE" style="margin-bottom:20px;text-align: center;">
+
+                                        <p:spacer height="50px;"/>
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-6">
+                                                <label style="float:left;margin-right: 15px;">Prestataire</label>
+                                                <p:selectOneMenu id="idP" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter"  
+                                                                 value="#{acompteBean.acompteFromEdit.idPrestataire}"> 
+                                                    <f:ajax event="change" listener="#{acompteBean.renderInfo}" execute="@form" render="corps contact accord nature acompterecu reliquat dechenance" />
+                                                    <f:selectItem itemLabel="#{acompteBean.acompteFromEdit.idPrestataire.nomcomplet} (Chantier: #{acompteBean.acompteFromEdit.idPrestataire.idChantier.siteChantier})"  itemValue="#{acompteBean.acompteFromEdit.idPrestataire}"/>
+                                                    <f:selectItems value="#{acompteBean.listPrestataires}"  var="p"  itemLabel="#{p.nomcomplet} (Chantier: #{p.idChantier.siteChantier})" itemValue="#{p}" />       
+                                                </p:selectOneMenu>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <label style="float:left;margin-right: 15px;">Corps d'etat</label>
+                                                <p:inputText id="corps" readonly="true" styleClass="form-control" a:placeholder="Corps d'etat" converter="#{beanStringConverter}" value="#{acompteBean.acompteFromEdit.idPrestataire.corps}" />
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <label style="float:left;margin-right: 15px;">Contact</label>
+                                                <p:inputText id="contact" readonly="true" styleClass="form-control" a:placeholder="Contact" converter="#{beanStringConverter}" value="#{acompteBean.acompteFromEdit.idPrestataire.telephone}" />
+                                            </div>
+                                        </div>
+
+                                        <div class="row clearfix">
+                                            <br/><br/>
+                                            <div class="col-sm-4">
+                                                <label style="float:left;margin-right: 15px;">Accord</label>
+                                                <p:inputText id="accord" readonly="true" styleClass="form-control" a:placeholder="Accord"  converter="#{beanStringConverter}" value="#{acompteBean.acompteFromEdit.idPrestataire.accord}"/>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label style="float:left;margin-right: 15px;">Nature travaux</label>
+                                                <p:inputText id="nature" readonly="true" styleClass="form-control" a:placeholder="Nature travaux" converter="#{beanStringConverter}" value="#{acompteBean.acompteFromEdit.idPrestataire.nature}" />
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label style="float:left;margin-right: 15px;">Acompte reçu</label>
+                                                <p:inputText id="acompterecu" readonly="true" styleClass="form-control" a:placeholder="Acompte reçu" converter="#{beanStringConverter}" value="#{acompteBean.acompteFromEdit.idPrestataire.accompte}" />
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row clearfix">
+                                            <br/><br/>
+                                            <div class="col-sm-4">
+                                                <label style="float:left;margin-right: 15px;">Reliquat</label>
+                                                <p:inputText id="reliquat" readonly="true" styleClass="form-control" a:placeholder="Reliquat"  converter="#{beanStringConverter}" value="#{acompteBean.acompteFromEdit.idPrestataire.reliquant}"/>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label style="float:left;margin-right: 15px;">NINEA</label>
+                                                <p:inputText id="ninea" readonly="true" styleClass="form-control" a:placeholder="" converter="#{beanStringConverter}" value="#{acompteBean.acompteFromEdit.idPrestataire.ninea}" />
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label style="float:left;margin-right: 15px;">Dernière echeance</label>
+                                                <p:inputText id="dechenance" readonly="true" styleClass="form-control" a:placeholder="Corps d'etat" converter="#{beanStringConverter}" value="#{acompteBean.acompteFromEdit.idPrestataire.echenance}" />
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row clearfix">
+                                            <br/><br/>
+                                            <div class="col-sm-4">
+                                                <div class="col-sm-4">
+                                                    <label style="float:left;">Echénance</label>
+                                                    <p:selectOneMenu id="idE" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter"  
+                                                                     value="#{acompteBean.acompteFromEdit.echeanceAcompte}"> 
+                                                        <f:selectItem itemLabel="-------------------- #{acompteBean.acompteFromEdit.echeanceAcompte} --------------------"  itemValue="#{acompteBean.acompteFromEdit.echeanceAcompte}"/>
+                                                        <f:selectItem itemLabel="1er"  itemValue="1er"/>
+                                                        <f:selectItem itemLabel="2e"  itemValue="2e"/>
+                                                        <f:selectItem itemLabel="3e"  itemValue="3e"/>
+                                                        <f:selectItem itemLabel="4e"  itemValue="4e"/>
+                                                        <f:selectItem itemLabel="5e"  itemValue="5e"/>
+                                                        <f:selectItem itemLabel="6e"  itemValue="6e"/>
+                                                        <f:selectItem itemLabel="7e"  itemValue="7e"/>
+                                                        <f:selectItem itemLabel="8e"  itemValue="8e"/>
+                                                        <f:selectItem itemLabel="9e"  itemValue="9e"/>
+                                                        <f:selectItem itemLabel="10e"  itemValue="10e"/>
+
+                                                        <f:selectItem itemLabel="11e"  itemValue="11e"/>
+                                                        <f:selectItem itemLabel="12e"  itemValue="12e"/>
+                                                        <f:selectItem itemLabel="13e"  itemValue="13e"/>
+                                                        <f:selectItem itemLabel="14e"  itemValue="14e"/>
+                                                        <f:selectItem itemLabel="15e"  itemValue="15e"/>
+                                                        <f:selectItem itemLabel="16e"  itemValue="16e"/>
+                                                        <f:selectItem itemLabel="17e"  itemValue="17e"/>
+                                                        <f:selectItem itemLabel="18e"  itemValue="18e"/>
+                                                        <f:selectItem itemLabel="19e"  itemValue="19e"/>
+                                                        <f:selectItem itemLabel="20e"  itemValue="20e"/>
+
+                                                    </p:selectOneMenu>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <br/>
+                                                <label style="float:left;margin-right: 15px;">Montant</label>
+                                                <pe:inputNumber  id="mt"  converter="#{beanStringConverter}" value="#{acompteBean.montantFromEditDouble}"  thousandSeparator="." decimalSeparator="," maxValue="999999999999"  />  
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <br/>
+                                                <label style="float:left;margin-right: 15px;">Date</label>
+                                                <p:calendar  id="datdeaccompte" converter="#{beanStringConverter}" value="#{acompteBean.acompteFromEdit.dateAcompte}" />
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-sm-4">
+                                            <label style="float:left;margin-right: 15px;">Numéro de cheque</label>
+                                            <p:inputText id="chequef" styleClass="form-control" a:placeholder="" converter="#{beanStringConverter}" value="#{acompteBean.acompteFromEdit.numerocheque}" />
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label style="float:left;margin-right: 15px;">Appliquer la TVA ?</label>
+                                            <p:selectOneMenu id="idChoix" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter"  
+                                                             value="#{acompteBean.acompteFromEdit.choixtva}"> 
+                                                <f:selectItem itemLabel="---------- #{acompteBean.acompteFromEdit.choixtva} ----------"  itemValue="#{acompteBean.acompteFromEdit.choixtva}"/>
+                                                <f:selectItem itemLabel="oui"  itemValue="oui"/>
+                                                <f:selectItem itemLabel="non"  itemValue="non"/>
+                                            </p:selectOneMenu>
+                                        </div>
+
+
+
+                                        <div class="row clearfix">
+                                            <br/><br/>
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <h:inputHidden id="idACP" converter="#{beanStringConverter}" value="#{acompteBean.acompteFromEdit.idAcompte}"/>
+                                                    <h:inputHidden id="ancienMtt" converter="#{beanStringConverter}" value="#{acompteBean.ancienMtAcompteFromEdit}"/>
+                                                    <p:commandButton id="save" value="Enregistrer" ajax="false" action="#{acompteBean.update}" />
+                                                    <h:commandLink  action="#{acompteBean.update}">
+                                                        <h:graphicImage value="resources/images/enregistrer.svg"  title="Enregistrer" />
+                                                    </h:commandLink>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </p:panel>
+                                </h:form>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

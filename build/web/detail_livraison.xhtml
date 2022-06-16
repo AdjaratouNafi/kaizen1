@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | APPROVISIONNEMENT
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h2></h2>
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="card">
+                                <div class="body">
+
+                                    <h:form id="formSearch">
+                                        <p:growl id="msgs" showDetail="true" />
+
+
+                                        <p:panel id="basicc" header="DETAIL FICHE APPROVISIONNEMENT CHANTIER" style="margin-bottom:20px;text-align: center;">
+
+                                            <p:spacer height="50px;"/>
+                                            <p>Commande : #{livraisonOtherBean.idCommandeLiv}</p><br/>
+                                            <p>Date : #{livraisonOtherBean.dateLiv}</p><br/>
+                                            <p>Fournisseur : #{livraisonOtherBean.fournisseurLiv}</p>
+
+                                            <p:dataTable emptyMessage="Aucune donnée trouvée" id="listD" value="#{livraisonOtherBean.allDetailleLivraison}" var="l"  widgetVar="100" paginator="true" rows="20" 
+                                                         paginatorPosition="bottom" style="width: 100%;" editable="true">
+
+                                                <p:column>
+                                                    <f:facet name="header">Désignation</f:facet> 
+                                                        #{l.designation}
+                                                </p:column>
+
+                                                <p:column>
+                                                    <f:facet name="header">Quantité</f:facet> 
+                                                        #{l.qtLivre}
+                                                </p:column>
+
+
+                                                <p:column>
+
+                                                    <f:facet name="header">P.U</f:facet> 
+                                                        #{l.pu}
+                                                </p:column>
+
+
+                                            </p:dataTable>
+
+                                        </p:panel>
+                                    </h:form>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | DECOMPTES
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="card">
+                                <div class="body">
+
+                                    <h:form id="form1">
+
+                                        <p:panel header="DETAIL DU DECOMPTE #{decompte2Bean.decompte2FromEdit.numeroDecompte2}" style="width: 100%;text-align: center;">
+
+
+                                            <b style="float: left;">Client : <h:outputText value = "#{decompte2Bean.decompte2FromEdit.idMarche.idClient.nomClient}"/> </b><br/>
+                                            <b style="float: left;">Marché : <h:outputText value = "#{decompte2Bean.decompte2FromEdit.idMarche.nomMarche}"/> </b><br/><br/>
+                                            <b style="float: left;">Date : <h:outputText value = "#{decompte2Bean.decompte2FromEdit.dateDecompte2}"/> </b><br/><br/>
+
+
+                                            <p:dataTable value="#{decompte2Bean.itemDetailleDecomptes2}" var="r" widgetVar="100" paginator="true" rows="5" paginatorPosition="bottom" style="width: 100%;">
+                                                <f:facet name="header">  
+
+                                                </f:facet>
+
+                                                <p:column>
+                                                    <f:facet name="header">Désignation</f:facet> 
+                                                        #{r.designation}
+                                                </p:column>
+                                                <p:column>
+                                                    <f:facet name="header">Quantité</f:facet> 
+                                                        #{r.quantite}
+                                                </p:column>
+                                                <p:column>
+                                                    <f:facet name="header">P.U</f:facet> 
+                                                    #{r.pu}
+                                                </p:column>
+                                                <p:column>
+                                                    <f:facet name="header">Execution</f:facet> 
+                                                    #{r.execution} %
+                                                </p:column>
+
+                                            </p:dataTable>
+
+                                        </p:panel>
+
+                                        <!-- #END# Basic Examples -->
+                                    </h:form>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

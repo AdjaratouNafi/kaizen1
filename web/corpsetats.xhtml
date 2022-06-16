@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | CORPS D'ETAT
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+
+                    </div>
+
+                    <h:form id="form1">
+                        <p:growl id="messages" showDetail="true"/>
+
+                        <p:panel header="LISTE DES CORPS D'ETAT" style="width: 100%;text-align: center;">
+
+                            <c:if test="#{corspetatPmBean.consulterCorspetat.equalsIgnoreCase('yes')}"> 
+
+                                <p:dataTable emptyMessage="Aucune donnée trouvée" filteredValue="#{corspetatPmBean.filteredListCorpsetat}" value="#{corspetatPmBean.item}" var="r" widgetVar="listCorps" style="width: 100%;">
+                                    <f:facet name="header">
+                                        <p:outputPanel>
+                                            <h:outputText value="Recherche:" style="margin: 15px;" />
+                                            <p:inputText id="globalFilter" converter="#{beanStringConverter}" onkeyup="PF('listCorps').filter()" style="150px;" />
+                                        </p:outputPanel>
+                                    </f:facet>
+
+                                    <p:column filterStyle="display:none" headerText="CORPS D'ETAT" sortBy="#{r.libellecoprsetat}" filterBy="#{r.libellecoprsetat}">
+                                        #{r.libellecoprsetat}
+                                    </p:column>
+
+                                    <p:column filterStyle="display:none" headerText="LOT TECHNIQUE" sortBy="#{r.idLottehcnique.libellelottechnique}" filterBy="#{r.idLottehcnique.libellelottechnique}">
+                                        #{r.idLottehcnique.libellelottechnique}
+                                    </p:column>
+
+                                    <p:column style="width: 300px;">
+                                        <f:facet name="header">Action</f:facet> 
+
+                                        <c:if test="#{corspetatPmBean.modifierCorspetat.equalsIgnoreCase('yes')}"> 
+                                            <h:commandLink  action="#{corspetatPmBean.editer}">
+                                                <h:graphicImage value="resources/images/modifier.svg" width="35px" height="35px"  title="Modifier" />
+                                            </h:commandLink>
+                                        </c:if> 
+
+                                        <c:if test="#{corspetatPmBean.modifierCorspetat.equalsIgnoreCase('no')}">
+                                            <p:commandButton value="Modifier" ajax="false" />
+                                        </c:if> 
+
+                                        &nbsp;&nbsp;&nbsp;
+
+                                        <c:if test="#{corspetatPmBean.supprimerCorspetat.equalsIgnoreCase('yes')}"> 
+                                            <h:commandLink  action="#{corspetatPmBean.supprimer}">
+                                                <h:graphicImage value="resources/images/supprimer.svg" width="35px" height="35px"  title="Supprimer" />
+                                            </h:commandLink>
+                                        </c:if> 
+
+                                        <c:if test="#{corspetatPmBean.supprimerCorspetat.equalsIgnoreCase('no')}">
+                                            <h:commandLink  class="btn waves-effect" style="background-color: red;color: #fff;margin-top: -5px;border-radius: 8px;">Supprimer</h:commandLink>  
+                                        </c:if> 
+
+                                    </p:column>
+
+                                </p:dataTable>
+
+                                <c:if test="#{corspetatPmBean.creerCorspetat.equalsIgnoreCase('yes')}"> 
+                                    <a href="new_corpsetatpm.xhtml" class="btn btn-primary m-t-15 waves-effect" style="border-radius: 10px;color: white;">Nouveau Corps d'Etat</a>
+                                </c:if> 
+
+                                <c:if test="#{corspetatPmBean.creerCorspetat.equalsIgnoreCase('no')}">
+                                    <a href="#" class="btn btn-primary m-t-15 waves-effect" style="border-radius: 10px;color: white;">Nouveau Corps d'Etat</a>
+                                </c:if> 
+
+
+                            </c:if> 
+
+
+                        </p:panel>
+
+
+
+                    </h:form>
+
+                </div>
+
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

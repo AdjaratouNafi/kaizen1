@@ -1,0 +1,139 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | PRETS
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+
+                    </div>
+
+                    <h:form id="form1">
+                        <!-- Basic Examples -->
+                        <div class="row clearfix">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                                <div class="body">
+                                    <p:panel header="Liste des prêts" style="width: 100%;text-align: center;">
+
+                                       <!-- <c:if test="#{pretBean.consulterPret.equalsIgnoreCase('yes')}"> -->
+
+                                        <p:dataTable value="#{pretBean.itemPrets}" var="r" widgetVar="100" style="width: 100%;">
+                                            <f:facet name="header">  
+
+                                            </f:facet>
+
+                                            <p:column>
+                                                <f:facet name="header">Nom</f:facet> 
+                                                    #{r.idUtilisateur.nomUtilisateur}  #{r.idUtilisateur.prenomUtilisateur}
+                                            </p:column>
+                                            <p:column>
+                                                <f:facet name="header">Date prêt</f:facet> 
+                                                    #{r.datePret}  
+                                            </p:column> 
+                                            <p:column>
+                                                <f:facet name="header">Montant</f:facet> 
+                                                    #{r.montantPret}  
+                                            </p:column> 
+                                            <p:column>
+                                                <f:facet name="header">Montant restant</f:facet> 
+                                                    #{r.montantR}  
+                                            </p:column> 
+                                            <p:column>
+                                                <f:facet name="header">Etat</f:facet> 
+                                                <h:outputText value="En attente de validation" rendered="#{r.etatPret == 'Demande'}" />
+                                                <h:outputText value="En attente de remise au bénéficiaire" rendered="#{r.etatPret == 'Validé'}" />
+                                                <h:outputText value="En attente de remboursement" rendered="#{r.etatPret == 'Perçu'}" />
+                                                <h:outputText value="Remboursé" rendered="#{r.etatPret == 'Remboursé'}" />
+                                            </p:column> 
+
+                                            <p:column>
+                                                <f:facet name="header">Action</f:facet> 
+
+                                                   <!-- <c:if test="#{pretBean.validerPret.equalsIgnoreCase('yes')}"> -->
+
+                                                <h:commandLink rendered="#{r.etatPret == 'Demande'}" action="#{pretBean.valider}">
+                                                    <h:graphicImage value="resources/images/traiter.svg" width="35px" height="35px"  title="Valider" />
+                                                </h:commandLink>
+
+                                                <h:commandLink rendered="#{r.etatPret == 'Validé'}" action="#{pretBean.percu}">
+                                                    <h:graphicImage value="resources/images/traiter.svg" width="35px" height="35px"  title="Payer" />
+                                                </h:commandLink>
+                                                <!--<h:commandLink rendered="#{r.etatPret == 'Perçu'}"  class="btn btn-primary m-t-15 waves-effect" action="#{pretBean.rembourser}">Effectuer remboursement</h:commandLink>-->
+
+                                                <!-- </c:if> -->
+
+                                                   <!-- <c:if test="#{pretBean.validerPret.equalsIgnoreCase('no')}">
+
+                                                        <h:commandLink rendered="#{r.etatPret == 'Demande'}"  class="btn btn-primary m-t-15 waves-effect" style="border-radius: 10px;color: white;">Valider</h:commandLink>
+                                                        <h:commandLink rendered="#{r.etatPret == 'Validé'}"  class="btn btn-primary m-t-15 waves-effect" style="border-radius: 10px;color: white;">Payer</h:commandLink>
+                                                        
+                                                    </c:if> -->
+
+                                                &nbsp;&nbsp;&nbsp;
+
+                                                   <!-- <c:if test="#{pretBean.modifierPret.equalsIgnoreCase('yes')}"> -->
+                                                <h:commandLink rendered="#{r.etatPret == 'Demande'}" action="#{pretBean.editer}">
+                                                    <h:graphicImage value="resources/images/modifier.svg" width="35px" height="35px"  title="Modifier" />
+                                                </h:commandLink>
+                                                <!-- </c:if> -->
+
+                                                   <!-- <c:if test="#{pretBean.modifierPret.equalsIgnoreCase('no')}">
+                                                        <h:commandLink  rendered="#{r.etatPret == 'Demande'}" class="btn btn-primary m-t-15 waves-effect" style="border-radius: 10px;color: white;">Modifier</h:commandLink>
+                                                    </c:if> -->
+
+                                                &nbsp;&nbsp;&nbsp;
+
+                                                    <!--<c:if test="#{pretBean.supprimerPret.equalsIgnoreCase('yes')}"> -->
+                                                <h:commandLink rendered="#{r.etatPret == 'Demande'}" action="#{pretBean.supprimer}">
+                                                    <h:graphicImage value="resources/images/supprimer.svg" width="35px" height="35px"  title="Supprimer" />
+                                                </h:commandLink>
+                                                <!-- </c:if> -->
+
+                                                    <!--<c:if test="#{pretBean.supprimerPret.equalsIgnoreCase('no')}">
+                                                        <h:commandLink  rendered="#{r.etatPret == 'Demande'}" class="btn waves-effect" style="border-radius: 10px;background-color: red;color: #fff;margin-top:15px;">Supprimer</h:commandLink>  
+                                                    </c:if> -->
+
+                                            </p:column>
+
+                                        </p:dataTable>
+
+                                            <!--<c:if test="#{pretBean.creerPret.equalsIgnoreCase('yes')}">-->
+                                        <a href="new_pret.xhtml" class="btn btn-primary m-t-15 waves-effect" style="border-radius: 10px;color: white;">Nouveau prêt</a>
+                                        <!--</c:if> -->
+
+<!-- <c:if test="#{pretBean.creerPret.equalsIgnoreCase('no')}">
+    <a href="new_pret.xhtml" class="btn btn-primary m-t-15 waves-effect" style="border-radius: 10px;color: white;">Nouveau prêt</a>
+</c:if> -->
+
+                                        <!--  </c:if> -->
+
+                                    </p:panel>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- #END# Basic Examples -->
+                    </h:form>
+
+                </div>
+
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

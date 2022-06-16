@@ -1,0 +1,197 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | INVENTAIRE
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h2></h2>
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                            <div class="body">
+                                <br/><br/>
+                                <center style="font-size: 25px;font-weight: bold;">ENREGISTRER UN PRODUIT</center>
+                                <br/><br/>
+                                <h:form id="formdecompte"> 
+
+
+                                    <div class="row clearfix">
+                                        <div class="col-sm-4">
+                                            <label style="float:left;margin-right: 15px;">Commande</label>
+                                            <p:selectOneMenu id="idDv" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter"  
+                                                             value="#{stockBean.stock.idCommande}"> 
+                                                <f:ajax listener="#{stockBean.renderInfoCmd}" execute="@form"  render="frs entrepot devis"/>
+                                                <f:selectItem itemLabel="--------- Sélectionnez une commande ---------"  itemValue="null"/>
+                                                <f:selectItems value="#{stockBean.allCommande}"  var="c"  itemLabel="#{c.code}" itemValue="#{c}" />       
+                                            </p:selectOneMenu>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label style="float:left;margin-right: 15px;">Fournisseur</label>
+                                            <p:inputText id="frs" readonly="true" styleClass="form-control" a:placeholder="Fournisseur" converter="#{beanStringConverter}" value="#{stockBean.stock.idFournisseur.nomFournisseur}" />
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <br/>
+                                            <label style="float:left;margin-right: 15px;">Entrepot</label>
+                                            <p:inputText  readonly="true" id="entrepot" converter="#{beanStringConverter}" value="#{stockBean.stock.idCommande.idEntrepot.nom}" />
+                                        </div>
+                                    </div> 
+
+
+                                    <div class="row clearfix">
+                                        <br/><br/>
+                                        <div class="col-sm-4">
+                                            <br/>
+                                            <label style="float:left;margin-right: 15px;">Date d'entrée</label>
+                                            <p:calendar  id="dateEntree" converter="#{beanStringConverter}" value="#{stockBean.stock.dateEntreStock}" />
+                                        </div>
+                                        <div class="col-sm-4">
+                                        </div>
+                                        <div class="col-sm-4">
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row clearfix">
+                                        <br/><br/>
+                                        <div class="col-sm-2">
+                                            <label style="float:left;margin-right: 15px;">Désignation</label> <br/>
+                                            <h:inputHidden id="input1" />
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <label style="float:left;margin-right: 15px;">Ref</label> <br/>
+                                            <h:inputHidden id="input2" />
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <label style="float:left;margin-right: 15px;">U.mesure</label> <br/>
+                                            <h:inputHidden id="input3" />
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <label style="float:left;margin-right: 15px;">Qte</label> <br/>
+                                            <h:inputHidden id="input4" />
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <label style="float:left;margin-right: 15px;">Qte.livrée</label> <br/>
+                                            <h:inputHidden id="input6" />
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <label style="float:left;margin-right: 15px;">Qte.restante</label> <br/>
+                                            <h:inputHidden id="input5" />
+                                        </div>
+
+                                        <div class="col-sm-1">
+                                            <label style="float:left;margin-right: 15px;">Seuil</label> <br/>
+                                            <h:inputHidden id="input7" />
+                                        </div>
+
+                                    </div>
+
+                                    <h:panelGroup id="devis">
+                                        <br/><br/>
+                                        <ui:repeat id="repeater1" value="#{stockBean.listStocks}" var="d" varStatus="status"> 
+                                            <div class="row clearfix">
+
+                                                <div class="col-sm-2">
+                                                    <h:inputText id="designation" readonly="true" styleClass="form-control"  converter="#{beanStringConverter}" value="#{stockBean.listStocks[status.index].designation}" />
+                                                </div>
+                                                <div class="col-sm-2">
+
+                                                    <h:inputText id="ref" readonly="true" styleClass="form-control"  converter="#{beanStringConverter}" value="#{stockBean.listStocks[status.index].ref}" />
+                                                </div>
+                                                <div class="col-sm-2">
+
+                                                    <h:inputText id="unite" readonly="true" styleClass="form-control"  converter="#{beanStringConverter}" value="#{stockBean.listStocks[status.index].unite}" />
+                                                </div>
+                                                <div class="col-sm-2">
+
+                                                    <h:inputText id="quantite" readonly="true" styleClass="form-control"  converter="#{beanStringConverter}" value="#{stockBean.listStocks[status.index].quantite}" />
+                                                </div>
+                                                <div class="col-sm-1">
+                                                    <h:inputText id="qtl" styleClass="form-control"  converter="#{beanStringConverter}" value="#{stockBean.listStocks[status.index].qtLivree}" >
+                                                        <f:ajax event="blur" listener="#{stockBean.calculeMtRestant(stockBean.listStocks[status.index])}" execute="@form" render=":formdecompte:devis" /> 
+                                                    </h:inputText> 
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <h:inputText id="pu" readonly="true" styleClass="form-control"  converter="#{beanStringConverter}" value="#{stockBean.listStocks[status.index].qtRestante}" />
+                                                </div>
+                                                <div class="col-sm-1">
+                                                    <h:inputHidden id="idD" converter="#{beanStringConverter}" value="#{stockBean.listStocks[status.index].idDetailleCommande}"/>
+                                                    <h:inputHidden id="put" converter="#{beanStringConverter}" value="#{stockBean.listStocks[status.index].pu}"/>
+
+                                                    <h:inputText id="qttt" styleClass="form-control"  converter="#{beanStringConverter}" value="#{stockBean.listStocks[status.index].qtSeuill}" />
+
+                                                </div>
+                                            </div>
+                                        </ui:repeat>                 
+
+
+
+                                    </h:panelGroup>
+
+                                    <div class="row clearfix">
+                                        <br/><br/>
+                                        <div class="col-sm-4">
+                                            <p:inputText id="cmmt" styleClass="form-control" a:placeholder="Commantaire" converter="#{beanStringConverter}" value="#{stockBean.stock.commentaire}" />
+                                        </div>
+
+                                        <div class="col-sm-4">
+
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="row clearfix">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <center>
+                                                    <br/><br/>
+                                                    <div class="form-group">
+                                                         <h:commandLink  action="#{stockBean.save}">
+                                                            <h:graphicImage value="resources/images/enregistrer.svg"  title="Enregistrer" />
+                                                        </h:commandLink>
+                                                        &nbsp;&nbsp;&nbsp;
+                                                        <h:commandLink  action="#{ressourceBean.reset}">
+                                                            <h:graphicImage value="resources/images/annuler.svg"  title="Annuler" />
+                                                        </h:commandLink>
+                                                    </div>
+
+                                                </center>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </h:form>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

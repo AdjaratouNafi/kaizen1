@@ -1,0 +1,203 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | CHANTIERS
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="body">
+
+                                <h:form id="form">
+
+                                    <p:growl id="msgs" showDetail="true" />
+
+                                    <center style="margin-left: auto;margin-right: auto;margin-bottom: 30px;width: 100%;font-size: 25px;font-weight: bold;text-transform: uppercase;"> 
+                                        CHANTIER: #{chantierBean.chantierFromEdit.siteChantier}
+                                    </center>
+                                    <br/>
+                                    <!--<p style="float: right;">
+                                        <p:commandLink action="#{chantierOtherBean.consulterImprimer(chantierBean.chantierFromEdit)}">
+                                            <h:graphicImage value="resources/images/adobe-pdf-icon.png" width="48" height="48" title="Imprimer" /> 
+                                        </p:commandLink> 
+                                    </p>
+
+                                    <br/><br/><br/>-->
+                                    
+                                    <p:tabView>
+                                        <p:tab title="INFORMATIONS DU CHANTIER">
+
+                                            <table width="100%" border="0">
+
+                                                <tr align="left">
+                                                    <td>
+                                                        <p style="margin-left: 15px; margin-top: 15px;"><b>Marché:</b> #{chantierBean.chantierFromEdit.idMarche.nomMarche} </p> <br/>
+
+                                                        <p style="margin-left: 15px; margin-top: 15px;"><b>Chef de chantier:</b> #{chantierBean.chantierFromEdit.idUtilisateur.nomUtilisateur} #{chantierBean.chantierFromEdit.idUtilisateur.prenomUtilisateur}</p> <br/>
+
+                                                        <p style="margin-left: 15px; margin-top: 15px;"><b>Etat du chantier:</b> #{chantierBean.chantierFromEdit.etatchantier}</p> <br/>
+
+                                                    </td>
+
+                                                    <td>  </td> <td> </td>
+                                                </tr>
+
+
+
+                                            </table> 
+
+                                        </p:tab>
+
+                                        <p:tab title="PRESTATAIRES AFFECTEES SUR LE CHANTIER">
+
+
+                                            <h:dataTable  class="table table-bordered table-striped table-hover js-basic-example dataTable" value="#{chantierBean.listPersonnelChantier}" var="p">
+
+
+                                                <h:column>
+                                                    <f:facet name="header">Prestataire</f:facet> 
+                                                        #{p.idPrestataire.nomcomplet} 
+                                                </h:column> 
+
+
+                                                <h:column>
+                                                    <f:facet name="header">Corps d'etat</f:facet> 
+                                                        #{p.idPrestataire.corps} 
+                                                </h:column> 
+
+                                                <h:column >
+                                                    <f:facet name="header">Date d'affectation</f:facet> 
+                                                        #{p.dateAlocation}  
+                                                </h:column> 
+
+                                                <!--<p:column style="width: 500px;">
+                                                    <f:facet name="header">Action</f:facet> 
+                                                    <p:commandButton value="Detail" ajax="false" action="#{chantierBean.detail(p)}" />
+                                                </p:column>-->
+
+
+                                            </h:dataTable>
+
+                                            <br/><br/><br/>
+
+                                            <table style="width: 100%;">
+                                                <tr>
+                                                    <td align="left;"> <font style="font-size: 15px;font-weight: bold;">TOTAL ACCORDS : #{chantierBean.totalAccorps} FCFA </font> </td>
+
+                                                    <td align="left;"> <font style="font-size: 15px;font-weight: bold;">TOTAL ACCOMPTES HT : #{chantierBean.totalAcompteHT} FCFA</font> </td>
+
+                                                    <td align="left;"> <font style="font-size: 15px;font-weight: bold;">TOTAL ACCOMPTES TTC : #{chantierBean.totalAcompteTCC} FCFA</font> </td>
+                                                </tr>
+
+                                            </table>
+
+
+                                        </p:tab>
+
+                                        <p:tab title="APPROVISIONNEMENT DU CHANTIER">
+
+                                            <label>Approvisionnement direct</label>
+
+                                            <h:dataTable  class="table table-bordered table-striped table-hover js-basic-example dataTable" value="#{chantierBean.listLivraisons}" var="l">
+
+                                                <p:column>
+                                                    <f:facet name="header">Désignation</f:facet> 
+                                                        #{l.designation}
+                                                </p:column>
+
+                                                <p:column>
+                                                    <f:facet name="header">Quantité</f:facet> 
+                                                        #{l.qtLivre}
+                                                </p:column>
+
+                                                <p:column>
+                                                    <f:facet name="header">P.U</f:facet> 
+                                                        #{l.pu}
+                                                </p:column>
+
+                                                <p:column>
+
+                                                    <f:facet name="header">Date</f:facet> 
+                                                        #{l.dateLivraison}
+                                                </p:column>
+
+
+                                            </h:dataTable>
+
+                                            <br/>
+
+                                            <label style="font-size: 12px;">TOTAL APPROVISIONNEMENT DIRECT: #{chantierBean.coutTotalApproDirect} F CFA</label>
+
+
+                                            <br/> <br/> <br/>
+
+                                            <label>Approvisionnement via le stock</label>
+                                            <h:dataTable  class="table table-bordered table-striped table-hover js-basic-example dataTable" value="#{chantierBean.listSortieStock}" var="p">
+
+
+                                                <h:column>
+                                                    <f:facet name="header">Demandeur</f:facet> 
+                                                        #{p.idUtilisateur.nomUtilisateur}  #{p.idUtilisateur.prenomUtilisateur}
+                                                </h:column> 
+
+
+                                                <h:column>
+                                                    <f:facet name="header">Materiel</f:facet> 
+                                                        #{p.idStock.designation} 
+                                                </h:column> 
+
+                                                <h:column>
+                                                    <f:facet name="header">Qté</f:facet> 
+                                                        #{p.quantite} 
+                                                </h:column> 
+
+                                                <h:column>
+                                                    <f:facet name="header">P.U</f:facet> 
+                                                        #{p.pu} 
+                                                </h:column> 
+
+                                                <h:column >
+                                                    <f:facet name="header">Date</f:facet> 
+                                                        #{p.dateSortiestock}  
+                                                </h:column> 
+
+
+                                            </h:dataTable>
+
+                                            <br/>
+
+                                            <label style="font-size: 12px;">TOTAL APPROVISIONNEMENT VIA STOCK: #{chantierBean.coutTotalApproStock} F CFA</label>
+
+                                        </p:tab>
+                                    </p:tabView>
+
+                                </h:form>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

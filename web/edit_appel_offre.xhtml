@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | Appe d'offre
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h2>MODIFIER UN Appel d'offre</h2>
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="card">
+                                <div class="body">
+                                    <h:form> 
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-4">
+                                                <p:inputText id="numero" styleClass="form-control" a:placeholder="Numéro"  converter="#{beanStringConverter}" value="#{appelOffreBean.appelOffreFromEdit.numAppel}"/>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <p:inputText id="dateappel" styleClass="form-control" a:placeholder="Date au format JJ-MM-AAAA"  converter="#{beanStringConverter}" value="#{appelOffreBean.appelOffreFromEdit.dateAppel}"/>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <p:selectOneMenu id="typeappel" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter" value="#{appelOffreBean.appelOffreFromEdit.typeAppel}"> 
+                                                    <f:selectItem itemLabel="--- Choisissez un type  ---"  itemValue="null"/> 
+                                                    <f:selectItem itemLabel="Public"  itemValue="Public"/>
+                                                    <f:selectItem itemLabel="Privé"  itemValue="Privé"/>
+                                                </p:selectOneMenu>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-4">
+                                                <p:selectOneMenu id="idUser" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter"  
+                                                                 value="#{appelOffreBean.appelOffreFromEdit.idUtilisateur}"> 
+                                                    <f:selectItem itemLabel="-- Sélectionnez un personnel --"  itemValue="null"/>
+                                                    <f:selectItems value="#{utilisateurBean.listUtilisateurs}"  var="r"  itemLabel="#{r.nomUtilisateur} #{r.prenomUtilisateur}" itemValue="#{r}" />       
+                                                </p:selectOneMenu>
+                                            </div>
+                                            <div class="col-sm-4">
+                                            </div>
+                                            <div class="col-sm-4">
+                                               
+                                            </div>
+                                        </div>
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <h:inputHidden id="idBailleur" converter="#{beanStringConverter}" value="#{appelOffreBean.appelOffreFromEdit.idAppel}"/>
+                                                    <p:commandButton styleClass="btn btn-primary m-t-15 waves-effect" id="save" value="Modifier" ajax="false" action="#{appelOffreBean.update}" />
+                                                    &nbsp;&nbsp;&nbsp;
+                                                    <p:commandButton styleClass="btn btn-primary m-t-15 waves-effect" id="reset" value="Annuler" action="#{appelOffreBean.reset}" />
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </h:form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,152 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | DEVIS
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h2></h2>
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                            <div class="body">
+                                <br/><br/>
+                                <center style="font-size: 25px;font-weight: bold;">TRAITER UNE EXPRESSION DE BESOIN</center>
+
+                                <br/><br/>
+
+                                <h:form id="formDevis"> 
+
+                                    <div class="row clearfix">
+                                        <div class="col-sm-4">
+                                            <label style="float:left;margin-right: 15px;">Expression de besoin</label>
+                                            <p:inputText id="expBesoin"  readonly="true" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traiterExpressionbesoinBean.expressionbesoinFromTraitement.numeroExpression}"/>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label style="float:left;margin-right: 15px;">Date</label>
+                                            <p:inputText id="dateexp"  readonly="true" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traiterExpressionbesoinBean.expressionbesoinFromTraitement.dateExpression}"/>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label style="float:left;">Etat de traitement</label>
+                                            <p:inputText id="etattraitement" readonly="true" styleClass="form-control"   converter="#{beanStringConverter}" value="#{traiterExpressionbesoinBean.expressionbesoinFromTraitement.etat}"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="row clearfix">
+                                        <br/><br/>
+                                        <div class="col-sm-3">
+                                            <label style="float:left;margin-right: 15px;">Désignation</label> <br/>
+                                            <h:inputHidden id="input1" />
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <label style="float:left;margin-right: 15px;">Qte demandée</label> <br/>
+                                            <h:inputHidden id="input2" />
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <label style="float:left;margin-right: 15px;">Qte disponible</label> <br/>
+                                            <h:inputHidden id="input3" />
+                                        </div>
+                                        <!--<div class="col-sm-3">
+                                            <label style="float:left;margin-right: 15px;">Entrepôt</label> <br/>
+                                            <h:inputHidden id="input3P" />
+                                        </div>-->
+                                        <div class="col-sm-3">
+                                            <label style="float:left;margin-right: 15px;">Qte validée</label> <br/>
+                                            <h:inputHidden id="input4" />
+                                        </div>
+
+                                    </div>
+
+
+                                    <h:panelGroup id="devis">
+                                        <br/><br/>
+                                        <ui:repeat id="repeater1" value="#{traitementEBNBean.listEb}" var="d" varStatus="status">
+                                            <div class="row clearfix">
+                                                <div class="col-sm-3">
+                                                    <br/>
+                                                    <h:inputText id="designation" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traitementEBNBean.listEb[status.index].designation}" />
+                                                </div>
+
+                                                <div class="col-sm-3">
+                                                    <br/>
+                                                    <h:inputText id="qtdmd" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traitementEBNBean.listEb[status.index].qtEbDemande}" />
+                                                </div>
+
+                                                <div class="col-sm-3">
+                                                    <br/>
+                                                    <h:inputText id="qtdsp" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traitementEBNBean.listEb[status.index].qtDispoStock}" />
+                                                </div> 
+
+                                                <!--<div class="col-sm-3">
+                                                    <br/>
+                                                    <h:inputText id="entrepotP" styleClass="form-control"  converter="#{beanStringConverter}" rendered="#{traitementEBNBean.listEb[status.index].entrepot != null}" value=" #{traitementEBBean.listEb[status.index].nomEntrepot}" />
+                                                </div>-->
+
+                                                <div class="col-sm-3">
+                                                    <br/>
+                                                    <h:inputText id="qtv" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traitementEBNBean.listEb[status.index].qtEbValide}" />
+                                                </div>
+
+                                            </div>
+                                        </ui:repeat>  
+
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <center>
+
+                                                        <br/><br/>
+                                                        <h:commandLink  action="#{traitementEBNBean.save2}">
+                                                            <h:graphicImage value="resources/images/enregistrer.svg"  title="Enregistrer" />
+                                                        </h:commandLink>
+                                                        &nbsp;&nbsp;&nbsp;
+                                                        <h:commandLink  action="#{traitementEBNBean.reset}">
+                                                            <h:graphicImage value="resources/images/annuler.svg"  title="Annuler" />
+                                                        </h:commandLink>
+                                                    </center>
+
+                                                </div>
+
+                                                <!--<div class="form-group">
+                                                    <p:commandButton  class="btn btn-primary m-t-15 waves-effect" id="save"  ajax="false" value="Enregistrer" action="#{traitementEBNBean.save2}" />
+                                                    &nbsp;&nbsp;&nbsp;
+                                                    <p:commandButton  class="btn btn-primary m-t-15 waves-effect" id="reset" value="Annuler" action="#{traitementEBNBean.reset}" />
+                                                </div>-->
+
+                                            </div>
+                                        </div>
+
+
+
+                                    </h:panelGroup> 
+
+                                </h:form>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

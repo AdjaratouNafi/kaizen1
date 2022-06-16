@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | Fournisseur
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+
+                        <h:form>
+                            <b>Liste des marchandises du fournisseur : <h:outputText value = "#{fournisseurBean.fournisseurFromEdit.nomFournisseur}"/> </b>
+                        </h:form>
+
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="card">
+                                <div class="body">
+
+
+                                    <h:form>
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-12">
+
+
+                                                <h:dataTable  class="table table-bordered table-striped table-hover js-basic-example dataTable" value="#{fournisseurBean.itemVentes}" var="r">
+
+                                                    <h:column>
+                                                        <f:facet name="header">#</f:facet> 
+
+                                                    </h:column> 
+                                                    <h:column>
+                                                        <f:facet name="header">Libelle</f:facet> 
+                                                            #{r.idMarchandise.libelle}  
+                                                    </h:column> 
+                                                    <h:column>
+                                                        <f:facet name="header">Prix unitaire</f:facet> 
+                                                        #{r.idMarchandise.prixunitaire} FCFA
+                                                    </h:column>            
+
+                                                </h:dataTable>
+
+
+                                            </div>
+                                        </div>
+
+
+                                    </h:form>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

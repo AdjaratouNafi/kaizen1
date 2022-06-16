@@ -1,0 +1,204 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | COMMANDES
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h2></h2>
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                            <div class="body">
+                                <br/><br/>
+                                <center style="font-size: 25px;font-weight: bold;">TRAITER UNE EXPRESSION DE BESOIN</center>
+                                <br/><br/>
+                                <h:form id="formDevis"> 
+
+
+                                    <div class="row clearfix">
+                                        <div class="col-sm-4">
+                                            <label style="float:left;margin-right: 15px;">Expression de besoin</label>
+                                            <p:inputText id="code"  readonly="true" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traitementExpressionTestBean.commandeFromEdit.dateechance}"/>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label style="float:left;margin-right: 15px;">Date</label>
+                                            <p:inputText id="dateexp"  readonly="true" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traitementExpressionTestBean.commandeFromEdit.dateechance}"/>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label style="float:left;">Chantier</label>
+                                            <p:inputText id="chantier" readonly="true" styleClass="form-control" a:placeholder="Numéro"  converter="#{beanStringConverter}" value="#{traitementExpressionTestBean.commandeFromEdit.idChantier.siteChantier}"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="row clearfix">
+                                        <div class="col-sm-4">
+                                            <!--<br/>
+                                            <label style="float:left;margin-right: 50px;">Fournisseur</label>
+                                            <p:selectOneMenu id="idFssr" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter"  
+                                                             value="#{commande2Bean.commandeFromEdit.idFournisseur}"> 
+                                                <f:selectItems value="#{fournisseurBean.listFournisseur}"  var="f"  itemLabel="#{f.nomFournisseur}" itemValue="#{f}" />       
+                                            </p:selectOneMenu>-->
+                                        </div>
+                                        <div class="col-sm-4">
+                                        </div>
+                                        <!--<div class="col-sm-4">
+                                            <label style="float:left;">Contact fournisseur</label>
+                                            <p:inputText id="contactF" readonly="true" styleClass="form-control"  converter="#{beanStringConverter}" value="#{commande2Bean.contactFournisseur}"/>
+                                        </div> -->
+                                    </div>
+
+
+                                    <div class="row clearfix">
+                                        <br/><br/>
+                                        <div class="col-sm-2">
+                                            <label style="float:left;margin-right: 15px;">Désignation</label> <br/>
+                                            <h:inputHidden id="input1" />
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <label style="float:left;margin-right: 15px;">Ref</label> <br/>
+                                            <h:inputHidden id="input2" />
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <label style="float:left;margin-right: 15px;">U.mesure</label> <br/>
+                                            <h:inputHidden id="input3" />
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <label style="float:left;margin-right: 15px;">Qte</label> <br/>
+                                            <h:inputHidden id="input4" />
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <label style="float:left;margin-right: 15px;">Fournisseur</label> <br/>
+                                            <h:inputHidden id="input6" />
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <label style="float:left;margin-right: 15px;">Contact</label> <br/>
+                                            <h:inputHidden id="input5" />
+                                        </div>
+
+                                    </div>
+
+                                    <h:panelGroup id="devis">
+                                        <br/><br/>
+                                        <ui:repeat id="repeater1" value="#{traitementExpressionTestBean.allFactureUtils}" var="d" varStatus="status">
+                                            <div class="row clearfix">
+                                                <div class="col-sm-2">
+
+                                                    <h:inputText readonly="true" id="designation" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traitementExpressionTestBean.allFactureUtils[status.index].designation}" />
+                                                </div>
+                                                <div class="col-sm-2">
+
+                                                    <h:inputText readonly="true" id="ref" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traitementExpressionTestBean.allFactureUtils[status.index].ref}" />
+                                                </div>
+                                                <div class="col-sm-2">
+
+                                                    <h:selectOneMenu id="unite" styleClass="form-control"  converter="omnifaces.SelectItemsConverter"  
+                                                                     value="#{traitementExpressionTestBean.allFactureUtils[status.index].unite}"> 
+                                                        <f:selectItem itemLabel="#{traitementExpressionTestBean.allFactureUtils[status.index].unite}"  itemValue="#{traitementExpressionTestBean.allFactureUtils[status.index].unite}"/>
+                                                        <f:selectItems value="#{uniteBean.listUnites}"  var="unite"  itemLabel="#{unite.abreviation}" itemValue="#{unite.abreviation}" />       
+                                                    </h:selectOneMenu>
+
+                                                </div>
+                                                <div class="col-sm-2">
+
+                                                    <h:inputText readonly="true" id="quantite" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traitementExpressionTestBean.allFactureUtils[status.index].quantite}" />
+                                                </div>
+                                                <div class="col-sm-2">
+
+                                                    <h:selectOneMenu id="idF" styleClass="form-control"  converter="omnifaces.SelectItemsConverter"  
+                                                                     value="#{traitementExpressionTestBean.allFactureUtils[status.index].fournisseur}"> 
+                                                        <f:ajax event="change" listener="#{traitementExpressionTestBean.renderInfo3(traitementExpressionTestBean.allFactureUtils[status.index])}" execute="@form" render=":formDevis:devis" />
+                                                        <f:selectItem itemLabel="#{traitementExpressionTestBean.allFactureUtils[status.index].fournisseur.nomFournisseur}"  itemValue="#{traitementExpressionTestBean.allFactureUtils[status.index].fournisseur}"/>
+                                                        <f:selectItems value="#{traitementExpressionTestBean.allFactureUtils[status.index].listPrix}"  var="p"  itemLabel="#{p.idFournisseur.nomFournisseur} (#{p.prix})" itemValue="#{p.idFournisseur}" />       
+                                                    </h:selectOneMenu>
+
+                                                </div>
+                                                <div class="col-sm-2">
+
+                                                    <h:inputText readonly="true" id="contact" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traitementExpressionTestBean.allFactureUtils[status.index].contact}" />
+
+                                                    <h:inputHidden  converter="#{beanStringConverter}" value="#{traitementExpressionTestBean.allFactureUtils[status.index].pu}" />
+
+                                                    <h:inputHidden id="idDetaille" value="#{traitementExpressionTestBean.allFactureUtils[status.index].idDetailleCommande}" />
+                                                </div>
+                                            </div>
+                                        </ui:repeat>                 
+
+
+
+                                    </h:panelGroup>
+
+
+                                    <div class="row clearfix">
+                                        <br/><br/>
+                                        <div class="col-sm-4">
+                                            <label style="float:left;margin-right: 15px;">Montant TTC</label> <br/>
+                                            <h:inputText id="mtotal" readonly="true" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traitementExpressionTestBean.totalTTC}" />
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label style="float:left;margin-right: 15px;">Etat</label>
+
+                                            <h:selectOneMenu id="etat" styleClass="ui-selectonemenu" converter="omnifaces.SelectItemsConverter"  
+                                                             value="#{traitementExpressionTestBean.etatCommande}"> 
+                                                <f:ajax event="change" listener="#{traitementExpressionTestBean.renderInfoExpTraitement2}" execute="@form" render="perfbyselection1" />
+                                                <f:selectItem itemLabel="-------------- Selectionnez un etat --------------"  itemValue="null"/>
+                                                <f:selectItem itemLabel="En attente"  itemValue="En attente"/>
+                                                <f:selectItem itemLabel="Traitée"  itemValue="Traitée"/>
+                                                <f:selectItem itemLabel="Rejetée"  itemValue="Rejetée"/>
+                                            </h:selectOneMenu>
+
+                                        </div>
+                                        <h:panelGroup id="perfbyselection1">
+                                            <div class="col-sm-4">
+                                                <br/>
+                                                <label style="float:left;margin-right: 15px;">Motif de rejet</label> <br/>
+                                                <h:inputText rendered="#{traitementExpressionTestBean.etatCommande eq 'Rejetée'}" id="motif" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traitementExpressionTestBean.commandeFromEdit.motif}" />
+                                            </div>
+                                        </h:panelGroup>
+                                    </div>
+
+
+                                    <div class="row clearfix">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <center>
+                                                    <br/><br/>
+                                                    <h:commandLink  action="#{traitementExpressionTestBean.saveTraitement}">
+                                                        <h:graphicImage value="resources/images/enregistrer.svg"  title="Enregistrer" />
+                                                    </h:commandLink>
+                                                </center>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </h:form>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

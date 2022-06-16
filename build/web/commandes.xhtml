@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | COMMANDES
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h3></h3>
+                    </div>
+
+                    <h:form id="form1">
+
+                        <p:panel header="LISTE DES COMMANDES" style="width: 100%;text-align: center;">
+
+
+                            <p:dataTable value="#{commandeBean.itemCommandes}" var="r" widgetVar="100" paginator="true" rows="20" paginatorPosition="bottom" style="width: 100%;">
+                                <f:facet name="header">  
+
+                                </f:facet>
+
+                                <p:column>
+                                    <f:facet name="header">N</f:facet> 
+                                        #{r.code}
+                                </p:column>
+
+
+                                <p:column>
+                                    <f:facet name="header">Fournisseur</f:facet> 
+                                        #{r.idFournisseur.nomFournisseur}  
+                                </p:column> 
+                                <p:column>
+                                    <f:facet name="header">Marché</f:facet> 
+                                        #{r.idMarche.nomMarche}
+                                </p:column> 
+                                <p:column>
+                                    <f:facet name="header">Echéance</f:facet> 
+                                        #{r.dateechance}
+                                </p:column>
+
+                                <p:column style="width: 500px;">
+                                    <f:facet name="header">Action</f:facet> 
+                                    <p:commandButton value="Detail" ajax="false" action="#{commandeBean.detail}" />
+                                    &nbsp;&nbsp;
+                                    <p:commandButton value="Imprimer" ajax="false" action="#{commandeBean.imprimer}" />
+                                    &nbsp;&nbsp;
+                                    <h:commandLink  class="btn waves-effect" style="background-color: red;color: #fff;margin-top: -5px;border-radius: 8px;" action="#{commandeBean.supprimer}">Supprimer</h:commandLink>  
+                                </p:column>
+
+                            </p:dataTable>
+
+                            <a href="new_commande.xhtml" class="btn btn-primary m-t-15 waves-effect" style="border-radius: 10px;color: white;">Nouveau bon de commande</a>
+                            &nbsp;&nbsp;&nbsp;
+                            <a href="maj_commande.xhtml" class="btn btn-primary m-t-15 waves-effect" style="border-radius: 10px;color: white;">Ajouter une ressource à un bon de commande</a>
+
+                        </p:panel>
+
+                        <!-- #END# Basic Examples -->
+                    </h:form>
+
+                </div>
+
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

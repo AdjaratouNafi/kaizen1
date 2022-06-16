@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | PRESTATAIRES
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h2></h2>
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                            <div class="body">
+
+                                <h:form id="formSearch">
+                                    <p:growl id="msgs" showDetail="true" />
+
+
+                                    <p:panel id="basicc" header="TOTAL DES ACCORDS ET ACOMPTES PAR CHANTIER" styleClass="myPanelClientForm">
+
+                                        <p:spacer height="50px;"/>
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-6">
+                                                <p:selectOneMenu id="idChantier" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter"  
+                                                                 effect="fade" filter="true" filterMatchMode="startsWith"  value="#{prestataireBean.chantier}"> 
+                                                    <f:selectItems value="#{livraisonBean.listChantier}"  var="c"  itemLabel="#{c.siteChantier} (Marché: #{c.idMarche.nomMarche}) (Client: #{c.idMarche.idDevis.idClient.nomClient})" itemValue="#{c}" />       
+                                                </p:selectOneMenu>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <p:commandButton id="save" value="Afficher" ajax="false" update="listD" action="#{prestataireBean.searchCalcule}" />
+                                            </div>
+                                        </div>
+
+                                        <p:spacer height="50px;"/>
+
+
+                                        <table style="width: 100%;">
+
+                                            <tr>
+                                                <td align="left;"> <font style="font-size: 15px;font-weight: bold;">TOTAL ACCORDS : #{prestataireBean.totalAccorps} FCFA </font> </td>
+
+                                                <td align="left;"> <font style="font-size: 15px;font-weight: bold;">TOTAL ACCOMPTES HT : #{prestataireBean.totalAcompteHT} FCFA</font> </td>
+
+                                                <td align="left;"> <font style="font-size: 15px;font-weight: bold;">TOTAL ACCOMPTES TTC : #{prestataireBean.totalAcompteTCC} FCFA</font> </td>
+                                            </tr>
+
+                                        </table>
+
+                                        <p:spacer height="50px;"/>
+
+
+                                    </p:panel>
+                                </h:form>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

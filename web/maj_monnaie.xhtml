@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | Caisse
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h2>ENREGISTRER UNE ENTREE DE CAISSE</h2>
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="card">
+                                <div class="body">
+                                    <h:form> 
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-4">
+                                                <p:inputText id="dateop" styleClass="form-control" a:placeholder="Date au format JJ-MM-AAAA"  converter="#{beanStringConverter}" value="#{caisseBean.operation.dateoperation}"/>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <p:selectOneMenu id="ameneur" styleClass="ui-selectonemenu"  
+                                                                 converter="omnifaces.SelectItemsConverter"  
+                                                                 value="#{caisseBean.operation.idClient}"> 
+                                                    <f:selectItem itemLabel="---------------------- Amener par ---------------------"  itemValue="null"/>
+                                                    <f:selectItems value="#{marcheBean.listClients}"  var="c"  itemLabel="#{c.nomClient}" itemValue="#{c}" />       
+                                                </p:selectOneMenu>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <p:selectOneMenu id="objet" styleClass="ui-selectonemenu"  
+                                                                 converter="omnifaces.SelectItemsConverter"  
+                                                                 value="#{caisseBean.operation.objet}"> 
+                                                    <f:selectItem itemLabel="---------------------- Objet ---------------------"  itemValue="null"/>
+                                                    <f:selectItem itemLabel="ACOMPTE SUR MARCHE"  itemValue="ACOMPTE SUR MARCHE"/>
+                                                </p:selectOneMenu>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-4">
+                                                <p:inputText id="debit" styleClass="form-control" a:placeholder="Débit" converter="#{beanStringConverter}" value="#{caisseBean.operation.debit}"/>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <p:inputText id="montant" styleClass="form-control" a:placeholder="Montant en lettre"  converter="#{beanStringConverter}" value="#{caisseBean.operation.montantlettre}"/>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <p:inputText id="nature" styleClass="form-control" a:placeholder="Nature" converter="#{beanStringConverter}" value="#{caisseBean.operation.nature}"/>
+                                            </div>
+                                        </div> 
+
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+
+                                                    <p:commandButton styleClass="btn btn-primary m-t-15 waves-effect" id="save" value="Enregistrer" ajax="false" action="#{caisseBean.save}" />
+                                                    &nbsp;&nbsp;&nbsp;
+                                                    <p:commandButton styleClass="btn btn-primary m-t-15 waves-effect" id="reset" value="Annuler" action="#{caisseBean.reset}" />
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </h:form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

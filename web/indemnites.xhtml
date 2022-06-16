@@ -1,0 +1,136 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | Indemnités
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+
+                    </div>
+
+
+
+                    <h:form id="form1">
+                        <!-- Basic Examples -->
+                        <div class="row clearfix">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                                <div class="body">
+                                    <p:panel header="LISTE DES INDEMNITES" style="width: 100%;text-align: center;">
+
+                                        <c:if test="#{indemniteBean.consulterIndemnite.equalsIgnoreCase('yes')}"> 
+
+                                            <p:dataTable value="#{indemniteBean.itemIndemnites}" var="r" widgetVar="100" style="width: 100%;">
+                                                <f:facet name="header">  
+
+                                                </f:facet>
+
+                                                <p:column>
+                                                    <f:facet name="header">Nom</f:facet> 
+                                                        #{r.idUtilisateur.nomUtilisateur}  #{r.idUtilisateur.prenomUtilisateur}
+                                                </p:column>
+                                                <p:column>
+                                                    <f:facet name="header">Date indemnité</f:facet> 
+                                                        #{r.dateCreationIndemnite}  
+                                                </p:column> 
+                                                <p:column>
+                                                    <f:facet name="header">Montant</f:facet> 
+                                                        #{r.frais}  
+                                                </p:column> 
+
+                                                <p:column>
+                                                    <f:facet name="header">Effet</f:facet> 
+                                                        #{r.effet}  
+                                                </p:column> 
+
+                                                <p:column>
+                                                    <f:facet name="header">Etat</f:facet> 
+                                                        #{r.etatIndemnite}  
+                                                </p:column> 
+
+                                                <p:column>
+                                                    <f:facet name="header">Action</f:facet> 
+
+                                                    <c:if test="#{indemniteBean.validerIndemnite.equalsIgnoreCase('yes')}">
+                                                        <h:commandLink  rendered="#{r.etatIndemnite == 'Valide'}" action="#{indemniteBean.invalider}">
+                                                            <h:graphicImage value="resources/images/traiter.svg" width="35px" height="35px"  title="Invalider" />
+                                                        </h:commandLink>
+                                                        <h:commandLink  rendered="#{r.etatIndemnite == 'Invalide'}" action="#{indemniteBean.valider}">
+                                                            <h:graphicImage value="resources/images/traiter.svg" width="35px" height="35px"  title="Valider" />
+                                                        </h:commandLink>
+                                                    </c:if> 
+
+                                                    <c:if test="#{indemniteBean.validerIndemnite.equalsIgnoreCase('no')}">
+                                                        <h:commandLink rendered="#{r.etatIndemnite == 'Valide'}"  style="border-radius: 10px;color: white;" class="btn btn-primary m-t-15 waves-effect">Invalider</h:commandLink>
+                                                        <h:commandLink rendered="#{r.etatIndemnite == 'Invalide'}" style="border-radius: 10px;color: white;"  class="btn btn-primary m-t-15 waves-effect">Valider</h:commandLink>
+                                                    </c:if>  
+
+                                                    &nbsp;&nbsp;&nbsp;
+
+                                                    <c:if test="#{indemniteBean.modifierIndemnite.equalsIgnoreCase('yes')}"> 
+                                                        <h:commandLink   action="#{indemniteBean.editer}">
+                                                            <h:graphicImage value="resources/images/modifier.svg" width="35px" height="35px"  title="Modifier" />
+                                                        </h:commandLink>
+                                                    </c:if> 
+
+                                                    <c:if test="#{indemniteBean.modifierIndemnite.equalsIgnoreCase('no')}">
+                                                        <h:commandLink  class="btn btn-primary m-t-15 waves-effect" style="border-radius: 10px;color: white;">Modifier</h:commandLink>
+                                                    </c:if> 
+
+                                                    &nbsp;&nbsp;&nbsp;
+
+                                                    <c:if test="#{indemniteBean.supprimerIndemnite.equalsIgnoreCase('yes')}"> 
+                                                        <h:commandLink   action="#{indemniteBean.supprimer}">
+                                                            <h:graphicImage value="resources/images/supprimer.svg" width="35px" height="35px"  title="Supprimer" />
+                                                        </h:commandLink>
+                                                    </c:if> 
+
+                                                    <c:if test="#{indemniteBean.supprimerIndemnite.equalsIgnoreCase('no')}">
+                                                        <h:commandLink  class="btn waves-effect" style="border-radius: 10px;background-color: red;color: #fff;margin-top:15px;">Supprimer</h:commandLink>  
+                                                    </c:if> 
+
+                                                </p:column>
+
+                                            </p:dataTable>
+
+                                            <c:if test="#{indemniteBean.creerIndemnite.equalsIgnoreCase('yes')}"> 
+                                                <a href="new_indemnite.xhtml" class="btn btn-primary m-t-15 waves-effect" style="border-radius: 10px;color: white;">Attribuer une indemnité</a>
+                                            </c:if> 
+
+                                            <c:if test="#{indemniteBean.creerIndemnite.equalsIgnoreCase('no')}">
+                                                <a href="new_indemnite.xhtml" class="btn btn-primary m-t-15 waves-effect" style="border-radius: 10px;color: white;">Attribuer une indemnité</a>
+                                            </c:if> 
+
+
+                                        </c:if> 
+
+
+                                    </p:panel>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- #END# Basic Examples -->
+                    </h:form>
+
+                </div>
+
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

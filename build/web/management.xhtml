@@ -1,0 +1,156 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | PROJECT MANAGEMENT
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h2></h2>
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                           
+                                <div class="body">
+
+                                    <h:form id="formSearch">
+                                        <p:growl id="msgs" showDetail="true" />
+
+
+                                        <p:panel id="basicc" header="MANAGEMENT DE PROJET" styleClass="myPanelClientForm">
+
+                                            <p:spacer height="50px;"/>
+
+                                            <div class="row clearfix">
+                                                <div class="col-sm-6">
+                                                    <p:selectOneMenu id="idMarche" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter"  
+                                                                     effect="fade" filter="true" filterMatchMode="startsWith"  value="#{gestionprojetBean.marche}"> 
+                                                        <f:selectItems value="#{gestionprojetBean.allMarches}"  var="m"  itemLabel="#{m.nomMarche}" itemValue="#{m}" />       
+                                                    </p:selectOneMenu>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <p:commandButton id="save" value="Afficher" ajax="false" action="#{gestionprojetBean.search}" />
+                                                </div>
+                                            </div>
+
+                                            <p:spacer height="50px;"/>
+
+                                            <p>Projet : #{gestionprojetBean.marche.nomMarche}</p><br/>
+
+                                            <p:dataTable emptyMessage="Aucune donnée trouvée" id="listD" value="#{gestionprojetBean.allManagements}" var="m"  widgetVar="100" paginator="true" rows="20" 
+                                                         resizableColumns="true"  liveResize="true"  paginatorPosition="bottom" style="width: 100%;" editable="true">
+
+                                                <p:column>
+
+                                                    <f:facet name="header">Tâche</f:facet> 
+                                                        #{m.tache}
+                                                </p:column>
+
+
+                                                <p:column>
+                                                    <f:facet name="header">Affectée à</f:facet> 
+                                                    <p:outputPanel layout="block" rendered="#{m.typeTache eq 'Prestataire'}">
+                                                        #{m.idprestatairePrim.nomcomplet}
+                                                    </p:outputPanel> 
+                                                    <p:outputPanel layout="block" rendered="#{m.typeTache eq 'Personnel'}">
+                                                        #{m.idUtilisateur.nomUtilisateur} #{m.idUtilisateur.prenomUtilisateur}
+                                                    </p:outputPanel>
+
+                                                </p:column>
+
+                                                <p:column>
+                                                    <f:facet name="header">Chantier</f:facet> 
+                                                        #{m.idChantier.siteChantier}
+                                                </p:column>
+
+                                                <p:column>
+                                                    <f:facet name="header">Durée</f:facet> 
+                                                        #{m.duree}
+                                                </p:column>
+
+
+                                                <p:column>
+
+                                                    <f:facet name="header">Date de debut</f:facet> 
+                                                        #{m.datedebut}
+                                                </p:column>
+
+                                                <p:column>
+
+                                                    <f:facet name="header">Date de fin</f:facet> 
+                                                        #{m.datefin}
+                                                </p:column>
+
+                                                <p:column>
+
+                                                    <f:facet name="header">% terminé</f:facet> 
+                                                    #{m.terminer}%
+                                                </p:column>
+
+                                                <p:column>
+
+                                                    <f:facet name="header">Etat</f:facet> 
+                                                        #{m.etat}
+                                                </p:column>
+
+                                                <p:column>
+
+                                                    <f:facet name="header">Status</f:facet> 
+
+                                                    <p:panel rendered="#{m.couleur == 'rouge'}" style="width: 25px;height: 25px;border-radius: 50px;background: red;" />
+
+                                                    <p:panel rendered="#{m.couleur == 'orange'}" style="width: 25px;height: 25px;border-radius: 50px;background: orange;" />
+
+                                                    <p:panel rendered="#{m.couleur == 'vert'}" style="width: 25px;height: 25px;border-radius: 50px;background: greenyellow;" />
+
+                                                </p:column>
+
+                                                <p:column styleClass="largeur500"> 
+
+                                                    <f:facet name="header">Action</f:facet> 
+                                                    <p:commandButton value="Traiter" ajax="false" action="#{gestionprojetBean.traiterManagement}">
+                                                        <f:setPropertyActionListener target="#{gestionprojetBean.managementFromTraitement}" value="#{m}"/>
+                                                    </p:commandButton>
+
+                                                    &nbsp;&nbsp;&nbsp;
+
+                                                    <p:commandButton value="Modifier" ajax="false" action="#{clientBean.editer}" />
+
+                                                    &nbsp;&nbsp;&nbsp;
+
+                                                    <h:commandLink  class="btn waves-effect" style="background-color: red;color: #fff;margin-top: -5px;border-radius: 8px;" action="#{clientBean.supprimer}">Supprimer</h:commandLink>  
+
+                                                </p:column>
+
+
+                                            </p:dataTable>
+
+
+                                        </p:panel>
+                                    </h:form>
+
+
+                                </div>
+                           
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

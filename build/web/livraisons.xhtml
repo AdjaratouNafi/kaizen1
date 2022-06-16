@@ -1,0 +1,178 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | APPROVISIONNEMENT
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h2></h2>
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            
+                                <div class="body">
+
+                                    <h:form id="formSearch">
+                                        <p:growl id="msgs" showDetail="true" />
+
+
+                                        <p:panel id="basicc" header="FICHE APPROVISIONNEMENT CHANTIER" style="margin-bottom:20px;text-align: center;">
+
+                                            <c:if test="#{livraisonBean.consulterLivraison.equalsIgnoreCase('yes')}"> 
+
+
+                                                <p:spacer height="50px;"/>
+
+                                                <div class="row clearfix">
+                                                    <div class="col-sm-3">
+                                                        <label style="float: left;">Marché</label>
+                                                        <h:selectOneMenu id="idM" class="form-control"  converter="omnifaces.SelectItemsConverter"  
+                                                                         value="#{livraisonBean.marche}"> 
+                                                            <f:ajax event="change" listener="#{livraisonBean.renderInfo1}" execute="@form" render="perfbyselection1" />
+                                                            <f:selectItem itemLabel="------- Selectionnez un marché -------"  itemValue="null"/>
+                                                            <f:selectItems value="#{livraisonBean.listMarches}"  var="m"  itemLabel="#{m.nomMarche}" itemValue="#{m}" />       
+                                                        </h:selectOneMenu>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <label style="float: left;">Chantier</label>
+                                                        <h:panelGroup id="perfbyselection1">
+                                                            <h:selectOneMenu id="idC" class="form-control"  converter="omnifaces.SelectItemsConverter"  
+                                                                             value="#{livraisonBean.chantier}"> 
+                                                                <f:ajax event="change" listener="#{livraisonBean.renderInfo2}" execute="@form" render="perfbyselection2" />
+                                                                <f:selectItem itemLabel=" Selectionnez un chantier "  noSelectionOption="true" />
+                                                                <f:selectItems value="#{livraisonBean.listChantier}"  var="c"  itemLabel="#{c.siteChantier}" itemValue="#{c}" />       
+                                                            </h:selectOneMenu>
+                                                        </h:panelGroup>
+
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <label style="float: left;">Livraison du</label>
+                                                        <h:panelGroup id="perfbyselection2">
+                                                            <h:selectOneMenu id="idL" class="form-control"  converter="omnifaces.SelectItemsConverter"  
+                                                                             value="#{livraisonBean.livraison}"> 
+                                                                <f:selectItem itemLabel=" Selectionnez une date "  noSelectionOption="true" />
+                                                                <f:selectItems value="#{livraisonBean.listLivraisons}"  var="l"  itemLabel="#{l.idCommande.code} (#{l.idCommande.dateechance})" itemValue="#{l}" />       
+                                                            </h:selectOneMenu>
+                                                        </h:panelGroup>
+
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <br/>
+                                                        <p:commandButton id="save" value="Afficher" ajax="false" action="#{livraisonBean.detail}" />
+                                                    </div>
+                                                </div>
+
+                                                <p:spacer height="50px;"/>
+
+
+                                                <p:spacer height="50px;"/>
+                                                <p>Commande : #{livraisonBean.idCommandeLiv}</p><br/>
+                                                <!--<p>Pourcentage d'execution : #{livraisonBean.pourcentageExe} %</p><br/>-->
+
+                                                <p:dataTable emptyMessage="Aucune donnée trouvée" id="listD" value="#{livraisonBean.allDetailleLivraison}" var="l"  widgetVar="100" paginator="true" rows="20" 
+                                                             paginatorPosition="bottom" style="width: 100%;" editable="true">
+
+                                                    <p:column>
+                                                        <f:facet name="header">Date</f:facet> 
+                                                            #{l.dateLivraison}
+                                                    </p:column>
+
+                                                    <p:column>
+                                                        <f:facet name="header">Désignation</f:facet> 
+                                                            #{l.designation}
+                                                    </p:column>
+
+                                                    <p:column>
+                                                        <f:facet name="header">Qté.livrée</f:facet> 
+                                                            #{l.qtLivre}
+                                                    </p:column>
+
+
+                                                    <p:column>
+
+                                                        <f:facet name="header">Qté.restante</f:facet> 
+                                                            #{l.qtRestante}
+                                                    </p:column>
+
+
+                                                </p:dataTable>
+
+
+                                            <!--<p:dataTable rowKey="#{l.idLivraison}" emptyMessage="Aucune donnée trouvée" resizableColumns="true"  liveResize="true" filteredValue="#{livraisonBean.filteredListLivraisons}"  value="#{livraisonBean.listLivraisons}" var="l"  widgetVar="listD" styleClass="widthEnPourcent">
+
+                                                <f:facet name="header">
+                                                    <p:outputPanel>
+                                                        <h:outputText value="Recherche:" style="margin: 15px;" />
+                                                        <p:inputText id="globalFilter" converter="#{beanStringConverter}" onkeyup="PF('listD').filter()" style="150px;"  a:placeholder=" "/>
+                                                    </p:outputPanel>
+                                                </f:facet>
+
+                                                <p:column headerText="ID" sortBy="#{l.idLivraison}" filterBy="#{l.idLivraison}">
+                                                #{l.idLivraison}
+                                            </p:column>
+    
+                                            <p:column headerText="Chantier" sortBy="#{l.idChantier.siteChantier}" filterBy="#{l.idChantier.siteChantier}">
+                                                #{l.idChantier.siteChantier}
+                                            </p:column>
+    
+                                            <p:column headerText="Client" sortBy="#{l.idCommande.idChantier.idMarche.idClient.nomClient}" filterBy="#{l.idCommande.idChantier.idMarche.idClient.nomClient}">
+                                                #{l.idCommande.idChantier.idMarche.idClient.nomClient}
+                                            </p:column>
+    
+                                            <p:column headerText="Date" sortBy="#{l.dateLivraison}" filterBy="#{l.dateLivraison}">
+                                                #{l.dateLivraison}
+                                            </p:column>
+    
+    
+                                            <p:column styleClass="largeur100">
+                                                <f:facet name="header">Action</f:facet> 
+                                                <p:commandButton value="Detail" ajax="false" action="#{livraisonOtherBean.detail(l)}" />
+                                            </p:column>
+    
+    
+                                        </p:dataTable> -->
+
+                                                <p:spacer height="50px;"/>
+
+                                                <c:if test="#{livraisonBean.creerLivraison.equalsIgnoreCase('yes')}"> 
+                                                    <a href="new_livraison.xhtml" class="btn btn-primary m-t-15 waves-effect" style="border-radius: 15px;color: white;">Nouvelle livraison</a>
+                                                </c:if> 
+
+                                                <c:if test="#{livraisonBean.creerLivraison.equalsIgnoreCase('no')}">
+                                                    <a href="#" class="btn btn-primary m-t-15 waves-effect" style="border-radius: 15px;color: white;">Nouvelle livraison</a>
+                                                </c:if> 
+
+
+                                            </c:if> 
+
+
+                                        </p:panel>
+                                    </h:form>
+
+
+                                </div>
+                           
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

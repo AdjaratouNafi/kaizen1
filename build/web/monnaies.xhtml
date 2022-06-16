@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | Monnaies
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h3>Monnaies</h3>
+                    </div>
+
+                    <h:form id="form1">
+                        <!-- Basic Examples -->
+                        <div class="row clearfix">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="card">
+                                    <div class="header">
+                                        <h2>
+
+                                        </h2>
+                                        <ul class="header-dropdown m-r--5">
+                                            <li class="dropdown">
+
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="body">
+
+                                        <h:dataTable  class="table table-bordered table-striped table-hover js-basic-example dataTable" value="#{monnaieBean.item}" var="r">
+
+                                            <h:column>
+                                                <f:facet name="header">Date</f:facet> 
+                                                    #{r.dateMonnaie}
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">Monnaie</f:facet> 
+                                                #{r.monnnaie} FCFA
+                                            </h:column> 
+                                            <h:column>
+                                                <f:facet name="header">Rendu par</f:facet> 
+                                                    #{r.rendrepar}  
+                                            </h:column> 
+                                            <h:column>
+                                                <f:facet name="header">Pièce</f:facet> 
+                                                    #{r.piece}
+                                            </h:column> 
+
+                                            <h:column>
+                                                <f:facet name="header">Numéro de pièce</f:facet> 
+                                                    #{r.numeropiece}
+                                            </h:column>
+
+                                            <h:column>
+                                                <f:facet name="header">Montant en lettre</f:facet> 
+                                                    #{r.montantlettre}
+                                            </h:column>
+
+                                            <h:column>
+                                                <f:facet name="header">Nature</f:facet> 
+                                                    #{r.nature}
+                                            </h:column>
+
+                                            <h:column>
+                                                <f:facet name="header">Observation</f:facet> 
+                                                    #{r.observation}
+                                            </h:column>
+
+                                            <h:column>
+                                                <f:facet name="header">Action</f:facet> 
+                                                
+                                                <h:commandLink  class="btn btn-primary m-t-15 waves-effect" action="#{monnaieBean.supprimer()}">Supprimer</h:commandLink>
+                                            </h:column>
+
+
+                                        </h:dataTable>
+
+
+                                        <br/>
+                                        <font size="5">MONTANT TOTAL: #{monnaieBean.totalMonnaie} FCFA</font>
+                                        <br/>
+
+                                        <a href="new_monnaie.xhtml" class="btn btn-primary m-t-15 waves-effect">Mise à jour des monnaies</a>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- #END# Basic Examples -->
+                    </h:form>
+
+                </div>
+
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | CHANTIERS
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                    </div>
+
+                    <h:form id="form1">
+                        <!-- Basic Examples -->
+                        <div class="row clearfix">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="header">
+                                    <h2>
+
+                                    </h2>
+                                    <ul class="header-dropdown m-r--5">
+                                        <li class="dropdown">
+
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="body">
+
+                                    <p:panel header="LISTE DES CHANTIERS" styleClass="myPanelWidth">
+
+                                        <c:if test="#{chantierBean.consulterChantier.equalsIgnoreCase('yes')}"> 
+
+                                            <p:dataTable emptyMessage="Aucune donnée trouvée" filteredValue="#{chantierBean.filteredListChantier}" value="#{chantierBean.item}" var="r" widgetVar="listChantier" styleClass="widthEnPourcent">
+                                                <f:facet name="header">
+                                                    <p:outputPanel>
+                                                        <h:outputText value="Recherche:" style="margin: 15px;" />
+                                                        <p:inputText id="globalFilter" converter="#{beanStringConverter}" onkeyup="PF('listChantier').filter()" style="150px;" />
+                                                    </p:outputPanel>
+                                                </f:facet>
+
+                                                <p:column filterStyle="display:none" headerText="Site" sortBy="#{r.siteChantier}" filterBy="#{r.siteChantier}">
+                                                        #{r.siteChantier}  
+                                                </p:column>  
+
+                                                <p:column> 
+                                                    <f:facet name="header">Action</f:facet> 
+
+                                                    <!--<p:commandButton value="Consulter" ajax="false"  action="#{chantierBean.consulter}" />-->
+
+                                                    <h:commandLink  action="#{chantierBean.consulter}">
+                                                        <h:graphicImage value="resources/images/visualisation.svg" width="35px" height="35px"  title="Consulter" />
+                                                    </h:commandLink>
+
+                                                    &nbsp;&nbsp;&nbsp;
+
+                                                    <c:if test="#{chantierBean.imprimerChantier.equalsIgnoreCase('yes')}"> 
+                                                       <!-- <p:commandButton value="Imprimer" ajax="false"  action="#{chantierBean.consulterImprimer}" /> -->
+                                                        <h:commandLink  action="#{chantierBean.consulterImprimer}">
+                                                            <h:graphicImage value="resources/images/imprimer.svg" width="35px" height="35px"  title="Imprimer" />
+                                                        </h:commandLink>
+                                                    </c:if> 
+
+                                                    <c:if test="#{chantierBean.imprimerChantier.equalsIgnoreCase('no')}">
+                                                        <p:commandButton value="Imprimer" ajax="false" />
+                                                    </c:if>
+
+
+                                                    &nbsp;&nbsp;&nbsp;
+
+                                                    <c:if test="#{chantierBean.modifierChantier.equalsIgnoreCase('yes')}"> 
+                                                       <!-- <p:commandButton  value="Modifier" ajax="false" action="#{chantierBean.editer}" />-->
+                                                        <h:commandLink  action="#{chantierBean.editer}">
+                                                            <h:graphicImage value="resources/images/modifier.svg" width="35px" height="35px"  title="Modifier" />
+                                                        </h:commandLink>
+                                                    </c:if> 
+
+                                                    <c:if test="#{chantierBean.modifierChantier.equalsIgnoreCase('no')}">
+                                                        <p:commandButton  value="Modifier" ajax="false" />
+                                                    </c:if> 
+
+
+                                                    &nbsp;&nbsp;&nbsp;
+
+                                                    <c:if test="#{chantierBean.supprimerChantier.equalsIgnoreCase('yes')}"> 
+                                                       <!-- <h:commandLink  class="btn waves-effect" style="color: #fff;background: red;margin-top: -4px;border-radius: 8px;" action="#{chantierBean.supprimer}">Supprimer</h:commandLink> --> 
+                                                        <h:commandLink  action="#{chantierBean.supprimer}">
+                                                            <h:graphicImage value="resources/images/supprimer.svg" width="35px" height="35px"  title="Supprimer" />
+                                                        </h:commandLink>
+                                                    </c:if> 
+
+                                                    <c:if test="#{chantierBean.supprimerChantier.equalsIgnoreCase('no')}">
+                                                        <h:commandLink  class="btn waves-effect" style="color: #fff;background: red;margin-top: -4px;border-radius: 8px;">Supprimer</h:commandLink>  
+                                                    </c:if> 
+
+                                                </p:column>
+
+                                            </p:dataTable>
+
+                                            <c:if test="#{chantierBean.creerChantier.equalsIgnoreCase('yes')}"> 
+                                                <a href="new_chantier.xhtml" class="btn btn-primary m-t-15 waves-effect" style="border-radius: 10px;color: white;">Nouveau chantier</a>
+                                            </c:if>
+
+                                            <c:if test="#{chantierBean.creerChantier.equalsIgnoreCase('no')}">
+                                                <a href="#" class="btn btn-primary m-t-15 waves-effect" style="border-radius: 10px;color: white;">Nouveau chantier</a>
+                                            </c:if> 
+
+
+                                        </c:if> 
+
+                                    </p:panel>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- #END# Basic Examples -->
+                    </h:form>
+
+                </div>
+
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

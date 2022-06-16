@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | Rôles
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h2>ENREGISTRER UN RÔLE</h2>
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="card">
+                                <div class="body">
+                                    <h:form>
+
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                        <input type="text" class="form-control" placeholder="col-sm-6" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                        <input type="text" class="form-control" placeholder="col-sm-6" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                        <input type="text" class="form-control" placeholder="col-sm-4" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                        <input type="text" class="form-control" placeholder="col-sm-4" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                        <input type="text" class="form-control" placeholder="col-sm-4" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+
+
+
+
+
+
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-12">
+
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                        <h:inputText id="libelle" class="form-control" a:placeholder="Libelle" converter="#{beanStringConverter}" value="#{roleBean.role.libelleRole}"/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+
+                                                    <h:selectOneMenu class='form-control round-form' converter="#{beanStringConverter}" value="#{roleBean.role.levelRole}"> 
+                                                        <f:selectItem itemValue = "1" itemLabel = "Niveau 1" /> 
+                                                        <f:selectItem itemValue = "2" itemLabel = "Niveau 2" />
+                                                        <f:selectItem itemValue = "3" itemLabel = "Niveau 3" />
+                                                    </h:selectOneMenu>
+
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <h:commandButton  class="btn btn-primary m-t-15 waves-effect" id="save" value="Enregistrer" action="#{roleBean.save}" />
+                                                    &nbsp;&nbsp;&nbsp;
+                                                    <h:commandButton  class="btn btn-primary m-t-15 waves-effect" id="reset" value="Annuler" action="#{roleBean.reset}" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </h:form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

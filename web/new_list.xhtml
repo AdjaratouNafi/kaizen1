@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | LISTES LIEES
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h2></h2>
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="card">
+                                <div class="body">
+
+                                    <h:form id="myForm">
+                                        <p:growl id="msgs" showDetail="true" />
+
+
+                                        <p:panel id="basic" header="LIST LIEE" styleClass="margin-bottom:20px;text-align: center;">
+
+                                            <p:spacer height="50px;"/>
+
+
+
+                                            <div class="row clearfix">
+                                                <div class="col-sm-4">
+                                                    <p:selectOneMenu id="idMarche" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter"  
+                                                                     value="#{montantBean.marche}"> 
+                                                        <f:ajax event="change" listener="#{montantBean.renderinfo}" execute="idMarche" render="idChantier" />
+                                                        <f:selectItem itemLabel="--------- Sélectionnez un marché ---------"  itemValue="null"/>
+                                                        <f:selectItems value="#{montantBean.listMarches}"  var="m"  itemLabel="#{m.nomMarche}" itemValue="#{m}" />       
+                                                    </p:selectOneMenu>
+                                                </div>
+                                            </div>
+
+                                            <div class="row clearfix">
+                                                <div class="col-sm-4">
+                                                    <p:selectOneMenu id="idChantier" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter"  
+                                                                     value="#{montantBean.chantier}"> 
+                                                        <!--<f:selectItem itemLabel=" Sélectionnez un chantier "  itemValue="null"/>-->
+                                                        <f:selectItems value="#{montantBean.listChantiers}"  var="c"  itemLabel="#{c.siteChantier}" itemValue="#{c}" />       
+                                                    </p:selectOneMenu>
+
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="row clearfix">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <p:commandButton id="save" value="Valider" ajax="false" action="#{montantBean.savee}" />
+                                                        &nbsp;&nbsp;&nbsp;
+                                                        <p:commandButton  id="reset" value="Annuler" action="#{montantBean.reset}" />
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </p:panel>
+                                    </h:form>
+
+                                    <h:form> 
+
+
+
+                                    </h:form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

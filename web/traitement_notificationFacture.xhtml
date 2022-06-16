@@ -1,0 +1,206 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | FACTURE
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h2></h2>
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="body">
+                                <br/><br/>
+                                <center style="font-size: 25px;font-weight: bold;">TRAITER UNE FACTURE</center>
+                                <br/><br/>
+                                <h:form id="formDevis"> 
+
+
+                                    <div class="row clearfix">
+                                        <div class="col-sm-4">
+                                            <label style="float:left;margin-right: 15px;">Numéro facture</label>
+                                            <p:inputText id="devis"  readonly="true" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traiterNotificationFactureBean.newfacture.numeroNewfacture}"/>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label style="float:left;margin-right: 15px;">Date</label>
+                                            <p:inputText id="dateexp"  readonly="true" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traiterNotificationFactureBean.newfacture.dateNewfacture}"/>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label style="float:left;margin-right: 15px;">Projet</label>
+                                            <p:inputText id="projet"  readonly="true" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traiterNotificationFactureBean.newfacture.idDevis.nommarche}"/>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row clearfix">
+                                        <br/><br/>
+                                        <div class="col-sm-2">
+                                            <label style="float:left;margin-right: 15px;">Désignation</label> <br/>
+                                            <h:inputHidden id="input1" />
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <label style="float:left;margin-right: 15px;">Type donnée</label> <br/>
+                                            <h:inputHidden id="inputB1" />
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <label style="float:left;margin-right: 15px;">Ref</label> <br/>
+                                            <h:inputHidden id="input2" />
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <label style="float:left;margin-right: 15px;">U.mesure</label> <br/>
+                                            <h:inputHidden id="input3" />
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <label style="float:left;margin-right: 15px;">Qte</label> <br/>
+                                            <h:inputHidden id="input4" />
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <label style="float:left;margin-right: 15px;">P.U sans</label> <br/>
+                                            <h:inputHidden id="input5" />
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <label style="float:left;margin-right: 15px;">P.U avec Coef.</label> <br/>
+                                            <h:inputHidden id="input55" />
+                                        </div>
+
+                                    </div>
+
+                                    <h:panelGroup id="devisLoop">
+                                        <br/>
+                                        <ui:repeat id="repeater1" value="#{traiterNotificationFactureBean.allFactureUtils}" var="d" varStatus="status">
+                                            <div class="row clearfix">
+                                                <div class="col-sm-2">
+                                                    <br/>
+                                                    <h:inputText readonly="true" id="designation" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traiterNotificationFactureBean.allFactureUtils[status.index].designation}" />
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <br/>
+                                                    <h:inputText readonly="true" id="typedonnee" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traiterNotificationFactureBean.allFactureUtils[status.index].typeitem}" />
+                                                </div>
+                                                <div class="col-sm-1">
+                                                    <br/>
+                                                    <h:inputText readonly="true" id="ref" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traiterNotificationFactureBean.allFactureUtils[status.index].ref}" />
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <br/>
+                                                    <h:inputText readonly="true" id="unite" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traiterNotificationFactureBean.allFactureUtils[status.index].unite}" />
+                                                </div>                                                  
+
+                                                <div class="col-sm-1">
+                                                    <br/>
+                                                    <h:inputText readonly="true" id="quantite" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traiterNotificationFactureBean.allFactureUtils[status.index].quantite}" />
+
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <br/>
+                                                    <h:inputText readonly="true" id="pusc" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traiterNotificationFactureBean.allFactureUtils[status.index].puSansCoef}" />
+
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <br/>
+                                                    <h:inputText readonly="true" id="puac" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traiterNotificationFactureBean.allFactureUtils[status.index].pu}" />
+
+                                                </div>
+
+                                            </div>
+                                        </ui:repeat>  
+
+                                    </h:panelGroup> 
+
+                                    <div class="row clearfix">
+                                        <br/>
+                                        <div class="col-sm-3">
+                                            <label style="float:left;margin-right: 15px;">Montant TTC</label> <br/>
+                                            <p:inputText id="mtotal" readonly="true" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traiterNotificationFactureBean.mttc}" />
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <label style="float:left;margin-right: 15px;">Montant en lettre</label> <br/>
+                                            <h:inputText readonly="true" id="montantlettre" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traiterNotificationFactureBean.newfacture.idDevis.montantlettre}" />
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <label style="float: left;">Devise</label>
+                                            <h:inputText readonly="true" id="idDevise" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traiterNotificationFactureBean.newfacture.idDevis.idDevise.symbole}" />
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <label style="float:left;margin-right: 15px;">Termes du contrat</label> <br/>
+                                            <h:inputText readonly="true" id="montantlettre1" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traiterNotificationFactureBean.newfacture.idDevis.terme}" />
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <label style="float:left;margin-right: 15px;">Disponibilité</label> <br/>
+                                            <h:inputText readonly="true" id="montantlettre2" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traiterNotificationFactureBean.newfacture.idDevis.nbjours}" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row clearfix">
+
+                                        <div class="col-sm-4">
+                                            <br/><br/>
+                                            <label style="float:left;margin-right: 15px;">Traitement</label>
+                                            <h:selectOneMenu id="etat" styleClass="ui-selectonemenu" converter="omnifaces.SelectItemsConverter"  
+                                                             value="#{traiterNotificationFactureBean.etatFacture}"> 
+                                                <f:ajax event="change" listener="#{traiterNotificationFactureBean.renderInfoExpTraitement2}" execute="@form" render="perfbyselection1" />
+                                                <f:selectItem itemLabel="-------------- Selectionnez un etat --------------"  itemValue="null"/>
+                                                <f:selectItem itemLabel="Valider"  itemValue="Valider"/>
+                                                <f:selectItem itemLabel="Rejeter"  itemValue="Rejeter"/>
+                                            </h:selectOneMenu>
+                                        </div>
+
+                                        <h:panelGroup id="perfbyselection1">
+                                            <div class="col-sm-4">
+                                                <br/>
+                                                <label style="float:left;margin-right: 15px;">Motif de rejet</label> <br/>
+                                                <h:inputText rendered="#{traiterNotificationFactureBean.etatFacture eq 'Rejeter'}" id="motif" styleClass="form-control"  converter="#{beanStringConverter}" value="#{traiterNotificationFactureBean.newfacture.motif}" />
+                                            </div>
+                                        </h:panelGroup>
+
+                                        <div class="col-sm-4">
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="row clearfix">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <center>
+                                                    <br/><br/>
+                                                    <h:commandLink  action="#{traiterNotificationFactureBean.save}">
+                                                        <h:graphicImage value="resources/images/enregistrer.svg"  title="Enregistrer" />
+                                                    </h:commandLink>
+                                                </center>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </h:form>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

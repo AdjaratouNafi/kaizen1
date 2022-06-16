@@ -1,0 +1,317 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | OPPORTUNITES
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h3></h3>
+                    </div>
+
+                    <h:form id="form1">
+                        <p:growl id="messages" showDetail="true"/>
+                        <p:panel header="GESTION DES OPPORTUNITES" style="width: 100%;text-align: center;"> 
+
+                            <c:if test="#{opportuniteBean.consulterOpportunite.equalsIgnoreCase('yes')}"> 
+
+                                <p:spacer height="30px;"/>
+                                <p:dataTable id="allOpportunites" scrollable="flase" scrollWidth="1200" value="#{opportuniteBean.allOpportunites}" var="o" rowKey="#{o.idOpportunite}" selectionMode="single"  
+                                             resizableColumns="true"  liveResize="true"  selection="#{opportuniteBean.opportuniteFromEdit}" widgetVar="100" paginator="true" rows="20" paginatorPosition="bottom" style="width: 100%;" editable="true">
+                                    <f:facet name="header">  
+                                        <p:commandButton id="toggler" type="button" value="Colonnes" style="float:right" icon="ui-icon-calculator" />
+                                        <p:columnToggler datasource="allOpportunites" trigger="toggler" />
+                                    </f:facet>
+
+                                    <c:if test="#{opportuniteBean.modifierOpportunite.equalsIgnoreCase('yes')}">
+                                        <p:ajax event="rowEdit" listener="#{opportuniteBean.rowEdit}" update=":form1:messages" />  
+                                        <p:ajax event="rowEditCancel" listener="#{opportuniteBean.rowEditCancel}" update=":form1:messages" /> 
+                                    </c:if> 
+
+                                    <c:if test="#{opportuniteBean.modifierOpportunite.equalsIgnoreCase('no')}">
+                                        <p:ajax event="rowEdit"  update=":form1:messages" />  
+                                        <p:ajax event="rowEditCancel" update=":form1:messages" /> 
+                                    </c:if>
+
+
+                                    <p:column>
+                                        <f:facet name="header">  
+                                            <h:outputText value="Status" />  
+                                        </f:facet>
+                                        <p:cellEditor>  
+                                            <f:facet name="output">  
+
+                                                <p:panel rendered="#{o.rouge == 'rouge'}" style="width: 25px;height: 25px;border-radius: 50px;background: red;" />
+
+                                                <p:panel rendered="#{o.rouge == 'jaune'}" style="width: 25px;height: 25px;border-radius: 50px;background: yellow;" />
+
+                                                <p:panel rendered="#{o.rouge == 'vert'}" style="width: 25px;height: 25px;border-radius: 50px;background: greenyellow;" />
+
+                                            </f:facet>  
+                                            <f:facet name="input">  
+                                                <p:selectOneMenu id="status" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter"  
+                                                                 value="#{o.rouge}"> 
+                                                    <f:selectItem itemLabel="#{o.rouge}"  itemValue="#{o.rouge}}"/>
+                                                    <f:selectItem itemLabel="Rouge"  itemValue="rouge"/>
+                                                    <f:selectItem itemLabel="Jaune"  itemValue="jaune"/> 
+                                                    <f:selectItem itemLabel="Vert"  itemValue="vert"/>
+                                                </p:selectOneMenu>
+                                            </f:facet> 
+                                        </p:cellEditor> 
+                                    </p:column>
+
+
+                                    <p:column>
+                                        <f:facet name="header">  
+                                            <h:outputText value="Opportunité" />  
+                                        </f:facet>
+                                        <p:cellEditor>  
+                                            <f:facet name="output">  
+                                                <h:outputText value="#{o.libelle}" />  
+                                            </f:facet>  
+                                            <f:facet name="input">  
+                                                <p:inputText id="opp" styleClass="form-control" converter="#{beanStringConverter}" value="#{o.libelle}" />
+                                            </f:facet>  
+                                        </p:cellEditor>
+                                    </p:column>
+
+                                    <p:column>
+                                        <f:facet name="header">  
+                                            <h:outputText value="Responsable" />  
+                                        </f:facet>
+                                        <p:cellEditor>  
+                                            <f:facet name="output">  
+                                                <h:outputText value="#{o.idUtilisateur.nomUtilisateur} #{o.idUtilisateur.prenomUtilisateur}" />  
+                                            </f:facet>  
+                                            <f:facet name="input">  
+                                                <p:selectOneMenu id="respo" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter"  
+                                                                 value="#{o.idUtilisateur}"> 
+                                                    <f:selectItem itemLabel="#{o.idUtilisateur.nomUtilisateur} #{o.idUtilisateur.prenomUtilisateur}"  itemValue="#{o.idUtilisateur}"/>
+                                                    <f:selectItems value="#{utilisateurBean.listUtilisateurs}" var="u"  itemLabel="#{u.nomUtilisateur} #{u.prenomUtilisateur}" itemValue="#{u}" />       
+                                                </p:selectOneMenu>
+                                            </f:facet>  
+                                        </p:cellEditor>
+                                    </p:column> 
+                                    <p:column>
+                                        <f:facet name="header">  
+                                            <h:outputText value="Priorité" />  
+                                        </f:facet>
+                                        <p:cellEditor>  
+                                            <f:facet name="output">  
+                                                <h:outputText value="#{o.priorite}" />  
+                                            </f:facet>  
+                                            <f:facet name="input">  
+                                                <p:selectOneMenu id="prioritee" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter"  
+                                                                 value="#{o.priorite}"> 
+                                                    <f:selectItem itemLabel="#{o.priorite}"  itemValue="#{o.priorite}"/>
+                                                    <f:selectItem itemLabel="Elevée"  itemValue="Elevée"/> 
+                                                    <f:selectItem itemLabel="Faible"  itemValue="Faible"/> 
+                                                </p:selectOneMenu>
+                                            </f:facet>  
+                                        </p:cellEditor>
+                                    </p:column>
+                                    <p:column style="width:100p%"> 
+                                        <f:facet name="header">  
+                                            <h:outputText value="Stade-Vente" />  
+                                        </f:facet>
+                                        <p:cellEditor>  
+                                            <f:facet name="output">  
+                                                <h:outputText value="#{o.stadevente}" />  
+                                            </f:facet>  
+                                            <f:facet name="input">  
+                                                <p:selectOneMenu id="stadev" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter"  
+                                                                 value="#{o.stadevente}"> 
+                                                    <f:selectItem itemLabel="#{o.stadevente}"  itemValue="#{o.stadevente}"/>
+                                                    <f:selectItem itemLabel="Identifié"  itemValue="Identifié"/>
+                                                    <f:selectItem itemLabel="Prospecting"  itemValue="Prospecting"/>
+                                                    <f:selectItem itemLabel="Besoin Evaluative"  itemValue="Besoin Evaluative"/>
+                                                    <f:selectItem itemLabel="Quotation"  itemValue="Quotation"/>
+                                                    <f:selectItem itemLabel="Contract"  itemValue="Contract"/>
+                                                    <f:selectItem itemLabel="Closed"  itemValue="Closed"/>       
+                                                </p:selectOneMenu>
+                                            </f:facet>  
+                                        </p:cellEditor>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">  
+                                            <h:outputText value="Valeur Estimée en FCFA" />  
+                                        </f:facet>
+                                        <p:cellEditor>  
+                                            <f:facet name="output">  
+                                                <h:outputText value="#{o.valeur}" />  
+                                            </f:facet>  
+                                            <f:facet name="input">  
+                                                <p:inputText id="valeur" styleClass="form-control" converter="#{beanStringConverter}" value="#{o.valeur}" />
+                                            </f:facet>  
+                                        </p:cellEditor>
+                                    </p:column>
+
+                                    <p:column>
+                                        <f:facet name="header">  
+                                            <h:outputText value="Date anticipée de cloture deal" />  
+                                        </f:facet>
+                                        <p:cellEditor>  
+                                            <f:facet name="output">  
+                                                <h:outputText value="#{o.dateCloture}" />  
+                                            </f:facet>  
+                                            <f:facet name="input">  
+                                                <p:calendar  id="dateAnt" converter="#{beanStringConverter}" value="#{o.dateCloture}" />
+                                            </f:facet>  
+                                        </p:cellEditor>
+                                    </p:column>
+
+                                    <p:column>
+                                        <f:facet name="header">  
+                                            <h:outputText value="Probabilté" />  
+                                        </f:facet>
+                                        <p:cellEditor>  
+                                            <f:facet name="output">  
+                                                <h:outputText value="#{o.probabilte}" />  
+                                            </f:facet>  
+                                            <f:facet name="input">  
+                                                <p:selectOneMenu id="proba" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter"  
+                                                                 value="#{o.probabilte}"> 
+                                                    <f:selectItem itemLabel="#{o.probabilte}"  itemValue="#{o.probabilte}"/>
+                                                    <f:selectItem itemLabel="Vide"  itemValue="Vide"/>
+                                                    <f:selectItem itemLabel="Un quart"  itemValue="Un quart"/>
+                                                    <f:selectItem itemLabel="Moitié"  itemValue="Moitié"/>
+                                                    <f:selectItem itemLabel="Trois quarts"  itemValue="Trois quarts"/>
+                                                    <f:selectItem itemLabel="Pleine"  itemValue="Pleine"/>  
+                                                </p:selectOneMenu> 
+                                            </f:facet>  
+                                        </p:cellEditor>
+                                    </p:column>
+
+                                    <p:column>
+                                        <f:facet name="header">  
+                                            <h:outputText value="Prochaine Etape" />  
+                                        </f:facet>
+                                        <p:cellEditor>  
+                                            <f:facet name="output"> 
+
+                                                <h:outputText value="#{o.prochainetap}" />
+
+                                            </f:facet>
+                                            <f:facet name="input">  
+                                                <p:inputText id="prochain"  styleClass="form-control" converter="#{beanStringConverter}" value="#{o.prochainetap}" />
+                                            </f:facet>  
+                                        </p:cellEditor>
+                                    </p:column>
+
+                                    <p:column>
+                                        <f:facet name="header">  
+                                            <h:outputText value="Produit" />  
+                                        </f:facet>
+                                        <p:cellEditor>  
+                                            <f:facet name="output">  
+                                                <h:outputText value="#{o.produit}" />  
+                                            </f:facet>  
+                                            <f:facet name="input">  
+                                                <p:inputText id="produit" styleClass="form-control" converter="#{beanStringConverter}" value="#{o.produit}" />
+                                            </f:facet> 
+                                        </p:cellEditor>
+                                    </p:column>
+
+                                    <p:column>
+                                        <f:facet name="header">  
+                                            <h:outputText value="Dernier contact" />  
+                                        </f:facet>
+                                        <p:cellEditor>  
+                                            <f:facet name="output">  
+                                                <h:outputText value="#{o.derniercontact}" />  
+                                            </f:facet>  
+                                            <f:facet name="input">  
+                                                <p:calendar  id="dernierContact" converter="#{beanStringConverter}" value="#{o.derniercontact}" /> 
+                                            </f:facet>  
+                                        </p:cellEditor>
+                                    </p:column>
+
+
+                                    <p:column>
+                                        <f:facet name="header">  
+                                            <h:outputText value="Nom contact" />  
+                                        </f:facet>
+                                        <p:cellEditor>  
+                                            <f:facet name="output">  
+                                                <h:outputText value="#{o.nomcontact}" />  
+                                            </f:facet>  
+                                            <f:facet name="input">  
+                                                <p:inputText id="nom"  styleClass="form-control" converter="#{beanStringConverter}" value="#{o.nomcontact}" />
+                                            </f:facet>  
+                                        </p:cellEditor>
+                                    </p:column>
+
+
+                                    <p:column>
+                                        <f:facet name="header">  
+                                            <h:outputText value="Email" />  
+                                        </f:facet>
+                                        <p:cellEditor>  
+                                            <f:facet name="output">  
+                                                <h:outputText value="#{o.email}" />  
+                                            </f:facet>  
+                                            <f:facet name="input">  
+                                                <p:inputText id="mail" styleClass="form-control" converter="#{beanStringConverter}" value="#{o.email}" />
+                                            </f:facet>  
+                                        </p:cellEditor>
+                                    </p:column>
+
+
+                                    <p:column>
+                                        <f:facet name="header">  
+                                            <h:outputText value="Phone" />  
+                                        </f:facet>
+                                        <p:cellEditor>  
+                                            <f:facet name="output">  
+                                                <h:outputText value="#{o.telephone}" />  
+                                            </f:facet>  
+                                            <f:facet name="input">  
+                                                <p:inputText id="tel"  styleClass="form-control" converter="#{beanStringConverter}" value="#{o.telephone}" />
+                                            </f:facet>  
+                                        </p:cellEditor>
+                                    </p:column>
+
+
+                                    <p:column headerText="Options" style="width:50p%">  
+                                        <p:rowEditor />  
+                                    </p:column> 
+
+                                </p:dataTable>
+
+                                <p:spacer height="30px;"/>
+
+                                <c:if test="#{opportuniteBean.creerOpportunite.equalsIgnoreCase('yes')}"> 
+                                    <a href="new_opportunite.xhtml" class="btn btn-primary m-t-15 waves-effect"><font color="#FFFFFF">CREER UNE OPPORTUNITE</font></a>
+                                </c:if> 
+
+                                <c:if test="#{opportuniteBean.creerOpportunite.equalsIgnoreCase('no')}">
+                                    <a href="#" class="btn btn-primary m-t-15 waves-effect"><font color="#FFFFFF">CREER UNE OPPORTUNITE</font></a>
+                                </c:if> 
+
+
+                            </c:if> 
+
+                        </p:panel>
+
+
+
+                    </h:form>
+
+                </div>
+
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

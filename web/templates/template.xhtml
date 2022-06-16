@@ -1,0 +1,938 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="fr" class="app" 
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+
+        <!--<meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />--> 
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <title><ui:insert name="titre">Titre</ui:insert></title>
+        <!-- Favicon-->
+        <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+
+        <!-- Google Fonts -->
+        <!--<link href="https://fonts.googleapis.com/css?family=Roboto:400,700&amp;subset=latin,cyrillic-ext" rel="stylesheet" type="text/css" />-->
+        <link href="resources/externalRessources/cyrillic-ext.css" rel="stylesheet" />
+
+        <!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css" />-->
+        <link href="resources/externalRessources/material-icons.css" rel="stylesheet" />
+
+        <link href="resources/css/file-explore.css" rel="stylesheet" />
+        <link href="resources/externalRessources/font-awesome/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+        <!-- Bootstrap Core Css -->
+        <link href="resources/plugins/bootstrap/css/bootstrap.css" rel="stylesheet"/>
+
+        <!-- Waves Effect Css -->
+        <link href="resources/plugins/node-waves/waves.css" rel="stylesheet"/>
+
+        <!-- Animation Css -->
+        <link href="resources/plugins/animate-css/animate.css" rel="stylesheet"/>
+
+        <!-- Preloader Css -->
+        <link href="resources/plugins/material-design-preloader/md-preloader.css" rel="stylesheet"/>
+
+        <!-- JQuery DataTable Css -->
+        <link href="resources/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet"/>
+
+        <!-- Bootstrap Select Css -->
+        <link href="resources/plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet"/>
+
+        <!-- Morris Chart Css-->
+        <link href="resources/plugins/morrisjs/morris.css" rel="stylesheet"/>
+
+        <!-- Custom Css -->
+        <link href="resources/css/style.css" rel="stylesheet"/> 
+        <link href="resources/css/stylePrim.css" rel="stylesheet"/>
+
+        <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
+        <link href="resources/css/themes/all-themes.css" rel="stylesheet"/>
+
+        <!--<script src="//cdn.ckeditor.com/4.5.9/full/ckeditor.js"></script>-->
+        <script src="resources/externalRessources/ckeditor.js"></script>
+
+    </h:head>
+    <h:body class="theme-red">
+
+        <!-- Page Loader -->
+        <div class="page-loader-wrapper">
+            <div class="loader">
+                <div class="md-preloader pl-size-md">
+                    <svg viewbox="0 0 75 75">
+                        <circle cx="37.5" cy="37.5" r="33.5" class="pl-red" stroke-width="4" />
+                    </svg>
+                </div>
+                <p>Please wait...</p>
+            </div>
+        </div>
+        <!-- #END# Page Loader -->
+        <!-- Overlay For Sidebars -->
+        <div class="overlay"></div>
+        <!-- #END# Overlay For Sidebars -->
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <div class="search-icon">
+                <i class="material-icons">search</i>
+            </div>
+            <input type="text" placeholder="START TYPING..." />
+            <div class="close-search">
+                <i class="material-icons">close</i>
+            </div>
+        </div>
+        <!-- #END# Search Bar -->
+        <!-- Top Bar -->
+        <nav class="navbar" style="background-color: #DDDEDF;">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
+                    <a href="javascript:void(0);" class="bars"></a>
+                    <a class="navbar-brand" href="index.html"><img src="resources/images/kaisen_logo50_EN_BLANC.png" width="50" height="50" style="margin-top: -15px;" /></a>
+                </div>
+                <div class="collapse navbar-collapse" id="navbar-collapse">
+
+                    <div class="col-md-6">
+                        <div class="inner-addon right-addon search-icon" style="margin-top: 12px;">
+                            <!-- Notifications -->
+                            <h:form>
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                                        <span class="label-count" style="color: #FFFFFF;float: left;background: #DDDEDF;">
+                                            <i class="material-icons" style="color: #FFFFFF;margin-right:0px;margin-top: 8px;">notifications</i><h:outputText id="txt_count" value="#{notificationBean.number}" />
+                                        </span>
+                                    </a>
+                                    <ul class="dropdown-menu" style="border-radius: 15px;border: solid 2px #00BCD4;margin-right: -50px;">
+                                        <li class="header">NOTIFICATIONS</li>
+                                        <li class="body">
+                                            <ul class="menu">
+                                                <p:outputPanel id="notifExp" layout="block">
+                                                    <ui:repeat id="repeater1" value="#{notificationBean.myllNotificationExpressions}" var="n" varStatus="status">
+
+                                                        <li>
+
+
+                                                            <div class="icon-circle bg-blue-grey">
+                                                                <i class="material-icons">comment</i>
+                                                            </div>
+                                                            <div class="menu-info">
+                                                                <h4>
+                                                                    <b> #{n.idUtilisateur.nomUtilisateur} #{n.idUtilisateur.prenomUtilisateur} : </b> &ldquo; #{n.message} &rdquo;
+                                                                </h4>
+
+
+                                                                <table>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <br/>
+                                                                            <i class="material-icons">access_time</i> Il y a 2 heures
+                                                                        </td>
+                                                                        <td align="right">
+                                                                            <br/>
+                                                                            &nbsp;&nbsp;&nbsp;
+                                                                            <h:commandButton style="background: #00BCD4;border-radius: 15px;" value="Traiter" action="#{notificationBean.traiterExpression}">
+                                                                                <f:setPropertyActionListener target="#{notificationBean.notification}" value="#{n}"/>
+                                                                            </h:commandButton> 
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+
+                                                            </div>
+
+
+                                                        </li>
+
+                                                    </ui:repeat>
+                                                </p:outputPanel>
+
+                                                <p:outputPanel id="notifSal" layout="block">
+                                                    <ui:repeat id="repeater2" value="#{notificationBean.myllNotificationSalaire}" var="n" varStatus="status">
+
+                                                        <li>
+
+
+                                                            <div class="icon-circle bg-blue-grey">
+                                                                <i class="material-icons">comment</i>
+                                                            </div>
+                                                            <div class="menu-info">
+                                                                <h4>
+                                                                    <b> #{n.idUtilisateur.nomUtilisateur} #{n.idUtilisateur.prenomUtilisateur} : </b> &ldquo; #{n.message} &rdquo;
+                                                                </h4>
+
+
+                                                                <table>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <br/>
+                                                                            <i class="material-icons">access_time</i> Il y a 2 heures
+                                                                        </td>
+                                                                        <td align="right"> 
+                                                                            <br/>
+                                                                            &nbsp;&nbsp;&nbsp;
+                                                                            <h:commandButton style="background: #00BCD4;border-radius: 15px;" value="Traiter" action="#{notificationBean.traiterSalaire}">
+                                                                                <f:setPropertyActionListener target="#{notificationBean.notification}" value="#{n}"/>
+                                                                            </h:commandButton> 
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+
+                                                            </div>
+
+
+                                                        </li>
+
+                                                    </ui:repeat>
+                                                </p:outputPanel> 
+
+
+                                                <p:outputPanel id="notifDevis" layout="block">
+                                                    <ui:repeat id="repeater3" value="#{notificationBean.myllNotificationDevis}" var="n" varStatus="status">
+
+                                                        <li>
+
+
+                                                            <div class="icon-circle bg-blue-grey">
+                                                                <i class="material-icons">comment</i>
+                                                            </div>
+                                                            <div class="menu-info">
+                                                                <h4>
+                                                                    <b> #{n.idUtilisateur.nomUtilisateur} #{n.idUtilisateur.prenomUtilisateur} : </b> &ldquo; #{n.message} &rdquo;
+                                                                </h4>
+
+
+                                                                <table>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <br/>
+                                                                            <i class="material-icons">access_time</i> Il y a 2 heures
+                                                                        </td>
+                                                                        <td align="right"> 
+                                                                            <br/>
+                                                                            &nbsp;&nbsp;&nbsp;
+                                                                            <h:commandButton style="background: #00BCD4;border-radius: 15px;" value="Traiter" action="#{notificationBean.traiterDevis}">
+                                                                                <f:setPropertyActionListener target="#{notificationBean.notification}" value="#{n}"/>
+                                                                            </h:commandButton> 
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+
+                                                            </div>
+
+
+                                                        </li>
+
+                                                    </ui:repeat>
+                                                </p:outputPanel> 
+
+
+                                                <p:outputPanel id="notifFacture" layout="block">
+                                                    <ui:repeat id="repeater4" value="#{notificationBean.myllNotificationfacture}" var="n" varStatus="status">
+
+                                                        <li>
+
+
+                                                            <div class="icon-circle bg-blue-grey">
+                                                                <i class="material-icons">comment</i>
+                                                            </div>
+                                                            <div class="menu-info">
+                                                                <h4>
+                                                                    <b> #{n.idUtilisateur.nomUtilisateur} #{n.idUtilisateur.prenomUtilisateur} : </b> &ldquo; #{n.message} &rdquo;
+                                                                </h4>
+
+
+                                                                <table>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <br/>
+                                                                            <i class="material-icons">access_time</i> Il y a 2 heures
+                                                                        </td>
+                                                                        <td align="right"> 
+                                                                            <br/>
+                                                                            &nbsp;&nbsp;&nbsp;
+                                                                            <h:commandButton style="background: #00BCD4;border-radius: 15px;" value="Traiter" action="#{notificationBean.traiterFacture}">
+                                                                                <f:setPropertyActionListener target="#{notificationBean.notification}" value="#{n}"/>
+                                                                            </h:commandButton> 
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+
+                                                            </div>
+
+
+                                                        </li>
+
+                                                    </ui:repeat>
+                                                </p:outputPanel>
+
+
+                                                <p:outputPanel id="notifDecompte" layout="block">
+                                                    <ui:repeat id="repeater5" value="#{notificationBean.myllNotificationDecompte}" var="n" varStatus="status">
+
+                                                        <li>
+
+
+                                                            <div class="icon-circle bg-blue-grey">
+                                                                <i class="material-icons">comment</i>
+                                                            </div>
+                                                            <div class="menu-info">
+                                                                <h4>
+                                                                    <b> #{n.idUtilisateur.nomUtilisateur} #{n.idUtilisateur.prenomUtilisateur} : </b> &ldquo; #{n.message} &rdquo;
+                                                                </h4>
+
+
+                                                                <table>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <br/>
+                                                                            <i class="material-icons">access_time</i> Il y a 2 heures
+                                                                        </td>
+                                                                        <td align="right"> 
+                                                                            <br/>
+                                                                            &nbsp;&nbsp;&nbsp;
+                                                                            <h:commandButton style="background: #00BCD4;border-radius: 15px;" value="Traiter" action="#{notificationBean.traiterDecompte}">
+                                                                                <f:setPropertyActionListener target="#{notificationBean.notification}" value="#{n}"/>
+                                                                            </h:commandButton> 
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+
+                                                            </div>
+
+
+                                                        </li>
+
+                                                    </ui:repeat>
+                                                </p:outputPanel>
+
+
+
+                                                <!-- <p:outputPanel id="notifCommandeExp" layout="block">
+                                                     <ui:repeat id="repeater6" value="#{notificationBean.myllNotificationCommandeExp}" var="n" varStatus="status">
+ 
+                                                         <li>
+ 
+ 
+                                                             <div class="icon-circle bg-blue-grey">
+                                                                 <i class="material-icons">comment</i>
+                                                             </div>
+                                                             <div class="menu-info">
+                                                                 <h4>
+                                                                     <b> #{n.idUtilisateur.nomUtilisateur} #{n.idUtilisateur.prenomUtilisateur} : </b> &ldquo; #{n.message} &rdquo;
+                                                                 </h4>
+ 
+ 
+                                                                 <table>
+                                                                     <tr>
+                                                                         <td>
+                                                                             <br/>
+                                                                             <i class="material-icons">access_time</i> Il y a 2 heures
+                                                                         </td>
+                                                                         <td align="right"> 
+                                                                             <br/>
+                                                                             &nbsp;&nbsp;&nbsp;
+                                                                             <h:commandButton style="background: #00BCD4;border-radius: 15px;" value="Traiter" action="#{notificationBean.traiterCommandeExp}">
+                                                                                 <f:setPropertyActionListener target="#{notificationBean.notification}" value="#{n}"/>
+                                                                             </h:commandButton> 
+                                                                         </td>
+                                                                     </tr>
+                                                                 </table>
+ 
+                                                             </div>
+ 
+ 
+                                                         </li>
+ 
+                                                     </ui:repeat>
+                                                 </p:outputPanel> -->
+
+
+                                                <p:outputPanel id="notifCommandeCmd" layout="block">
+                                                    <ui:repeat id="repeater7" value="#{notificationBean.myllNotificationCommandeCmd}" var="n" varStatus="status">
+
+                                                        <li>
+
+
+                                                            <div class="icon-circle bg-blue-grey">
+                                                                <i class="material-icons">comment</i>
+                                                            </div>
+                                                            <div class="menu-info">
+                                                                <h4>
+                                                                    <b> #{n.idUtilisateur.nomUtilisateur} #{n.idUtilisateur.prenomUtilisateur} : </b> &ldquo; #{n.message} &rdquo;
+                                                                </h4>
+
+
+                                                                <table>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <br/>
+                                                                            <i class="material-icons">access_time</i> Il y a 2 heures
+                                                                        </td>
+                                                                        <td align="right"> 
+                                                                            <br/>
+                                                                            &nbsp;&nbsp;&nbsp;
+                                                                            <h:commandButton style="background: #00BCD4;border-radius: 15px;" value="Traiter" action="#{notificationBean.traiterCommandeCmd}">
+                                                                                <f:setPropertyActionListener target="#{notificationBean.notification}" value="#{n}"/>
+                                                                            </h:commandButton> 
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+
+                                                            </div>
+
+
+                                                        </li>
+
+                                                    </ui:repeat>
+                                                </p:outputPanel>
+
+                                            </ul>
+                                        </li>
+                                        <li class="footer">
+                                            <a href="javascript:void(0);">voir toutes les notifications</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <p:poll interval="3" listener="#{notificationBean.increment}" update="txt_count notifExp notifSal notifDevis notifFacture notifDecompte notifCommandeCmd" />
+                            </h:form>
+                            <!-- #END# Notifications -->
+                        </div>
+                    </div>
+
+                    <ul class="nav navbar-nav navbar-right">
+
+                        <!-- Search zone -->
+                        <div class="col-md-6">
+                            <div class="inner-addon right-addon search-icon" style="margin-top: 12px;">
+                                <i class="glyphicon glyphicon-search "></i>
+                                <input type="text" placeholder="" class="form-control search-box" />
+                            </div>
+                        </div>
+                        <!-- End Search zone -->
+
+                        <!-- Search zone -->
+                        <div class="col-md-6">
+                            <div class="pull-right" style="margin-top: 12px;">
+                                <img src="resources/images/kaisen_blanc.png" width="130" />
+                            </div>
+                        </div>
+                        <!-- End Search zone -->
+                    </ul>
+
+
+                </div>
+            </div>
+        </nav>
+        <!-- #Top Bar -->
+
+
+
+
+        <section>
+            <!-- Left Sidebar -->
+            <aside id="leftsidebar" class="sidebar">
+                <!-- User Info -->
+                <div class="user-info" style="background-color: #FFFFFF;">
+                    <div class="image">
+                        <img src="resources/images/user.png"  width="48" height="48" alt="User" />
+                    </div>
+                    <div class="info-container">
+                        <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><font style="color: gray;">#{sessionScope.user.prenomUtilisateur} #{sessionScope.user.nomUtilisateur}</font> </div>
+                        <!--<div class="email">john.doe@example.com</div>-->
+                        <div class="btn-group user-helper-dropdown">
+                            <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="color: gray;">keyboard_arrow_down</i>
+                            <ul class="dropdown-menu pull-right">
+                                <li><a href="javascript:void(0);"><i class="material-icons">person</i>Profile</a></li>
+                                <li>
+                                    <h:outputLink value="#{request.contextPath}/deconnexionn.xhtml">
+                                        <i class="material-icons">input</i>Deconnexion 
+                                    </h:outputLink>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- #User Info -->
+                <!-- Menu -->
+
+                <div class="menu">
+                    <ul class="list">
+
+                        <!-- Menu utilisateur -->
+                        <li class="header">MENU PRINCIPAL</li>
+
+                        <c:forEach var="data" items="#{loginBean.allAcces}">
+
+                            <h:panelGroup rendered="#{data.module == 'Accueil'}">
+                                <li>
+                                    <a href="home.xhtml">
+                                        <i class="material-icons">home</i>
+                                        <span>Accueil</span>
+                                    </a>
+                                </li>
+                            </h:panelGroup> 
+
+
+                            <h:panelGroup rendered="#{data.module == 'Configuration'}">
+                                <li>
+                                    <a href="javascript:void(0);" class="menu-toggle">
+                                        <i class="material-icons">settings</i>
+                                        <span>Configuration</span>
+                                    </a>
+                                    <ul class="ml-menu">
+                                        <li>
+                                            <li>
+                                                <a href="roles.xhtml">Gestion des rôles</a>
+                                            </li>
+                                            <li>
+                                                <a href="users.xhtml">Gestion des utilisateurs</a>
+                                            </li>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </h:panelGroup> 
+
+
+                            <h:panelGroup rendered="#{data.module == 'Personnel'}">
+                                <li>
+                                    <a href="javascript:void(0);" class="menu-toggle">
+                                        <i class="material-icons">group</i>
+                                        <span>Personnel</span>
+                                    </a>
+                                    <ul class="ml-menu">
+                                        <li>
+                                            <li>
+                                                <a href="javascript:void(0);" class="menu-toggle">
+                                                    <span>Contrats</span>
+                                                </a>
+                                                <ul class="ml-menu">
+                                                    <li>
+                                                        <a href="recrues.xhtml">Recrutement</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="stagaires.xhtml">Stage</a>
+                                                    </li>
+
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a href="salaires.xhtml">Salaire</a>
+                                            </li>
+                                            <li>
+                                                <a href="prets.xhtml">Prêts</a>
+                                            </li>
+                                            <li>
+                                                <a href="indemnites.xhtml">Indemnités</a>
+                                            </li>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </h:panelGroup> 
+
+
+                            <h:panelGroup rendered="#{data.module == 'Projets'}">
+                                <li>
+                                    <a href="javascript:void(0);" class="menu-toggle">
+                                        <i class="material-icons">person</i>
+                                        <span>Projets</span>
+                                    </a>
+                                    <ul class="ml-menu">
+                                        <li>
+
+                                            <li>
+
+                                                <a href="javascript:void(0);" class="menu-toggle">
+                                                    <span>Gestion</span>
+                                                </a>
+                                                <ul class="ml-menu">
+                                                    <li>
+                                                        <a href="clients.xhtml">Clients</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="devis.xhtml">Devis</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="marches.xhtml">Marchés</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="facture2.xhtml">Factures</a>
+                                                    </li> 
+                                                    <li>
+                                                        <a href="decomptep.xhtml">Décomptes</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a href="chantiers.xhtml">Chantiers</a>
+                                            </li>
+                                            <li>
+
+                                                <a href="javascript:void(0);" class="menu-toggle">
+                                                    <span>Prestataires</span>
+                                                </a>
+                                                <ul class="ml-menu">
+                                                    <li>
+                                                        <a href="prestataires_prims.xhtml">Liste prestataires</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="prestataires.xhtml">Referenciel Main-d'oeuvre</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="acomptes.xhtml">Acomptes</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+
+                                            <li>
+                                                <a href="javascript:void(0);" class="menu-toggle">
+                                                    <span>Project Managment</span>
+                                                </a>
+                                                <ul class="ml-menu">
+                                                    <li>
+                                                        <a href="new_management.xhtml">Nouvelle tâche</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="management.xhtml">Managment</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+
+                                        </li>
+                                    </ul>
+                                </li>
+                            </h:panelGroup> 
+
+
+                            <h:panelGroup rendered="#{data.module == 'Approvisionnement'}">
+                                <li>
+                                    <a href="javascript:void(0);" class="menu-toggle">
+                                        <i class="material-icons">local_shipping</i>
+                                        <span>Approvisionnement</span>
+                                    </a>
+                                    <ul class="ml-menu">
+                                        <li>
+                                            <li>
+                                                <a href="devises.xhtml">Devises</a>
+                                            </li>
+                                            <li>
+                                                <a href="unites.xhtml">Unite de mesure</a>
+                                            </li>
+                                            <li>
+                                                <a href="lottechnique.xhtml">Lot technique</a>
+                                            </li>
+                                            <li>
+                                                <a href="corpsetats.xhtml">Corps d'etat</a> 
+                                            </li>
+                                            <li>
+                                                <a href="marchandises.xhtml">Materiels</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0);" class="menu-toggle">  
+                                                    <span>Fournisseurs</span>
+                                                </a>
+                                                <ul class="ml-menu">
+                                                    <li>
+                                                        <a href="fournisseurs.xhtml">Liste fournisseurs</a>
+                                                    </li> 
+                                                    <li>
+                                                        <a href="refFournisseurs.xhtml">Referenciel fournisseurs</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="acomptes_fournisseurs.xhtml">Acomptes</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0);" class="menu-toggle">  
+                                                    <span>Debourssés sec</span>
+                                                </a>
+                                                <ul class="ml-menu">
+                                                    <li>
+                                                        <a href="niveaudeboursser.xhtml">Niveaus debourssés sec</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="deboursser.xhtml">Liste debourssés sec</a>
+                                                    </li> 
+                                                    <li>
+                                                        <a href="new_sortideb.xhtml">Sortie debourssés sec</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="suivideboursser.xhtml">Suivi debourssés sec</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a href="prix.xhtml">Referenciel de prix</a> 
+                                            </li>
+                                            <li>
+                                                <a href="expressionbesoins.xhtml">Expression des besoins</a>
+                                            </li>
+                                            <li>
+                                                <a href="commandes2.xhtml">Bons de commande</a>
+                                            </li>
+
+                                            <li>
+                                                <a href="javascript:void(0);" class="menu-toggle">
+                                                    <span>Livraison</span>
+                                                </a>
+                                                <ul class="ml-menu">
+                                                    <!-- <li>
+                                                         <a href="new_livraison.xhtml">Nouvelle livraison</a>
+                                                     </li> -->
+                                                    <li>
+                                                        <a href="livraisons.xhtml">Approvisionnement chantier</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+
+                                        </li>
+                                    </ul>
+                                </li>
+                            </h:panelGroup> 
+
+
+
+                            <h:panelGroup rendered="#{data.module == 'Stock'}">
+                                <li>
+                                    <a href="javascript:void(0);" class="menu-toggle">
+                                        <i class="material-icons">widgets</i>
+                                        <span>Stock</span>
+                                    </a>
+                                    <ul class="ml-menu">
+                                        <li>
+                                            <li>
+                                                <a href="entrepots.xhtml">Entrepots</a>
+                                            </li>
+                                            <li>
+                                                <a href="stock.xhtml">Inventaire</a>
+                                            </li>
+
+                                            <c:if test="#{stockBean.creerStock.equalsIgnoreCase('yes')}"> 
+                                                <li>
+                                                    <a href="new_stock.xhtml">Mise à jour stock</a>
+                                                </li>
+                                            </c:if> 
+
+                                            <c:if test="#{stockBean.creerStock.equalsIgnoreCase('no')}">
+                                                <li>
+                                                    <a href="#">Mise à jour stock</a>
+                                                </li>
+                                            </c:if> 
+
+                                            <li>
+                                                <a href="sortieStocks.xhtml">Sortie de stock</a>
+                                            </li>
+
+                                            <li>
+                                                <a href="historiqueLivraisons.xhtml">Historique livraison</a>
+                                            </li>
+
+                                        </li>
+                                    </ul>
+                                </li>
+                            </h:panelGroup> 
+
+
+                            <h:panelGroup rendered="#{data.module == 'Opportunités'}">
+                                <li>
+                                    <a href="opportunites.xhtml">
+                                        <i class="material-icons">library_books</i>
+                                        <span>Opportunités</span>
+                                    </a>
+                                </li>
+                            </h:panelGroup>
+
+
+                        </c:forEach>
+
+
+                        <!-- Fin Menu utilisateur -->
+                    </ul>
+                </div>
+                <!-- #Menu -->
+
+
+                <!-- Footer -->
+                <div class="legal">
+                    <div class="copyright">
+                        <font style="color: red;font-family: Snell Roundhand;font-size: 30px;font-size: 15px;font-weight: bold;">&copy;  Accel</font><font style="color: black;font-family: Snell Roundhand;font-size: 30px;font-size: 15px;font-weight: bold;"> Technologies.</font><font style="color: white;font-family: Snell Roundhand;font-size: 30px;font-size: 15px;font-weight: bold;"> Tous droits Réservés</font>   
+                    </div>
+                    <div class="version">
+
+                    </div>
+                </div>
+                <!-- #Footer -->
+
+
+            </aside>
+            <!-- #END# Left Sidebar -->
+            <!-- Right Sidebar -->
+
+            <!-- #END# Right Sidebar -->
+        </section>
+
+
+        <ui:insert name="contenu"></ui:insert> 
+        <!-- Jquery Core Js -->
+        <!--<script src="resources/plugins/jquery/jquery.min.js"></script>-->
+        <h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
+        <h:outputScript library="primefaces" name="jquery/jquery-plugins.js" target="head" />
+
+        <!-- Bootstrap Core Js -->
+        <script src="resources/plugins/bootstrap/js/bootstrap.js"></script>
+
+        <!-- Select Plugin Js -->
+        <script src="resources/plugins/bootstrap-select/js/bootstrap-select.js"></script>
+
+        <!-- Slimscroll Plugin Js -->
+        <script src="resources/plugins/jquery-slimscroll/jquery.slimscroll.js" ></script>
+
+        <!-- Waves Effect Plugin Js -->
+        <script src="resources/plugins/node-waves/waves.js"></script>
+
+        <!-- Jquery CountTo Plugin Js -->
+        <script src="resources/plugins/jquery-countto/jquery.countTo.js"></script>
+
+        <!-- Morris Plugin Js -->
+        <script src="resources/plugins/raphael/raphael.min.js" ></script>
+        <script src="resources/plugins/morrisjs/morris.js"></script>
+        <!-- ChartJs -->
+        <script src="resources/plugins/chartjs/Chart.bundle.js"></script>
+
+        <!-- Flot Charts Plugin Js -->
+        <script src="resources/plugins/flot-charts/jquery.flot.js"></script>
+        <script src="resources/plugins/flot-charts/jquery.flot.resize.js"></script>
+        <script src="resources/plugins/flot-charts/jquery.flot.pie.js"></script>
+        <script src="resources/plugins/flot-charts/jquery.flot.categories.js"></script>
+        <script src="resources/plugins/flot-charts/jquery.flot.time.js"></script>
+
+        <!-- Sparkline Chart Plugin Js -->
+        <script src="resources/plugins/jquery-sparkline/jquery.sparkline.js"></script>
+
+
+        <!-- Jquery DataTable Plugin Js -->
+        <script src="resources/plugins/jquery-datatable/jquery.dataTables.js"></script>
+        <script src="resources/plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
+        <script src="resources/plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
+        <script src="resources/plugins/jquery-datatable/extensions/export/buttons.flash.min.js" ></script>
+        <script src="resources/plugins/jquery-datatable/extensions/export/jszip.min.js"></script>
+        <script src="resources/plugins/jquery-datatable/extensions/export/pdfmake.min.js" ></script>
+        <script src="resources/plugins/jquery-datatable/extensions/export/vfs_fonts.js"></script>
+        <script src="resources/plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
+        <script src="resources/plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
+
+        <!-- Autosize Plugin Js -->
+        <script src="resources/plugins/autosize/autosize.js"></script>
+        <!-- Moment Plugin Js -->
+        <script src="resources/plugins/momentjs/moment.js"></script>
+
+        <!-- Custom Js -->
+        <script src="resources/js/admin.js"></script>
+        <script src="resources/js/pages/tables/jquery-datatable.js"></script>
+        <script src="resources/js/pages/forms/basic-form-elements.js"></script>
+        <script src="resources/js/pages/index.js"></script>
+
+
+        <!-- Demo Js -->
+        <script src="resources/js/demo.js"></script>
+        <script>
+            CKEDITOR.replace('myeditor');
+        </script>  
+
+
+
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+            google.charts.load('current', {'packages': ['corechart']});
+            google.charts.setOnLoadCallback(drawChart1);
+            google.charts.setOnLoadCallback(drawChart2);
+            google.charts.setOnLoadCallback(drawChart3);
+
+            function drawChart1() {
+
+                var data1 = google.visualization.arrayToDataTable([
+                    ['Task', 'Hours per Day'],
+                    ['Expression de besoin', #{expressionbesoinBean.nbExpressionNomValide}],
+                    ['Bon de commande', #{commande2Bean.nbCommandeNonValide}]
+                ]);
+
+                var options1 = {
+                    title: 'Expression de besoin et bon de commande en attente de validation',
+                    pieSliceText: 'value'
+                };
+
+                var chart1 = new google.visualization.PieChart(document.getElementById('piechart'));
+
+                chart1.draw(data1, options1);
+            }
+
+
+            function drawChart2() {
+                var data2 = google.visualization.arrayToDataTable([
+                    ['Task', 'Hours per Day'],
+                    ['Expression de besoin', #{expressionbesoinBean.nbExpressionNomValide}],
+                    ['Bon de commande', #{commande2Bean.nbCommandeNonValide}]
+                ]);
+
+                var options2 = {
+                    title: 'Expression de besoin et bon de commande en attente de validation',
+                    is3D: true,
+                    pieSliceText: 'value'
+                };
+
+                var chart2 = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+                chart2.draw(data2, options2);
+            }
+
+            function drawChart3() {
+                var data3 = google.visualization.arrayToDataTable([
+                    ['Month', {label: 'Acomptes', type: 'number'}, {label: 'Bon de commande', type: 'number'}],
+                    ['Janv.', #{sessionScope.utilDepensesAcompteFromDashbord.montantAcomptesJanvier}, #{sessionScope.utilDepensesCommandeFromDashbord.montantBonCommandeJanvier}],
+                    ['Févr.', #{sessionScope.utilDepensesAcompteFromDashbord.montantAcomptesFevrier}, #{sessionScope.utilDepensesCommandeFromDashbord.montantBonCommandeFevrier}],
+                    ['Mars', #{sessionScope.utilDepensesAcompteFromDashbord.montantAcomptesMars}, #{sessionScope.utilDepensesCommandeFromDashbord.montantBonCommandeMars}],
+                    ['Avr.', #{sessionScope.utilDepensesAcompteFromDashbord.montantAcomptesAvril}, #{sessionScope.utilDepensesCommandeFromDashbord.montantBonCommandeAvril}],
+                    ['Mai', #{sessionScope.utilDepensesAcompteFromDashbord.montantAcomptesMai}, #{sessionScope.utilDepensesCommandeFromDashbord.montantBonCommandeMai}],
+                    ['Juin', #{sessionScope.utilDepensesAcompteFromDashbord.montantAcomptesJuin}, #{sessionScope.utilDepensesCommandeFromDashbord.montantBonCommandeJuin}],
+                    ['Juill.', #{sessionScope.utilDepensesAcompteFromDashbord.montantAcomptesJuillet}, #{sessionScope.utilDepensesCommandeFromDashbord.montantBonCommandeJuillet}],
+                    ['Août', #{sessionScope.utilDepensesAcompteFromDashbord.montantAcomptesAout}, #{sessionScope.utilDepensesCommandeFromDashbord.montantBonCommandeAout}],
+                    ['Sept.', #{sessionScope.utilDepensesAcompteFromDashbord.montantAcomptesSeptembre}, #{sessionScope.utilDepensesCommandeFromDashbord.montantBonCommandeSeptembre}],
+                    ['Oct.', #{sessionScope.utilDepensesAcompteFromDashbord.montantAcomptesOctobre}, #{sessionScope.utilDepensesCommandeFromDashbord.montantBonCommandeOctobre}],
+                    ['Nov.', #{sessionScope.utilDepensesAcompteFromDashbord.montantAcomptesNovembre}, #{sessionScope.utilDepensesCommandeFromDashbord.montantBonCommandeNovembre}],
+                    ['Déc.', #{sessionScope.utilDepensesAcompteFromDashbord.montantAcomptesDecembre}, #{sessionScope.utilDepensesCommandeFromDashbord.montantBonCommandeDecembre}]
+                ]);
+
+                var options3 = {
+                    title: 'Dépenses 2019',
+                    curveType: 'function',
+                    interpolateNulls: true,
+                    legend: {position: 'bottom'}
+                };
+
+                var chart3 = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+                chart3.draw(data3, options3);
+            }
+        </script>
+
+        <script type="application/javascript">
+            function playSound(){
+            var audio = new Audio('http://www.soundjay.com/misc/sounds/bell-ringing-04.mp3');
+            audio.play();
+            }
+        </script>
+
+        <!--<script>
+            $(".nav a").on("click", function () {
+                $(".nav").find(".active").removeClass("active");
+                $(this).parent().addClass("active");
+            });
+        </script>-->
+
+    </h:body>
+</html>

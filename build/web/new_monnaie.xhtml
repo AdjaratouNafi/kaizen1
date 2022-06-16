@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | Monnaies
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h2>MISE A JOUR MONNAIE</h2>
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="card">
+                                <div class="body">
+                                    <h:form> 
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-4">
+                                                <p:inputText id="dateop" styleClass="form-control" a:placeholder="Date au format JJ-MM-AAAA"  converter="#{beanStringConverter}" value="#{monnaieBean.monnaie.dateMonnaie}"/>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <p:inputText id="mnn" styleClass="form-control" a:placeholder="Monnaie"  converter="#{beanStringConverter}" value="#{monnaieBean.monnaie.monnnaie}"/>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <p:inputText id="rp" styleClass="form-control" a:placeholder="Rendu par"  converter="#{beanStringConverter}" value="#{monnaieBean.monnaie.rendrepar}"/>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-4">
+                                                <p:inputText id="piece" styleClass="form-control" a:placeholder="Pièce"  converter="#{beanStringConverter}" value="#{monnaieBean.monnaie.piece}"/>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <p:inputText id="npiece" styleClass="form-control" a:placeholder="Numéro de pièce"  converter="#{beanStringConverter}" value="#{monnaieBean.monnaie.numeropiece}"/>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <p:inputText id="mtl" styleClass="form-control" a:placeholder="Montant en lettre"  converter="#{beanStringConverter}" value="#{monnaieBean.monnaie.montantlettre}"/>
+                                            </div>
+                                        </div> 
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-4">
+                                                <p:inputText id="nature" styleClass="form-control" a:placeholder="nature"  converter="#{beanStringConverter}" value="#{monnaieBean.monnaie.nature}"/>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <p:inputText id="obs" styleClass="form-control" a:placeholder="Observation"  converter="#{beanStringConverter}" value="#{monnaieBean.monnaie.observation}"/>
+                                            </div>
+                                            <div class="col-sm-4">
+
+                                            </div>
+                                        </div> 
+
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+
+                                                    <p:commandButton styleClass="btn btn-primary m-t-15 waves-effect" id="save" value="Enregistrer" ajax="false" action="#{monnaieBean.save()}" />
+                                                    &nbsp;&nbsp;&nbsp;
+                                                    <p:commandButton styleClass="btn btn-primary m-t-15 waves-effect" id="reset" value="Annuler" action="#{caisseBean.reset}" />
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </h:form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

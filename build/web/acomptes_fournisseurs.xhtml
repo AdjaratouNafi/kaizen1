@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | ACOMPTES 
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h3></h3>
+                    </div>
+
+                    <h:form id="form1">
+                        <p:growl id="messages" showDetail="true"/>
+                        <p:panel header="LISTE DES ACOMPTES" styleClass="myPanelWidth">
+
+
+
+                            <p:dataTable rowKey="#{r.idAcomptefournisseur}" emptyMessage="Aucune donnée trouvée"  filteredValue="#{acompteFournisseurBean.filteredListAcomptes}" value="#{acompteFournisseurBean.listAcomptes}" var="r" widgetVar="listAcpt" styleClass="widthEnPourcent">
+
+                                <f:facet name="header">
+                                    <p:outputPanel>
+                                        <h:outputText value="Recherche:" style="margin: 15px;" />
+                                        <p:inputText id="globalFilter" converter="#{beanStringConverter}" onkeyup="PF('listAcpt').filter()" style="150px;" />
+                                    </p:outputPanel>
+                                </f:facet>
+
+                                 <p:column filterStyle="display:none" headerText="Numéro" sortBy="#{r.idFournisseur.nomFournisseur}" filterBy="#{r.idFournisseur.nomFournisseur}">
+                                    #{r.numeroacomptef}
+                                </p:column>
+                                <p:column filterStyle="display:none" headerText="Fournisseur" sortBy="#{r.idFournisseur.nomFournisseur}" filterBy="#{r.idFournisseur.nomFournisseur}">
+                                    #{r.idFournisseur.nomFournisseur}
+                                </p:column>
+                                <p:column filterStyle="display:none" headerText="Accord" sortBy="#{r.idReffournisseur.accord}" filterBy="#{r.idReffournisseur.accord}">
+                                    #{r.idReffournisseur.accord}  
+                                </p:column> 
+                                <p:column filterStyle="display:none" headerText="Montant acompte" sortBy="#{r.montantAcompte}" filterBy="#{r.montantAcompte}">
+                                    #{r.montantAcompte}  
+                                </p:column> 
+                                <p:column filterStyle="display:none" headerText="Date" sortBy="#{r.dateAcompte}" filterBy="#{r.dateAcompte}">
+                                    <f:facet name="header">Date</f:facet> 
+                                        #{r.dateAcompte}  
+                                </p:column> 
+                                <p:column filterStyle="display:none" headerText="Echeance" sortBy="#{r.echeanceAcompte}" filterBy="#{r.echeanceAcompte}">
+                                    <f:facet name="header">Echeance</f:facet> 
+                                        #{r.echeanceAcompte}
+                                </p:column> 
+                                <p:column  filterStyle="display:none" headerText="Numéro de cheque" sortBy="#{r.numerocheque}" filterBy="#{r.numerocheque}">
+                                    #{r.numerocheque}
+                                </p:column> 
+
+                                <p:column>
+                                    <f:facet name="header">Action</f:facet> 
+
+
+                                    <h:commandLink  action="#{acompteBean.editer}">
+                                        <h:graphicImage value="resources/images/modifier.svg" width="35px" height="35px"  title="Modifier" />
+                                    </h:commandLink>
+
+                                    &nbsp;&nbsp;&nbsp;
+
+
+                                    <h:commandLink  action="#{acompteBean.supprimer}">
+                                        <h:graphicImage value="resources/images/supprimer.svg" width="35px" height="35px"  title="Supprimer" />
+                                    </h:commandLink>
+
+                                </p:column>
+
+                            </p:dataTable>
+
+                            <a href="new_acompte_fournisseur.xhtml" class="btn btn-primary m-t-15 waves-effect" style="border-radius: 10px;color: white;">Nouveau acompte</a>
+
+
+                        </p:panel>
+
+
+                    </h:form>
+
+                </div>
+
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

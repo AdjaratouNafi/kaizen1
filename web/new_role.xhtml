@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | ROLES
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                            <div class="body">
+
+                                <h:form>
+
+                                    <p:growl id="msgs" showDetail="true" sticky="true" /> 
+
+
+                                    <p:panel id="basic" header="NOUVEAU ROLE" style="margin-bottom:20px;text-align: center;">
+
+                                        <p:spacer height="50px;"/>
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-4">
+                                                <p:inputText  id="libelle" class="form-control" a:placeholder="Libelle" converter="#{beanStringConverter}" value="#{roleBean.role.libelleRole}" required="true" requiredMessage="Le champ libelle est obligatoire"/>
+                                            </div>
+                                            <div class="col-sm-4">
+
+                                            </div>
+                                            <div class="col-sm-4">
+
+                                            </div>
+                                        </div> 
+
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <br/><br/><br/>
+                                                    <!--<p:commandButton  id="save" value="Enregistrer" ajax="false" update="msgs" action="#{roleBean.save}" />-->
+                                                    <h:commandLink  action="#{roleBean.save}">
+                                                        <h:graphicImage value="resources/images/enregistrer.svg"  title="Enregistrer" />
+                                                    </h:commandLink>
+                                                    &nbsp;&nbsp;&nbsp;
+                                                    <!--<p:commandButton  id="reset" value="Annuler" action="#{roleBean.reset}" />-->
+                                                    <h:commandLink  action="#{roleBean.reset}">
+                                                        <h:graphicImage value="resources/images/annuler.svg"  title="Annuler" />
+                                                    </h:commandLink>
+                                                    
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </p:panel>
+                                </h:form>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

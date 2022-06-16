@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | COMMANDES
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                           
+                                <div class="body">
+
+                                    <h:form id="form1">
+
+                                        <p:panel header="DETAIL DU BON DE COMMANDE #{commandeOtherBean.commandeFromEdit.code}" style="width: 100%;text-align: center;">
+
+                                            <b style="float: left;">Date : <h:outputText value = "#{commandeOtherBean.commandeFromEdit.dateechance}"/> </b><br/>
+                                            <b style="float: left;">Fournisseur : <h:outputText value = "#{commandeOtherBean.commandeFromEdit.idFournisseur.nomFournisseur}"/> </b><br/>
+                                            <b style="float: left;">Adresse : <h:outputText value = "#{commandeOtherBean.commandeFromEdit.idFournisseur.adresseFournisseur}"/> </b><br/>
+
+                                            <h:panelGroup rendered="#{commandeOtherBean.commandeFromEdit.typecommande eq 'Exp besoin'}">
+                                                <b style="float: left;">Projet : <h:outputText value = "#{commandeOtherBean.commandeFromEdit.idMarche.nomMarche}"/> </b><br/><br/>
+                                                <b style="float: left;">Chantier : <h:outputText value = "#{commandeOtherBean.commandeFromEdit.idChantier.siteChantier}"/> </b><br/><br/>
+                                            </h:panelGroup>
+
+                                            <h:panelGroup rendered="#{commandeOtherBean.commandeFromEdit.typecommande eq 'Appro stock'}">
+                                                <br>
+                                                    <b style="float: right;">#{commandeOtherBean.commandeFromEdit.idMarche.idDevise.symbole}</b>
+                                                </br>
+                                            </h:panelGroup>
+                                            <h:panelGroup rendered="#{commandeOtherBean.commandeFromEdit.typecommande eq 'Exp besoin'}">
+                                                <b style="float: right;">#{commandeOtherBean.commandeFromEdit.idChantier.idMarche.idDevise.symbole}</b> 
+                                            </h:panelGroup>
+
+                                            <p:dataTable value="#{commandeOtherBean.allFactureUtils}" var="r" widgetVar="100" paginator="true" rows="20" paginatorPosition="bottom" style="width: 100%;">
+                                                <f:facet name="header">  
+
+                                                </f:facet>
+
+                                                <p:column style="text-align: right;">
+                                                    <f:facet name="header">Désignation</f:facet> 
+                                                        #{r.designation}
+                                                </p:column>
+                                                <p:column style="text-align: right;">
+                                                    <f:facet name="header">Ref</f:facet> 
+                                                        #{r.ref}
+                                                </p:column>
+                                                <p:column style="text-align: right;">
+                                                    <f:facet name="header">U.mesure</f:facet> 
+                                                        #{r.unite}
+                                                </p:column>
+                                                <p:column style="text-align: right;">
+                                                    <f:facet name="header">Qte</f:facet> 
+                                                        #{r.quantite}
+                                                </p:column>
+                                                <p:column style="text-align: right;">
+                                                    <f:facet name="header">P.U</f:facet> 
+                                                        #{r.pu} 
+                                                </p:column>
+                                                <p:column style="text-align: right;">
+                                                    <f:facet name="header">P.Total</f:facet> 
+                                                        #{r.prixtotal}
+                                                </p:column>
+
+                                            </p:dataTable>
+
+
+                                            <br/>
+                                            <font style="font-size: 15px;font-weight: bold;float: right">TOTAL HT: #{commandeOtherBean.totalHT}  </font>
+                                            <br/>
+                                            <font style="font-size: 15px;font-weight: bold;float: right">TVA 18%: #{commandeOtherBean.montantTVA} </font>
+                                            <br/>
+                                            <font style="font-size: 15px;font-weight: bold;float: right">TOTAL TTC: #{commandeOtherBean.totalTTC}</font>
+                                            <br/><br/>
+
+                                        </p:panel>
+
+                                        <!-- #END# Basic Examples -->
+                                    </h:form>
+
+
+                                </div>
+                           
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

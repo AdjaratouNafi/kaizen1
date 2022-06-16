@@ -1,0 +1,183 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | PROJECT MANAGER
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h3></h3>
+                    </div>
+
+                    <h:form id="form1">
+                        <p:growl id="messages" showDetail="true"/>
+                        <p:panel header="GESTION DE PROJET" style="width: 100%;text-align: center;"> 
+
+                            <p:spacer height="30px;"/>
+                            <p:dataTable scrollable="true" scrollWidth="1200" value="#{stockBean.allStocks}" var="s" rowKey="#{s.idSotk}" selectionMode="single"  
+                                         selection="#{stockBean.utilStockFromEdit}" widgetVar="100" paginator="true" rows="20" paginatorPosition="bottom" style="width: 100%;" editable="true">
+                                <f:facet name="header">  
+
+                                </f:facet>
+                                <!--<p:ajax event="rowEdit" listener="#{stockBean.rowEdit}" update=":form1:messages" />  
+                                <p:ajax event="rowEditCancel" listener="#{stockBean.rowEditCancel}" update=":form1:messages" />-->
+
+                                <p:column>
+                                    <f:facet name="header">  
+                                        <h:outputText value="Nom de la tâche" />  
+                                    </f:facet>
+                                    <p:cellEditor>  
+                                        <f:facet name="output">  
+                                            <h:outputText value="Consultation des entreprises" />  
+                                        </f:facet>  
+                                        <f:facet name="input">  
+                                            <p:inputText id="mch" styleClass="form-control" converter="#{beanStringConverter}" value="" /> 
+                                        </f:facet> 
+                                    </p:cellEditor> 
+                                </p:column>
+
+
+                                <p:column>
+                                    <f:facet name="header">  
+                                        <h:outputText value="Durée" />  
+                                    </f:facet>
+                                    <p:cellEditor>  
+                                        <f:facet name="output">  
+                                            <h:outputText value="35j" />  
+                                        </f:facet>  
+                                        <f:facet name="input">  
+                                            <p:inputText id="frs" styleClass="form-control" converter="#{beanStringConverter}" value="" style="width:100%"/>  
+                                        </f:facet>  
+                                    </p:cellEditor>
+                                </p:column>
+
+                                <p:column>
+                                    <f:facet name="header">  
+                                        <h:outputText value="Date de début" />  
+                                    </f:facet>
+                                    <p:cellEditor>  
+                                        <f:facet name="output">  
+                                            <h:outputText value="01/03/2017" />  
+                                        </f:facet>  
+                                        <f:facet name="input">  
+                                            <p:calendar  id="dateEntree" converter="#{beanStringConverter}" value="" />
+                                        </f:facet>  
+                                    </p:cellEditor>
+                                </p:column> 
+                                <p:column>
+                                    <f:facet name="header">  
+                                        <h:outputText value="Date de fin" />  
+                                    </f:facet>
+                                    <p:cellEditor>  
+                                        <f:facet name="output">  
+                                            <h:outputText value="21/03/2018" />  
+                                        </f:facet>  
+                                        <f:facet name="input">  
+                                            <p:calendar  id="ddf" converter="#{beanStringConverter}" value="" />
+                                        </f:facet>  
+                                    </p:cellEditor>
+                                </p:column>
+                                <p:column style="width:100p%"> 
+                                    <f:facet name="header">  
+                                        <h:outputText value="Prédécesseurs" />  
+                                    </f:facet>
+                                    <p:cellEditor>  
+                                        <f:facet name="output">  
+                                            <h:outputText value="1" />  
+                                        </f:facet>  
+                                        <f:facet name="input">  
+                                            <p:inputText id="pdss" styleClass="form-control" converter="#{beanStringConverter}" value="" /> 
+                                        </f:facet>  
+                                    </p:cellEditor>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">  
+                                        <h:outputText value="% terminé" />  
+                                    </f:facet>
+                                    <p:cellEditor>  
+                                        <f:facet name="output">  
+                                            <h:outputText value="100%" />  
+                                        </f:facet>  
+                                        <f:facet name="input">  
+                                            <p:inputText id="vinv" styleClass="form-control" converter="#{beanStringConverter}" value="" /> 
+                                        </f:facet>  
+                                    </p:cellEditor>
+                                </p:column>
+
+                                <p:column>
+                                    <f:facet name="header">  
+                                        <h:outputText value="Statut" />  
+                                    </f:facet>
+                                    <p:cellEditor>  
+                                        <f:facet name="output">  
+                                            <i class="material-icons" style="color:greenyellow">fiber_manual_record</i>
+                                        </f:facet>  
+                                        <f:facet name="input">  
+                                            <p:inputText id="qs" styleClass="form-control" converter="#{beanStringConverter}" value="" /> 
+                                        </f:facet>  
+                                    </p:cellEditor>
+                                </p:column>
+
+                                <p:column>
+                                    <f:facet name="header">  
+                                        <h:outputText value="Attribuée à" />  
+                                    </f:facet>
+                                    <p:cellEditor>  
+                                        <f:facet name="output">  
+                                            <h:outputText value="Moustapha Ly" />  
+                                        </f:facet>  
+                                        <f:facet name="input">  
+                                            <p:inputText id="qst" styleClass="form-control" converter="#{beanStringConverter}" value="" /> 
+                                        </f:facet>  
+                                    </p:cellEditor>
+                                </p:column>
+
+                                <p:column>
+                                    <f:facet name="header">  
+                                        <h:outputText value="Commentaires" />  
+                                    </f:facet>
+                                    <p:cellEditor>  
+                                        <f:facet name="output">  
+                                            <h:outputText value="Test" />  
+                                        </f:facet>  
+                                        <f:facet name="input">  
+                                            <p:calendar  id="dateDC" converter="#{beanStringConverter}" value="" />
+                                        </f:facet> 
+                                    </p:cellEditor>
+                                </p:column>
+
+
+                                <p:column headerText="Options" style="width:50p%">  
+                                    <p:rowEditor />  
+                                </p:column> 
+
+                            </p:dataTable>
+
+                            <p:spacer height="30px;"/>
+
+                            <a href="#" class="btn btn-primary m-t-15 waves-effect"><font color="#FFFFFF">CREER UNE NOUVELLE TACHE</font></a>
+
+
+                        </p:panel>
+
+
+
+                    </h:form>
+
+                </div>
+
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

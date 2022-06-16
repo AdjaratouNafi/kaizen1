@@ -1,0 +1,180 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | OPPORTUNITES
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h2></h2>
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                            <div class="body">
+
+                                <h:form>
+                                    <p:growl id="msgs" showDetail="true" />
+
+
+                                    <p:panel id="basic" header="ENREGISTRER UNE NOUVELLE OPPORTUNITE" style="margin-bottom:20px;text-align: center;">
+
+                                        <p:spacer height="50px;"/>
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-4">
+                                                <p:inputText id="opp" styleClass="form-control" a:placeholder="Opportunité" converter="#{beanStringConverter}" value="#{opportuniteBean.opportunite.libelle}" />
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h:panelGroup id="detailWrapper0">
+                                                    <p:selectOneMenu id="priorite" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter"  
+                                                                     value="#{opportuniteBean.opportunite.priorite}"> 
+                                                        <f:selectItem itemLabel="-------------------- Priorité -------------------"  itemValue="null"/>
+                                                        <f:selectItem itemLabel="Elevée"  itemValue="Elevée"/> 
+                                                        <f:selectItem itemLabel="Faible"  itemValue="Faible"/> 
+                                                    </p:selectOneMenu>
+                                                </h:panelGroup>
+                                            </div>  
+                                            <div class="col-sm-4">
+                                                <h:panelGroup id="detailWrapper1">
+                                                    <p:selectOneMenu id="stadev" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter"  
+                                                                     value="#{opportuniteBean.opportunite.stadevente}"> 
+                                                        <f:selectItem itemLabel="--------------- Stade de vente --------------"  itemValue="null"/>
+                                                        <f:selectItem itemLabel="Identifié"  itemValue="Identifié"/>
+                                                        <f:selectItem itemLabel="Prospection"  itemValue="Prospection"/>
+                                                        <f:selectItem itemLabel="Besoin Evaluation"  itemValue="Besoin Evaluation"/>
+                                                        <f:selectItem itemLabel="Quotation"  itemValue="Quotation"/>
+                                                        <f:selectItem itemLabel="Contract"  itemValue="Contract"/>
+                                                        <f:selectItem itemLabel="Cloturée"  itemValue="Cloturée"/>       
+                                                    </p:selectOneMenu>
+                                                </h:panelGroup>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row clearfix">
+                                            <br/><br/>
+                                            <div class="col-sm-4">
+                                                <div class="col-sm-4">
+
+                                                    <p:selectOneMenu id="respo" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter"  
+                                                                     value="#{opportuniteBean.opportunite.idUtilisateur}"> 
+                                                        <f:selectItem itemLabel="-------------- Responsable -----------------"  itemValue="null"/>
+                                                        <f:selectItems value="#{utilisateurBean.listUtilisateurs}" var="u"  itemLabel="#{u.nomUtilisateur} #{u.prenomUtilisateur}" itemValue="#{u}" />       
+                                                    </p:selectOneMenu>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+
+                                                <p:inputText id="valeur" styleClass="form-control" a:placeholder="Valeur estimée en FCFA" converter="#{beanStringConverter}" value="#{opportuniteBean.opportunite.valeur}" />
+
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label style="float:left;">Date de cloture</label>
+                                                <p:calendar  id="dateAnt" converter="#{beanStringConverter}" value="#{opportuniteBean.opportunite.dateCloture}" />
+                                            </div>
+                                        </div>
+
+                                        <div class="row clearfix">
+                                            <br/><br/>
+                                            <div class="col-sm-4">
+                                                <p:selectOneMenu id="proba" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter"  
+                                                                 value="#{opportuniteBean.opportunite.probabilte}"> 
+                                                    <f:selectItem itemLabel="-------------------- Probabilité ----------------"  itemValue="null"/>
+                                                    <f:selectItem itemLabel="Vide"  itemValue="Vide"/>
+                                                    <f:selectItem itemLabel="Un quart"  itemValue="Un quart"/>
+                                                    <f:selectItem itemLabel="Moitié"  itemValue="Moitié"/>
+                                                    <f:selectItem itemLabel="Trois quarts"  itemValue="Trois quarts"/>
+                                                    <f:selectItem itemLabel="Pleine"  itemValue="Pleine"/>  
+                                                </p:selectOneMenu>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <p:inputText id="prochain"  styleClass="form-control" a:placeholder="Prochaine Etape" converter="#{beanStringConverter}" value="#{opportuniteBean.opportunite.prochainetap}" />
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <p:inputText id="produit" styleClass="form-control" a:placeholder="Produit" converter="#{beanStringConverter}" value="#{opportuniteBean.opportunite.produit}" />
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row clearfix">
+                                            <br/><br/>
+                                            <div class="col-sm-4">
+                                                <label style="float:left;">Dernier contact</label>
+                                                <p:calendar  id="dernierContact" converter="#{beanStringConverter}" value="#{opportuniteBean.opportunite.derniercontact}" />
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <p:inputText id="nom"  styleClass="form-control" a:placeholder="Nom contact" converter="#{beanStringConverter}" value="#{opportuniteBean.opportunite.nomcontact}" />
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <p:inputText id="mail" styleClass="form-control" a:placeholder="Email" converter="#{beanStringConverter}" value="#{opportuniteBean.opportunite.email}" />
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row clearfix">
+                                            <br/><br/>
+                                            <div class="col-sm-4">
+                                                <p:inputText id="tel"  styleClass="form-control" a:placeholder="Téléphone" converter="#{beanStringConverter}" value="#{opportuniteBean.opportunite.telephone}" />
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <p:selectOneMenu id="status" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter"  
+                                                                 value="#{opportuniteBean.opportunite.rouge}"> 
+                                                    <f:selectItem itemLabel="-------------------- Status -------------------"  itemValue="null"/>
+                                                    <f:selectItem itemLabel="Rouge"  itemValue="rouge"/>
+                                                    <f:selectItem itemLabel="Jaune"  itemValue="jaune"/> 
+                                                    <f:selectItem itemLabel="Vert"  itemValue="vert"/>
+                                                </p:selectOneMenu>
+                                            </div>
+
+                                            <div class="col-sm-4">
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <br/><br/>
+                                                    <h:commandLink  action="#{opportuniteBean.save}">
+                                                        <h:graphicImage value="resources/images/enregistrer.svg"  title="Enregistrer" />
+                                                    </h:commandLink>
+                                                    &nbsp;&nbsp;&nbsp;
+                                                    <h:commandLink  action="#{opportuniteBean.reset}">
+                                                        <h:graphicImage value="resources/images/annuler.svg"  title="Annuler" />
+                                                    </h:commandLink>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </p:panel>
+                                </h:form>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

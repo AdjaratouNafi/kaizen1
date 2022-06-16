@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | DEBOURSSES SEC
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h2></h2>
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                            <div class="body">
+
+                                <h:form>
+
+                                    <p:growl id="msgs" showDetail="true" sticky="true" /> 
+
+                                    <p:panel id="basic" header="ENREGISTRER UN DEBOURSSE SEC" style="margin-bottom:20px;text-align: center;">
+
+                                        <p:spacer height="50px;"/>
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-4">
+                                                <p:selectOneMenu id="idNiveau" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter"  
+                                                                 value="#{deboursserBean.deboursser.idNivodeboursser}"> 
+                                                    <!--<f:ajax event="change" listener="#{marchandiseBean.renderInfo}" execute="@form" render="idCorps" />-->
+                                                    <f:selectItem itemLabel="------- Sélectionnez un niveau -------"  itemValue="null"/>
+                                                    <f:selectItems value="#{deboursserBean.allNiveauDeboursser}"  var="d"  itemLabel="#{d.libellenivodeboursser}" itemValue="#{d}" />       
+                                                </p:selectOneMenu>
+                                            </div>
+
+                                            <div class="col-sm-4">
+
+                                                <p:selectOneMenu id="idMate" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter"  
+                                                                 value="#{deboursserBean.deboursser.idMateriel}"> 
+                                                    <f:selectItem itemLabel="------- Sélectionnez un materiel -------"  itemValue="null"/>
+                                                    <f:selectItems value="#{deboursserBean.allMarchandise}"  var="m"  itemLabel="#{m.libelle}" itemValue="#{m}" />       
+                                                </p:selectOneMenu>
+
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <p:inputText id="qte" styleClass="form-control" a:placeholder="Quantité"  converter="#{beanStringConverter}" value="#{deboursserBean.deboursser.quantite}"/>
+                                            </div>
+
+                                        </div>
+
+                                        <p:spacer height="50px;"/>
+
+                                        <div class="row clearfix">
+
+                                            <div class="col-sm-4">
+                                                <p:selectOneMenu id="unite"  converter="omnifaces.SelectItemsConverter"  
+                                                                 value="#{deboursserBean.deboursser.unite}"> 
+                                                    <f:selectItem itemLabel="------- Sélectionnez une unité -------"  itemValue="null"/>
+                                                    <f:selectItems value="#{uniteBean.listUnites}"  var="unite"  itemLabel="#{unite.abreviation}" itemValue="#{unite.abreviation}" />       
+                                                </p:selectOneMenu>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                            </div>
+                                            <div class="col-sm-4">
+                                            </div>
+                                        </div>
+
+                                        <div class="row clearfix">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <br/><br/>
+                                                    <h:commandLink  action="#{deboursserBean.save}">
+                                                        <h:graphicImage value="resources/images/enregistrer.svg"  title="Enregistrer" />
+                                                    </h:commandLink>
+                                                    &nbsp;&nbsp;&nbsp;
+                                                    <h:commandLink  action="#{deboursserBean.reset}">
+                                                        <h:graphicImage value="resources/images/annuler.svg"  title="Annuler" />
+                                                    </h:commandLink>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </p:panel>
+                                </h:form>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

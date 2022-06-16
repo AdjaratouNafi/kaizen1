@@ -1,0 +1,166 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | CONTRAT
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="card">
+                                <div class="body">
+
+
+                                    <h:form>
+                                        <fieldset>
+
+                                            <legend>Informations Personnel :</legend>
+
+                                            <div class="row clearfix">
+                                                <div class="col-sm-3">
+                                                    <p:selectOneMenu id="idUser" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter" value="#{contratRecrutBean.contratFromEdit.idUtilisateur}"> 
+                                                        <f:ajax event="change" listener="#{contratRecrutBean.renderInfoUserr}"  render="cni nom prenom mail adresse telephone lieu"/>
+                                                        <f:selectItem itemLabel="#{contratRecrutBean.contratFromEdit.idUtilisateur.nomUtilisateur} #{contratRecrutBean.contratFromEdit.idUtilisateur.prenomUtilisateur}"  itemValue="#{contratRecrutBean.contratFromEdit.idUtilisateur}"/>
+                                                        <f:selectItems value="#{contratRecrutBean.listUsers}"  var="u"  itemLabel="#{u.nomUtilisateur} #{u.prenomUtilisateur}" itemValue="#{u}" />       
+                                                    </p:selectOneMenu>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <p:inputText id="cni" styleClass="form-control" style="background-color: #CECECE;" a:placeholder="CNI"  converter="#{beanStringConverter}" readonly="true" value="#{contratRecrutBean.user.cni}"/>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <p:inputText id="nom" styleClass="form-control" style="background-color: #CECECE;" a:placeholder="Nom" converter="#{beanStringConverter}" readonly="true" value="#{contratRecrutBean.user.nomUtilisateur}"/>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <p:inputText id="prenom" styleClass="form-control" style="background-color: #CECECE;" a:placeholder="Prenom" converter="#{beanStringConverter}" readonly="true" value="#{contratRecrutBean.user.prenomUtilisateur}"/>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row clearfix">
+                                                <div class="col-sm-3">
+                                                    <p:inputText id="mail" styleClass="form-control" style="background-color: #CECECE;" a:placeholder="Email"  converter="#{beanStringConverter}" readonly="true" value="#{contratRecrutBean.user.mailUtilisateur}"/>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <p:inputText id="adresse" styleClass="form-control" style="background-color: #CECECE;" a:placeholder="Adresse"  converter="#{beanStringConverter}" readonly="true" value="#{contratRecrutBean.user.adresseUtilisateur}"/>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <p:inputText id="telephone" styleClass="form-control" style="background-color: #CECECE;" a:placeholder="Téléphone" converter="#{beanStringConverter}" readonly="true" value="#{contratRecrutBean.user.telUtilisateur}"/>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <p:inputText id="lieu" styleClass="form-control" style="background-color: #CECECE;" a:placeholder="Lieu de naissance" converter="#{beanStringConverter}" readonly="true" value="#{contratRecrutBean.user.lieuNaissanceUtilisateur}"/>
+                                                </div>
+                                            </div>
+
+                                        </fieldset>
+
+                                        <br/>
+
+                                        <fieldset>
+
+                                            <legend>Informations Contrat :</legend>
+
+                                            <div class="row clearfix">
+                                                <div class="col-sm-3">
+                                                    <h:outputText value="Durée de travail" />
+                                                    <p:inputText id="durree" styleClass="form-control"   converter="#{beanStringConverter}"  value="#{contratRecrutBean.contratFromEdit.dureeTravail}"/>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <h:outputText value="DISPOSITIONS REGISSANT LE CONTRAT" />
+                                                    <p:inputTextarea id="article1" styleClass="form-control"   converter="#{beanStringConverter}"  value="#{contratRecrutBean.contratFromEdit.article1}"/>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <h:outputText value="DUREE DU CONTRAT" />
+                                                    <p:inputTextarea id="article2" styleClass="form-control"  converter="#{beanStringConverter}"  value="#{contratRecrutBean.contratFromEdit.article2}"/>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <h:outputText value="DESCRIPTION DU POSTE ET LIEU D’EMPLOI" />
+                                                    <p:inputTextarea id="article3" styleClass="form-control"  converter="#{beanStringConverter}"  value="#{contratRecrutBean.contratFromEdit.article3}"/>
+                                                </div>
+                                            </div>   
+
+
+                                            <div class="row clearfix">
+                                                <div class="col-sm-3">
+                                                    <h:outputText value="CONDITIONS DE SERVICE" />
+                                                    <p:inputTextarea id="condition" styleClass="form-control"   converter="#{beanStringConverter}"  value="#{contratRecrutBean.contratFromEdit.article4}"/>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <h:outputText value="CONGE ANNUEL" />
+                                                    <p:inputTextarea id="conge" styleClass="form-control"   converter="#{beanStringConverter}"  value="#{contratRecrutBean.contratFromEdit.article5}"/>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <h:outputText value="COUVERTURE SOCIALE" />
+                                                    <p:inputTextarea id="couverture" styleClass="form-control"  converter="#{beanStringConverter}"  value="#{contratRecrutBean.contratFromEdit.article6}"/>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <h:outputText value="LITIGES – CONTESTATIONS" />
+                                                    <p:inputTextarea id="litige" styleClass="form-control"  converter="#{beanStringConverter}"  value="#{contratRecrutBean.contratFromEdit.article8}"/>
+                                                </div>
+                                            </div>  
+
+
+                                            <div class="row clearfix">
+                                                <div class="col-sm-3">
+                                                    <p:inputText id="salairebase" styleClass="form-control"  a:placeholder="Salaire de base"  converter="#{beanStringConverter}"  value="#{contratRecrutBean.contratFromEdit.salairebase}"/>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <p:inputText id="sursalaire" styleClass="form-control"  a:placeholder="Sursalaire"  converter="#{beanStringConverter}"  value="#{contratRecrutBean.contratFromEdit.surSalaire}"/>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <p:inputText id="Salairebrutfiscal" styleClass="form-control"  a:placeholder="Salaire brut fiscal" converter="#{beanStringConverter}"  value="#{contratRecrutBean.contratFromEdit.salaireBrutFiscal}"/>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <p:inputText id="classification" styleClass="form-control"  a:placeholder="Classification professionnelle" converter="#{beanStringConverter}"  value="#{contratRecrutBean.contratFromEdit.classificationProfe}"/>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row clearfix">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <h:inputHidden id="idContrat" converter="#{beanStringConverter}" value="#{contratRecrutBean.contratFromEdit.idContrat}"/>
+                                                        <h:inputHidden id="dateContrat" converter="#{beanStringConverter}" value="#{contratRecrutBean.contratFromEdit.dateEngagement}"/>
+                                                        <h:inputHidden id="localtypecontrat" converter="#{beanStringConverter}" value="#{contratRecrutBean.contratFromEdit.localTypeContrat}"/>
+                                                        <h:inputHidden id="difftypecontrat" converter="#{beanStringConverter}" value="#{contratRecrutBean.contratFromEdit.diffTypeContrat}"/>
+                                                        <p:commandButton styleClass="btn btn-primary m-t-15 waves-effect" id="save" value="Modifier et generer le contrat" ajax="false" action="#{contratRecrutBean.updateStage}" />
+                                                        &nbsp;&nbsp;&nbsp;
+                                                        <p:commandButton styleClass="btn btn-primary m-t-15 waves-effect" id="reset" value="Annuler" action="#{contratRecrutBean.reset}" />
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </fieldset>
+
+
+                                    </h:form>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

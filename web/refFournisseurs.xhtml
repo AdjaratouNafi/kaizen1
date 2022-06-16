@@ -1,0 +1,192 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | FOURNISSEURS
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h3></h3>
+                    </div>
+
+                    <h:form id="form1">
+                        <p:growl id="messages" showDetail="true"/>
+                        <p:panel header="REFERENCIEL FOURNISSEURS" styleClass="myPanelWidth"> 
+
+                            <p:spacer height="30px;"/> 
+                            <p:dataTable id="allFournisseurs" value="#{refFournisseurBean.allFournisseurs}" var="o" rowKey="#{o.idRefFournisseur}" selectionMode="single"  
+                                         resizableColumns="true"  liveResize="true" selection="#{refFournisseurBean.fournisseurUtil}" widgetVar="100" paginator="true" rows="20" paginatorPosition="bottom" styleClass="widthEnPourcent" editable="true">
+
+                                <f:facet name="header">  
+                                    INFORMATIONS DOSSIERS 
+                                    <p:commandButton id="toggler" type="button" value="Colonnes" style="float:right" icon="ui-icon-calculator" />
+                                    <p:columnToggler datasource="allFournisseurs" trigger="toggler" />
+                                </f:facet>
+
+                                <p:ajax event="rowEdit" listener="#{refFournisseurBean.onEdit}" update=":form1:messages" />  
+                                <p:ajax event="rowEditCancel" listener="#{refFournisseurBean.onCancel}" update=":form1:messages" /> 
+
+                                <p:column>
+                                    <f:facet name="header">  
+                                        <h:outputText value="FOURNISSEUR" />  
+                                    </f:facet>
+                                    <p:cellEditor>  
+                                        <f:facet name="output">  
+                                            <h:outputText value="#{o.nomcomplet}" />  
+                                        </f:facet>  
+                                        <f:facet name="input">  
+                                            <h:inputHidden id="ttt1" converter="#{beanStringConverter}" value="#{refFournisseurBean.txtVide}" /> 
+                                        </f:facet>  
+                                    </p:cellEditor> 
+                                </p:column>                
+
+                                <p:column>
+                                    <f:facet name="header">  
+                                        <h:outputText value="CONTACT" />  
+                                    </f:facet>
+                                    <p:cellEditor>  
+                                        <f:facet name="output">  
+                                            <h:outputText value="#{o.telephone}" />  
+                                        </f:facet>  
+                                        <f:facet name="input">  
+                                            <h:inputHidden id="ttt3" converter="#{beanStringConverter}" value="#{refFournisseurBean.txtVide}" />
+                                        </f:facet>  
+                                    </p:cellEditor>
+                                </p:column> 
+                                <p:column>
+                                    <f:facet name="header">  
+                                        <h:outputText value="COMMANDE" />  
+                                    </f:facet>
+                                    <p:cellEditor>  
+                                        <f:facet name="output">  
+                                            <h:outputText value="#{o.idCommande.code}" />  
+                                        </f:facet>  
+                                        <f:facet name="input">  
+                                            <h:inputHidden id="ttt4" converter="#{beanStringConverter}" value="#{refFournisseurBean.txtVide}" />  
+                                        </f:facet>  
+                                    </p:cellEditor>
+                                </p:column> 
+                                <p:column>
+                                    <f:facet name="header">  
+                                        <h:outputText value="ACCORD" />  
+                                    </f:facet>
+                                    <p:cellEditor>  
+                                        <f:facet name="output">  
+                                            <h:outputText value="#{o.accordAffichage}" />  
+                                        </f:facet>  
+                                        <f:facet name="input"> 
+                                            <pe:inputNumber  id="accord"  converter="#{beanStringConverter}" value="#{o.accord}"  thousandSeparator="." decimalSeparator="," maxValue="999999999999"  />  
+                                        </f:facet>  
+                                    </p:cellEditor>
+                                </p:column>
+                                <p:column style="width:100p%"> 
+                                    <f:facet name="header">  
+                                        <h:outputText value="NATURE TRAVAUX" />  
+                                    </f:facet>
+                                    <p:cellEditor>  
+                                        <f:facet name="output">  
+                                            <h:outputText value="#{o.nature}" />  
+                                        </f:facet>  
+                                        <f:facet name="input">  
+                                            <p:inputText id="nature" styleClass="form-control" converter="#{beanStringConverter}" value="#{o.nature}" /> 
+                                        </f:facet>  
+                                    </p:cellEditor>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">  
+                                        <h:outputText value="ACOMPTES RECUS" />  
+                                    </f:facet>
+                                    <p:cellEditor>  
+                                        <f:facet name="output">  
+                                            <h:outputText value="#{o.accompteAffichage}" />  
+                                        </f:facet>  
+                                        <f:facet name="input">  
+                                            <h:inputHidden id="ttt5" converter="#{beanStringConverter}" value="#{prestataireBean.txtVide}" />
+                                        </f:facet>  
+                                    </p:cellEditor>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">  
+                                        <h:outputText value="ECHEANCE" />  
+                                    </f:facet>
+                                    <p:cellEditor>  
+                                        <f:facet name="output">  
+                                            <h:outputText value="#{o.echenance}" />  
+                                        </f:facet>  
+                                        <f:facet name="input">  
+                                            <h:inputHidden id="ttt6" converter="#{beanStringConverter}" value="#{prestataireBean.txtVide}" />
+                                        </f:facet>  
+                                    </p:cellEditor>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">  
+                                        <h:outputText value="RELIQUAT" />  
+                                    </f:facet>
+                                    <p:cellEditor>  
+                                        <f:facet name="output"> 
+                                            <p:panel rendered="#{o.voyant == 'oui'}" styleClass="controleVoyant1">
+                                                <h:outputText value="#{o.reliquantAffichage}" />
+                                            </p:panel>
+                                            <p:panel rendered="#{o.voyant == 'non'}" styleClass="controleVoyant2">
+                                                <h:outputText  value="#{o.reliquantAffichage}" />
+                                            </p:panel>
+                                        </f:facet>  
+                                        <f:facet name="input">  
+                                            <h:inputHidden id="ninea"  converter="#{beanStringConverter}" value="#{o.ninea}" /> 
+                                            <h:inputHidden id="ttt7" converter="#{beanStringConverter}" value="#{refFournisseurBean.txtVide}" />
+                                        </f:facet>  
+                                    </p:cellEditor>
+                                </p:column>
+                                <p:column headerText="Options">  
+                                    <p:rowEditor />  
+                                </p:column> 
+
+                            </p:dataTable>
+
+                            <p:spacer height="30px;"/>
+
+
+                            <a href="new_refFournisseur.xhtml" class="btn btn-primary m-t-15 waves-effect" style="border-radius: 10px;color: white;">Mise à jour referenciel</a>
+
+                            
+                            <p:spacer height="30px;"/>
+                            <br/><br/><br/>
+
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td align="left;"> <font style="font-size: 15px;font-weight: bold;">TOTAL ACCORDS: #{refFournisseurBean.total.accord} FCFA </font> </td>
+
+                                    <td align="left;"> <font style="font-size: 15px;font-weight: bold;">TOTAL ACCOMPTES HT : #{refFournisseurBean.totalDesAcomptesHT} FCFA</font> </td>
+
+                                    <td align="left;"> <font style="font-size: 15px;font-weight: bold;">TOTAL ACCOMPTES TTC : #{refFournisseurBean.totalDesAcomptesTTC} FCFA</font> </td>
+                                </tr>
+
+                            </table>
+
+
+
+                        </p:panel>
+
+
+
+                    </h:form>
+
+                </div>
+
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

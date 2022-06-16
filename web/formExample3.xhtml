@@ -1,0 +1,186 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | Contrat
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h2>NOUVEAU CONTRAT</h2>
+                    </div>
+                    <!-- Input -->
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="card">
+                                <div class="body">
+
+
+                                    <h:form>
+
+                                        <p:growl id="growl" sticky="true" showDetail="true"/>
+
+                                        <p:wizard widgetVar="wiz" showNavBar="false">
+                                            <p:tab id="personalTab" title="Personnel">
+                                                <p:panel header="Informations personnel">
+                                                    <p:messages />
+                                                    <h:panelGrid columns="8" columnClasses="label, value">
+
+                                                        <div class="row clearfix">
+                                                            <div class="col-sm-3">
+                                                                <p:selectOneMenu id="idUser" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter" value="#{contratRecrutBean.contratRecrutemenForm.utilisateur}"> 
+                                                                    <f:ajax event="change" listener="#{contratRecrutBean.renderInfoUser}"  render="cni nom prenom mail adresse telephone lieu"/>
+                                                                    <f:selectItem itemLabel="------------- Sélectionnez un personnel -------------"  itemValue="null"/>
+                                                                    <f:selectItems value="#{contratRecrutBean.listUsers}"  var="u"  itemLabel="#{u.nomUtilisateur} #{u.prenomUtilisateur}" itemValue="#{u}" />       
+                                                                </p:selectOneMenu>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <p:inputText id="cni" class="form-control" a:placeholder="CNI"  converter="#{beanStringConverter}" readonly="true" value="#{contratRecrutBean.user.cni}"/>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <p:inputText id="nom" class="form-control" a:placeholder="Nom" converter="#{beanStringConverter}" readonly="true" value="#{contratRecrutBean.user.nomUtilisateur}"/>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <p:inputText id="prenom" class="form-control" a:placeholder="Prenom" converter="#{beanStringConverter}" readonly="true" value="#{contratRecrutBean.user.prenomUtilisateur}"/>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="row clearfix">
+                                                            <div class="col-sm-3">
+                                                                <p:inputText id="mail" class="form-control" a:placeholder="Email"  converter="#{beanStringConverter}" readonly="true" value="#{contratRecrutBean.user.mailUtilisateur}"/>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <p:inputText id="adresse" class="form-control" a:placeholder="Adresse"  converter="#{beanStringConverter}" readonly="true" value="#{contratRecrutBean.user.adresseUtilisateur}"/>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <p:inputText id="telephone" class="form-control" a:placeholder="Téléphone" converter="#{beanStringConverter}" readonly="true" value="#{contratRecrutBean.user.telUtilisateur}"/>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <p:inputText id="lieu" class="form-control" a:placeholder="Lieu de naissance" converter="#{beanStringConverter}" readonly="true" value="#{contratRecrutBean.user.lieuNaissanceUtilisateur}"/>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        
+                                                        <div class="row clearfix">
+                                                            <div class="col-sm-3">
+                                                               <h:outputText value="     " />
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <h:outputText value="     " />
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                               <h:outputText value="      " />
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <p:commandButton value="Suivant" process="@this" oncomplete="PF('wiz').loadStep('contratTab', false)" />
+                                                            </div>
+                                                        </div>
+           
+
+                                                    </h:panelGrid>
+                                                </p:panel>
+                                            </p:tab>
+
+                                            <p:tab id="contratTab" title="Contrat">
+                                                <p:panel header="Informations contrat">
+                                                    <p:messages />
+                                                    <h:panelGrid columns="8" columnClasses="label, value">
+                                                        <!--<h:outputText value="Street: " />
+                                                        <p:inputText value="#{userWizard.user.street}" />
+
+                                                        <h:outputText value="Postal Code: " />
+                                                        <p:inputText value="#{userWizard.user.postalCode}" />
+
+                                                        <h:outputText value="City: " />
+                                                        <p:inputText value="#{userWizard.user.city}" />-->
+                                                        
+                                                        <div class="row clearfix">
+                                                            <div class="col-sm-3">
+                                                               <p:commandButton value="Précédent" process="@this" oncomplete="PF('wiz').loadStep('personalTab', false)" />
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <h:outputText value="     " />
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                               <h:outputText value="      " />
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <p:commandButton value="Suivant" process="@this" oncomplete="PF('wiz').loadStep('confirmTab', false)" />
+                                                            </div>
+                                                        </div>
+
+                                                    </h:panelGrid>
+                                                </p:panel>
+                                            </p:tab>
+
+                                            <p:tab id="confirmTab" title="Aperçu">
+                                                <p:panel header="Aperçu du contrat">
+                                                    <h:panelGrid id="confirmation" columns="3" columnClasses="grid,grid,grid">
+                                                        <h:panelGrid columns="2" columnClasses="label, value">
+                                                            <h:outputText value="Firstname: " />
+                                                            <h:outputText value="#{userWizard.user.firstname}" styleClass="outputLabel"/>
+
+                                                            <h:outputText value="Lastname: " />
+                                                            <h:outputText value="#{userWizard.user.lastname}" styleClass="outputLabel"/>
+
+                                                            <h:outputText value="Age: " />
+                                                            <h:outputText value="#{userWizard.user.age}" styleClass="outputLabel"/>
+                                                        </h:panelGrid>
+
+                                                        <h:panelGrid columns="2" columnClasses="label, value">
+                                                            <h:outputText value="Street: " />
+                                                            <h:outputText value="#{userWizard.user.street}" styleClass="outputLabel"/>
+
+                                                            <h:outputText value="Postal: " />
+                                                            <h:outputText value="#{userWizard.user.postalCode}" styleClass="outputLabel"/>
+
+                                                            <h:outputText value="City: " />
+                                                            <h:outputText value="#{userWizard.user.city}" styleClass="outputLabel"/>
+                                                        </h:panelGrid>
+
+                                                        <h:panelGrid columns="2" columnClasses="label, value">
+                                                            <h:outputText value="Email: " />
+                                                            <h:outputText value="#{userWizard.user.email}" styleClass="outputLabel"/>
+
+                                                            <h:outputText value="Phone " />
+                                                            <h:outputText value="#{userWizard.user.phone}" styleClass="outputLabel"/>
+
+                                                            <h:outputText value="Info: " />
+                                                            <h:outputText value="#{userWizard.user.info}" styleClass="outputLabel"/>
+
+                                                            <h:outputText />
+                                                            <h:outputText />
+                                                        </h:panelGrid>
+                                                    </h:panelGrid>
+
+                                                    <p:commandButton value="Submit" actionListener="#{userWizard.save}" update="growl" process="@this"/>
+                                                </p:panel>
+                                            </p:tab>
+                                        </p:wizard>
+
+                                    </h:form>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- #END# Input -->
+
+                </div>
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

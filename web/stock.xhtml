@@ -1,0 +1,329 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | INVENTAIRE
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h3></h3>
+                    </div>
+
+                    <h:form id="form1">
+                        <p:growl id="messages" showDetail="true"/>
+                        <p:panel header="GESTION DE L'INVENTAIRE" styleClass="myPanelWidth"> 
+
+                            <c:if test="#{stockBean.consulterStock.equalsIgnoreCase('yes')}"> 
+
+
+                                <p:spacer height="50px;"/>
+
+                                <div class="row clearfix">
+                                    <div class="col-sm-4">
+                                        <label style="float: left;">Entrepot</label>
+                                        <p:selectOneMenu id="idM"  converter="omnifaces.SelectItemsConverter"  
+                                                         panelStyle="width:180px"  effect="fade" filter="true" filterMatchMode="startsWith" value="#{stockBean.entrepot}"> 
+                                            <f:selectItem itemLabel="------- Selectionnez un entrepot -------"  noSelectionOption="true"/>
+                                            <f:selectItems value="#{entrepotBean.listEntrepots}"  var="e"  itemLabel="#{e.nom}" itemValue="#{e}" />       
+                                        </p:selectOneMenu>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <br/>
+                                        <p:commandButton id="save" value="Afficher" ajax="false" action="#{stockBean.detail}" />
+                                    </div>
+                                    <div class="col-sm-4">
+
+                                    </div>
+                                </div>
+
+                                <p:spacer height="50px;"/>
+                                <label style="float: left;margin-top: 15px;">Entrepot: #{stockBean.nomEntrepot}</label>
+                                <p:spacer height="50px;"/>
+
+                                <p:dataTable emptyMessage="Aucune donnée trouvée" id="allStocks" scrollable="false" scrollWidth="1200" value="#{stockBean.allStocks}" var="s" rowKey="#{s.idSotk}" selectionMode="single"  
+                                             resizableColumns="true"  liveResize="true" selection="#{stockBean.utilStockFromEdit}" widgetVar="100" paginator="true" rows="20" paginatorPosition="bottom" styleClass="widthEnPourcent" editable="true">
+                                    <f:facet name="header">  
+                                        <p:commandButton id="toggler" type="button" value="Colonnes" style="float:right" icon="ui-icon-calculator" />
+                                        <p:columnToggler datasource="allStocks" trigger="toggler" />
+                                    </f:facet>
+
+                                    <c:if test="#{stockBean.modifierStock.equalsIgnoreCase('yes')}">
+                                        <p:ajax event="rowEdit" listener="#{stockBean.rowEdit}" update=":form1:messages" />  
+                                        <p:ajax event="rowEditCancel" listener="#{stockBean.rowEditCancel}" update=":form1:messages" /> 
+                                    </c:if> 
+
+                                    <c:if test="#{stockBean.modifierStock.equalsIgnoreCase('no')}">
+                                        <p:ajax event="rowEdit"  update=":form1:messages" />  
+                                        <p:ajax event="rowEditCancel" update=":form1:messages" /> 
+                                    </c:if> 
+
+
+
+                                    <p:column>
+                                        <f:facet name="header">  
+                                            <h:outputText value="Item inventaires" />  
+                                        </f:facet>
+                                        <p:cellEditor>  
+                                            <f:facet name="output">  
+                                                <h:outputText value="#{s.designation}" />  
+                                            </f:facet>  
+                                            <f:facet name="input">  
+                                                <p:inputText id="mch" readonly="true" styleClass="form-control" converter="#{beanStringConverter}" value="#{s.designation}" /> 
+                                            </f:facet> 
+                                        </p:cellEditor> 
+                                    </p:column>
+
+
+                                    <p:column>
+                                        <f:facet name="header">  
+                                            <h:outputText value="Fournisseurs" />  
+                                        </f:facet>
+                                        <p:cellEditor>  
+                                            <f:facet name="output">  
+                                                <h:outputText value="#{s.fournisseur.nomFournisseur}" />  
+                                            </f:facet>  
+                                            <f:facet name="input">  
+                                                <p:inputText readonly="true" id="frs" styleClass="form-control" converter="#{beanStringConverter}" value="#{s.fournisseur.nomFournisseur}" style="width:100%"/>  
+                                            </f:facet>  
+                                        </p:cellEditor>
+                                    </p:column>
+
+                                    <p:column>
+                                        <f:facet name="header">  
+                                            <h:outputText value="Date d'entrée" />  
+                                        </f:facet>
+                                        <p:cellEditor>  
+                                            <f:facet name="output">  
+                                                <h:outputText value="#{s.dateEntreStock}" />  
+                                            </f:facet>  
+                                            <f:facet name="input">  
+                                                <p:calendar  id="dateEntree" converter="#{beanStringConverter}" value="#{s.dateEntreStock}" />
+                                            </f:facet>  
+                                        </p:cellEditor>
+                                    </p:column> 
+                                    <p:column>
+                                        <f:facet name="header">  
+                                            <h:outputText value="En stock" />  
+                                        </f:facet>
+                                        <p:cellEditor>  
+                                            <f:facet name="output">  
+                                                <h:outputText value="#{s.qtStock}" />  
+                                            </f:facet>  
+                                            <f:facet name="input">  
+                                                <p:inputText id="qts" styleClass="form-control" converter="#{beanStringConverter}" value="#{s.qtStock}" style="width:100%"/>  
+                                            </f:facet>  
+                                        </p:cellEditor>
+                                    </p:column>
+                                    <p:column> 
+                                        <f:facet name="header">  
+                                            <h:outputText value="P.U" />  
+                                        </f:facet>
+                                        <p:cellEditor>  
+                                            <f:facet name="output">  
+                                                <h:outputText value="#{s.puStock}" />  
+                                            </f:facet>  
+                                            <f:facet name="input">  
+                                                <pe:inputNumber  id="pu"  converter="#{beanStringConverter}" value="#{s.puStockDouble}"  thousandSeparator="." decimalSeparator="," maxValue="999999999999"  />  
+                                            </f:facet>  
+                                        </p:cellEditor>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">  
+                                            <h:outputText value="Valeur inventaire" />  
+                                        </f:facet>
+                                        <p:cellEditor>  
+                                            <f:facet name="output">  
+                                                <h:outputText value="#{s.valeurInventaire}" />  
+                                            </f:facet>  
+                                            <f:facet name="input">  
+                                                <p:inputText id="vinv" readonly="true" styleClass="form-control" converter="#{beanStringConverter}" value="#{s.valeurInventaire}" /> 
+                                            </f:facet>  
+                                        </p:cellEditor>
+                                    </p:column>
+
+                                    <p:column>
+                                        <f:facet name="header">  
+                                            <h:outputText value="Seuille" />  
+                                        </f:facet>
+                                        <p:cellEditor>  
+                                            <f:facet name="output">  
+                                                <h:outputText value="#{s.qtSeuille}" />  
+                                            </f:facet>  
+                                            <f:facet name="input">  
+                                                <p:inputText id="qs" styleClass="form-control" converter="#{beanStringConverter}" value="#{s.qtSeuille}" /> 
+                                            </f:facet>  
+                                        </p:cellEditor>
+                                    </p:column>      
+
+                                    <p:column>
+                                        <f:facet name="header">  
+                                            <h:outputText value="Commandé" />  
+                                        </f:facet>
+                                        <p:cellEditor>  
+                                            <f:facet name="output"> 
+
+                                                <p:panel rendered="#{s.controlStock == 'non'}" styleClass="controleVoyant3" />
+
+                                                <p:panel rendered="#{s.controlStock == 'oui'}" styleClass="controleVoyant4">
+                                                    <p:effect event="load" type="pulsate" delay="500" />
+                                                </p:panel>
+
+                                            </f:facet>
+                                            <f:facet name="input">  
+                                                <p:inputText id="EEE" readonly="true" styleClass="form-control" converter="#{beanStringConverter}" value="#{stockBean.myEmtyValues}" /> 
+                                            </f:facet>  
+                                        </p:cellEditor>
+                                    </p:column>
+
+                                    <p:column>
+                                        <f:facet name="header">  
+                                            <h:outputText value="Dernière commande" />  
+                                        </f:facet>
+                                        <p:cellEditor>  
+                                            <f:facet name="output">  
+                                                <h:outputText value="#{s.dateLastAppro}" />  
+                                            </f:facet>  
+                                            <f:facet name="input">  
+                                                <p:calendar  id="dateDC" converter="#{beanStringConverter}" value="#{s.dateLastAppro}" />
+                                            </f:facet> 
+                                        </p:cellEditor>
+                                    </p:column>
+
+                                    <p:column>
+                                        <f:facet name="header">  
+                                            <h:outputText value="Reçu" />  
+                                        </f:facet>
+                                        <p:cellEditor>  
+                                            <f:facet name="output">  
+                                                <h:outputText value="#{s.idCommande.code}" />  
+                                            </f:facet>  
+                                            <f:facet name="input">  
+                                                <p:selectOneMenu id="idCmd" styleClass="ui-selectonemenu"  converter="omnifaces.SelectItemsConverter"  
+                                                                 value="#{s.idCommande}"> 
+                                                    <f:selectItem itemLabel="#{s.idCommande.code}"  itemValue="#{s.idCommande}"/>
+                                                    <f:selectItems value="#{commandeBean.listCommandes}" var="cmd"  itemLabel="#{cmd.code}" itemValue="#{cmd}" />       
+                                                </p:selectOneMenu> 
+                                            </f:facet>  
+                                        </p:cellEditor>
+                                    </p:column>
+
+
+                                    <p:column>
+                                        <f:facet name="header">  
+                                            <h:outputText value="Commndé par" />  
+                                        </f:facet>
+                                        <p:cellEditor>  
+                                            <f:facet name="output">  
+                                                <h:outputText value="#{s.nomUser}" />  
+                                            </f:facet>  
+                                            <f:facet name="input">  
+                                                <p:inputText readonly="true" id="nu" styleClass="form-control" converter="#{beanStringConverter}" value="#{s.nomUser}" /> 
+                                            </f:facet>  
+                                        </p:cellEditor>
+                                    </p:column>
+
+                                    <p:column>
+                                        <f:facet name="header">  
+                                            <h:outputText value="P.U" />  
+                                        </f:facet>
+                                        <p:cellEditor>  
+                                            <f:facet name="output">  
+                                                <h:outputText value="#{s.pu}" />  
+                                            </f:facet>  
+                                            <f:facet name="input">  
+                                                <pe:inputNumber  id="pud"  converter="#{beanStringConverter}" value="#{s.puDouble}"  thousandSeparator="." decimalSeparator="," maxValue="999999999999"  />  
+                                            </f:facet>  
+                                        </p:cellEditor>
+                                    </p:column>
+
+
+                                    <p:column>
+                                        <f:facet name="header">  
+                                            <h:outputText value="Qté" />  
+                                        </f:facet>
+                                        <p:cellEditor>  
+                                            <f:facet name="output">  
+                                                <h:outputText value="#{s.qt}" />  
+                                            </f:facet>  
+                                            <f:facet name="input">  
+                                                <p:inputText id="qt" styleClass="form-control" converter="#{beanStringConverter}" value="#{s.qt}" /> 
+                                            </f:facet>  
+                                        </p:cellEditor>
+                                    </p:column>
+
+
+                                    <p:column>
+                                        <f:facet name="header">  
+                                            <h:outputText value="P.Total" />  
+                                        </f:facet>
+                                        <p:cellEditor>  
+                                            <f:facet name="output">  
+                                                <h:outputText value="#{s.total}" />  
+                                            </f:facet>  
+                                            <f:facet name="input">  
+                                                <p:inputText id="pt" readonly="true" styleClass="form-control" converter="#{beanStringConverter}" value="#{s.total}" /> 
+                                            </f:facet>  
+                                        </p:cellEditor>
+                                    </p:column>
+
+
+                                    <p:column>
+                                        <f:facet name="header">  
+                                            <h:outputText value="Commentaires" />  
+                                        </f:facet>
+                                        <p:cellEditor>  
+                                            <f:facet name="output">  
+                                                <h:outputText value="#{s.commentaire}" />  
+                                            </f:facet>  
+                                            <f:facet name="input">  
+                                                <p:inputText id="cmmtd" styleClass="form-control" converter="#{beanStringConverter}" value="#{s.commentaire}" /> 
+                                            </f:facet>  
+                                        </p:cellEditor>
+                                    </p:column>
+
+
+                                    <p:column headerText="Options" style="width:50p%">  
+                                        <p:rowEditor />  
+                                    </p:column> 
+
+                                </p:dataTable>
+
+                                <p:spacer height="30px;"/>
+
+                                <c:if test="#{stockBean.creerStock.equalsIgnoreCase('yes')}"> 
+                                    <a href="new_stock.xhtml" class="btn btn-primary m-t-15 waves-effect"><font color="#FFFFFF">MISE A JOUR STOCK</font></a>
+                                </c:if> 
+
+                                <c:if test="#{stockBean.creerStock.equalsIgnoreCase('no')}">
+                                    <a href="#" class="btn btn-primary m-t-15 waves-effect"><font color="#FFFFFF">MISE A JOUR STOCK</font></a>
+                                </c:if> 
+
+
+
+                            </c:if> 
+
+                        </p:panel>
+
+
+
+                    </h:form>
+
+                </div>
+
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

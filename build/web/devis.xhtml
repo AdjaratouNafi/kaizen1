@@ -1,0 +1,264 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titre">
+            Kaï-zen | DEVIS
+        </ui:define>
+
+        <ui:define name="contenu">
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h3></h3>
+                    </div>
+
+                    <h:form id="form1">
+
+                        <p:panel header="LISTE DES DEVIS" styleClass="myPanelWidth">
+
+                            <c:if test="#{devisBean.consulterDevis.equalsIgnoreCase('yes')}">
+
+                                <p:dataTable rendered="#{devisBean.userNotif.idRole.libelleRole == 'Administrateur' or devisBean.userNotif.idRole.libelleRole == 'Super administrateur'}" emptyMessage="Aucune donnée trouvée" filteredValue="#{devisBean.filteredListDevis1}" value="#{devisBean.allDevis}" var="r" widgetVar="listDevis"  style="width: 100%;">
+                                    <f:facet name="header">
+                                        <p:outputPanel>
+                                            <h:outputText value="Recherche:" style="margin: 15px;" />
+                                            <p:inputText id="globalFilter" converter="#{beanStringConverter}" onkeyup="PF('listDevis').filter()" style="150px;" />
+                                        </p:outputPanel>
+                                    </f:facet>
+
+                                    <p:column filterStyle="display:none" headerText="Numéro" sortBy="#{r.numeroDevis}">
+                                        #{r.numeroDevis}
+                                    </p:column>
+
+                                    <p:column filterStyle="display:none" headerText="Client" sortBy="#{r.idClient.nomClient}">
+                                        #{r.idClient.nomClient}
+                                    </p:column>
+                                    <p:column filterStyle="display:none" headerText="Projet" sortBy="#{r.nommarche}">
+                                        #{r.nommarche}
+                                    </p:column>
+
+                                    <p:column filterStyle="display:none" headerText="Etat" sortBy="#{r.etat}">
+                                         <h:outputText rendered="#{r.etat == 'En attente de validation'}" value="#{r.etat}" style="margin: 15px;" />
+                                         <h:outputText rendered="#{r.etat == 'Valider'}" value="Validé" style="margin: 15px;" />
+                                         <h:outputText rendered="#{r.etat == 'Rejeter'}" value="Rejeté" style="margin: 15px;" />
+                                    </p:column>
+
+                                    <p:column filterStyle="display:none" headerText="Créer par" sortBy="#{r.idUtilisateur.nomUtilisateur} #{r.idUtilisateur.prenomUtilisateur}" filterBy="#{r.idUtilisateur.nomUtilisateur} #{r.idUtilisateur.prenomUtilisateur}">
+                                        #{r.idUtilisateur.nomUtilisateur} #{r.idUtilisateur.prenomUtilisateur}
+                                    </p:column>
+
+                                    <p:column filterStyle="display:none" headerText="Motif" sortBy=" #{r.motif}">
+                                        #{r.motif}
+                                    </p:column>
+
+                                    <p:column>
+                                        <f:facet name="header">Action</f:facet> 
+                                        <h:commandLink  action="#{devisOtherBean.detail(r)}">
+                                            <h:graphicImage value="resources/images/visualisation.svg" width="25px" height="25px"  title="Detail" />
+                                        </h:commandLink>
+                                        &nbsp;&nbsp;
+
+                                        <!--<h:commandLink rendered="#{r.etat == 'En attente de validation'}"  action="#{devisOtherBean.modifier(r)}">
+                                            <h:graphicImage value="resources/images/traiter.svg" width="25px" height="25px"  title="Traiter" />
+                                        </h:commandLink>-->
+                                        <h:commandLink rendered="#{r.etat == 'En attente de validation'}"  action="#{devisOtherBean.traiterDevis(r)}">
+                                            <h:graphicImage value="resources/images/traiter.svg" width="25px" height="25px"  title="Traiter" />
+                                        </h:commandLink>
+
+                                        <h:commandLink rendered="#{r.etat == 'Valider'}">
+                                            <h:graphicImage value="resources/images/traiter.svg" width="25px" height="25px"  title="Traiter" />
+                                        </h:commandLink>
+
+                                        <h:commandLink rendered="#{r.etat == 'Rejeter'}" >
+                                            <h:graphicImage value="resources/images/traiter.svg" width="25px" height="25px"  title="Traiter" />
+                                        </h:commandLink>
+
+                                        &nbsp;&nbsp;
+
+                                        <c:if test="#{devisBean.imprimerDevis.equalsIgnoreCase('yes')}"> 
+                                            <h:commandLink  action="#{devisOtherBean.imprimer(r)}" >
+                                                <h:graphicImage value="resources/images/imprimer.svg" width="25px" height="25px"  title="Imprimer" />
+                                            </h:commandLink>
+                                        </c:if> 
+
+                                        <c:if test="#{devisBean.imprimerDevis.equalsIgnoreCase('no')}">
+                                            <h:commandLink>
+                                                <h:graphicImage value="resources/images/imprimer.svg" width="25px" height="25px"  title="Imprimer" />
+                                            </h:commandLink>
+                                        </c:if> 
+
+                                        &nbsp;&nbsp;
+
+                                        <c:if test="#{devisBean.modifierDevis.equalsIgnoreCase('yes')}"> 
+                                            <h:commandLink rendered="#{r.etat == 'En attente de validation'}"  action="#{devisOtherBean.modifier(r)}" >
+                                                <h:graphicImage value="resources/images/modifier.svg" width="25px" height="25px"  title="Modifier" />
+                                            </h:commandLink>
+                                            <h:commandLink rendered="#{r.etat == 'Valider'}" >
+                                                <h:graphicImage value="resources/images/modifier.svg" width="25px" height="25px"  title="Modifier" />
+                                            </h:commandLink>
+                                        </c:if> 
+
+                                        <c:if test="#{devisBean.modifierDevis.equalsIgnoreCase('no')}">
+                                            <h:commandLink>
+                                                <h:graphicImage value="resources/images/modifier.svg" width="25px" height="25px"  title="Modifier" />
+                                            </h:commandLink>
+                                        </c:if> 
+
+
+                                        &nbsp;&nbsp;
+
+                                        <c:if test="#{devisBean.supprimerDevis.equalsIgnoreCase('yes')}"> 
+                                            <h:commandLink  action="#{devisBean.supprimer(r)}" >
+                                                <h:graphicImage value="resources/images/supprimer.svg" width="25px" height="25px"  title="Supprimer" />
+                                            </h:commandLink>      
+                                        </c:if>  
+                                        <c:if test="#{devisBean.supprimerDevis.equalsIgnoreCase('no')}">
+                                            <h:commandLink >
+                                                <h:graphicImage value="resources/images/supprimer.svg" width="25px" height="25px"  title="Supprimer" />
+                                            </h:commandLink> 
+                                        </c:if> 
+
+                                    </p:column>
+
+                                </p:dataTable>
+
+
+                                <p:dataTable rendered="#{devisBean.userNotif.idRole.libelleRole == 'Personnel'}" emptyMessage="Aucune donnée trouvée" filteredValue="#{devisBean.filteredListDevis2}" value="#{devisBean.allDevisByUser}" var="r" widgetVar="listDevis2"  style="width: 100%;">
+                                    <f:facet name="header">
+                                        <p:outputPanel>
+                                            <h:outputText value="Recherche:" style="margin: 15px;" />
+                                            <p:inputText id="globalFilter" converter="#{beanStringConverter}" onkeyup="PF('listDevis2').filter()" style="150px;" />
+                                        </p:outputPanel>
+                                    </f:facet>
+
+                                    <p:column filterStyle="display:none" headerText="Numéro" sortBy="#{r.numeroDevis}">
+                                        #{r.numeroDevis}
+                                    </p:column>
+
+                                    <p:column filterStyle="display:none" headerText="Client" sortBy="#{r.idClient.nomClient}">
+                                        #{r.idClient.nomClient}
+                                    </p:column>
+                                    <p:column filterStyle="display:none" headerText="Projet" sortBy="#{r.nommarche}">
+                                        #{r.nommarche}
+                                    </p:column>
+
+                                    <p:column filterStyle="display:none" headerText="Etat" sortBy="#{r.etat}">
+                                        #{r.etat}
+                                    </p:column>
+
+                                    <p:column filterStyle="display:none" headerText="Créer par" sortBy="#{r.idUtilisateur.nomUtilisateur} #{r.idUtilisateur.prenomUtilisateur}" filterBy="#{r.idUtilisateur.nomUtilisateur} #{r.idUtilisateur.prenomUtilisateur}">
+                                        #{r.idUtilisateur.nomUtilisateur} #{r.idUtilisateur.prenomUtilisateur}
+                                    </p:column>
+
+                                    <p:column filterStyle="display:none" headerText="Motif" sortBy=" #{r.motif}">
+                                        #{r.motif}
+                                    </p:column>
+
+                                    <p:column>  
+                                        <f:facet name="header">Action</f:facet> 
+                                        <h:commandLink  action="#{devisOtherBean.detail(r)}">
+                                            <h:graphicImage value="resources/images/visualisation.svg" width="25px" height="25px"  title="Detail" />
+                                        </h:commandLink>
+                                        &nbsp;&nbsp;
+
+                                        <!--<h:commandLink rendered="#{r.etat == 'En attente de validation'}"  action="#{devisOtherBean.modifier(r)}">
+                                            <h:graphicImage value="resources/images/traiter.svg" width="25px" height="25px"  title="Traiter" />
+                                        </h:commandLink>-->
+                                        <h:commandLink rendered="#{r.etat == 'En attente de validation'}"  action="#{devisOtherBean.traiterDevis(r)}">
+                                            <h:graphicImage value="resources/images/traiter.svg" width="25px" height="25px"  title="Traiter" />
+                                        </h:commandLink>
+
+                                        <h:commandLink rendered="#{r.etat == 'Valider'}">
+                                            <h:graphicImage value="resources/images/traiter.svg" width="25px" height="25px"  title="Traiter" />
+                                        </h:commandLink>
+
+                                        <h:commandLink rendered="#{r.etat == 'Rejeter'}" >
+                                            <h:graphicImage value="resources/images/traiter.svg" width="25px" height="25px"  title="Traiter" />
+                                        </h:commandLink>
+
+                                        &nbsp;&nbsp;
+
+                                        <c:if test="#{devisBean.imprimerDevis.equalsIgnoreCase('yes')}"> 
+                                            <h:commandLink  action="#{devisOtherBean.imprimer(r)}" >
+                                                <h:graphicImage value="resources/images/imprimer.svg" width="25px" height="25px"  title="Imprimer" />
+                                            </h:commandLink>
+                                        </c:if> 
+
+                                        <c:if test="#{devisBean.imprimerDevis.equalsIgnoreCase('no')}">
+                                            <h:commandLink>
+                                                <h:graphicImage value="resources/images/imprimer.svg" width="25px" height="25px"  title="Imprimer" />
+                                            </h:commandLink>
+                                        </c:if> 
+
+                                        &nbsp;&nbsp;
+
+                                        <c:if test="#{devisBean.modifierDevis.equalsIgnoreCase('yes')}"> 
+                                            <h:commandLink rendered="#{r.etat == 'En attente de validation'}"  action="#{devisOtherBean.modifier(r)}" >
+                                                <h:graphicImage value="resources/images/modifier.svg" width="25px" height="25px"  title="Modifier" />
+                                            </h:commandLink>
+                                            <h:commandLink rendered="#{r.etat == 'Valider'}" >
+                                                <h:graphicImage value="resources/images/modifier.svg" width="25px" height="25px"  title="Modifier" />
+                                            </h:commandLink>
+                                        </c:if> 
+
+                                        <c:if test="#{devisBean.modifierDevis.equalsIgnoreCase('no')}">
+                                            <h:commandLink>
+                                                <h:graphicImage value="resources/images/modifier.svg" width="25px" height="25px"  title="Modifier" />
+                                            </h:commandLink>
+                                        </c:if> 
+
+
+                                        &nbsp;&nbsp;
+
+                                        <c:if test="#{devisBean.supprimerDevis.equalsIgnoreCase('yes')}"> 
+                                            <h:commandLink  action="#{devisBean.supprimer(r)}" >
+                                                <h:graphicImage value="resources/images/supprimer.svg" width="25px" height="25px"  title="Supprimer" />
+                                            </h:commandLink>      
+                                        </c:if>  
+                                        <c:if test="#{devisBean.supprimerDevis.equalsIgnoreCase('no')}">
+                                            <h:commandLink >
+                                                <h:graphicImage value="resources/images/supprimer.svg" width="25px" height="25px"  title="Supprimer" />
+                                            </h:commandLink> 
+                                        </c:if>  
+
+                                    </p:column>
+
+                                </p:dataTable>
+
+
+                                <c:if test="#{devisBean.creerDevis.equalsIgnoreCase('yes')}"> 
+                                    <a href="new_devis.xhtml" class="btn btn-primary m-t-15 waves-effect" style="border-radius: 10px;color: white;">Creer un nouveau devis</a>
+
+                                </c:if> 
+
+                                <c:if test="#{devisBean.creerDevis.equalsIgnoreCase('no')}">
+                                    <a href="#" class="btn btn-primary m-t-15 waves-effect" style="border-radius: 10px;color: white;">Creer un nouveau devis</a>
+
+                                </c:if> 
+
+                                <!--<a href="new_devis_import.xhtml" class="btn btn-primary m-t-15 waves-effect" style="border-radius: 10px;color: white;">Importer un fichier Excel</a>-->
+
+
+
+                            </c:if> 
+
+                        </p:panel>
+
+                        <!-- #END# Basic Examples -->
+                    </h:form>
+
+                </div>
+
+            </section>
+
+        </ui:define>
+
+    </ui:composition>
+</html>
